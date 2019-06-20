@@ -80,7 +80,7 @@
 					<tbody>
 						<tr>
 
-							<th th:each="item:${itemList}">
+							<th th:each="item,status:${itemList}">
 								<a href="item_detail.html" >
 									<img src="img/1.jpg" th:src="@{'/img/'+${item.imagePath}}"
 										class="img-responsive img-rounded" width="200" height="600">
@@ -89,6 +89,9 @@
 								<span class="price" th:text="${item.priceM}">&nbsp;М&nbsp;</span>&nbsp;&nbsp;1,380円(税抜)<br>
 								<span class="price" th:text="${item.priceL}">&nbsp;Ｌ</span>&nbsp;&nbsp;2,380円(税抜)<br>
 							</th>
+							
+							
+							
 						</tr>
 						<tr>
 
