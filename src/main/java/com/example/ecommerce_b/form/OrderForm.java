@@ -5,7 +5,7 @@ package com.example.ecommerce_b.form;
  * 
  * @author ryuheisugita
  */
-public class OderForm {
+public class OrderForm {
 	
 	/** 宛先氏名 */
 	private String destinationName;
@@ -31,10 +31,10 @@ public class OderForm {
 	}
 
 	/** 引数なしのコンストラクタ */
-	public OderForm() {}
+	public OrderForm() {}
 	
 	/** コンストラクタ */
-	public OderForm(String destinationName, String destinationEmail, String destinationZipcode,
+	public OrderForm(String destinationName, String destinationEmail, String destinationZipcode,
 			String destinationAddress, String destinationTell, String deliveryTime, Integer pyamentMethod) {
 		super();
 		this.destinationName = destinationName;
