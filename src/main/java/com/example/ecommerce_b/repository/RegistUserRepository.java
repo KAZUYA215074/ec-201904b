@@ -19,4 +19,5 @@ public class RegistUserRepository {
 		String sql = "insert into users(name, email, password, zipcode, address, telephone) values(:name,:mailAddress,:password,:zipcode,:address,:telephone);";
 		template.update(sql,param);
 	}
+	
 }
