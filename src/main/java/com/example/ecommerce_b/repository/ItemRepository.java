@@ -19,6 +19,9 @@ import com.example.ecommerce_b.domain.Item;
 @Repository
 public class ItemRepository {
 
+	/**
+	 * ItemドメインのRowMapper.
+	 */
 	private static final RowMapper<Item> ITEM_ROW_MAPPER = (rs, i) -> {
 		Item item = new Item();
 		item.setId(rs.getInt("id"));
@@ -48,6 +51,8 @@ public class ItemRepository {
 				+ " ORDER BY :status;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("status", status);
 		List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
+		
+		System.out.println(itemList.get(0).getId());
 
 		return itemList;
 	}
