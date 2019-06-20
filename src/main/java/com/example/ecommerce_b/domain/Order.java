@@ -1,5 +1,6 @@
 package com.example.ecommerce_b.domain;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -23,15 +24,16 @@ public class Order {
 	/** 宛先氏名 */
 	private String destinationName;
 	/** 宛先Eメール */
+	
 	private String destinationEmail;
 	/** 宛先郵便番号 */
 	private String destinationZipcode;
 	/** 宛先住所 */
 	private String destinationAddress;
 	/** 宛先TEL */
-	private String destinationTell;
+	private String destinationTel;
 	/** 配達時間 */
-	private String deliveryTime;
+	private Timestamp deliveryTime;
 	/** 支払い方法 */
 	private Integer pyamentMethod;
 	/** ユーザー */
@@ -57,13 +59,22 @@ public class Order {
 		return (int) (this.getTotalPrice()*1.08);		
 	}
 
+	@Override
+	public String toString() {
+		return "Order [id=" + id + ", userId=" + userId + ", status=" + status + ", totalPrice=" + totalPrice
+				+ ", orderDate=" + orderDate + ", destinationName=" + destinationName + ", destinationEmail="
+				+ destinationEmail + ", destinationZipcode=" + destinationZipcode + ", destinationAddress="
+				+ destinationAddress + ", destinationTel=" + destinationTel + ", deliveryTime=" + deliveryTime
+				+ ", pyamentMethod=" + pyamentMethod + ", user=" + user + ", orderList=" + orderList + "]";
+	}
+
 	/** 引数なしのコンストラクタ */
 	public Order() {}
 	
 	/** コンストラクタ */
 	public Order(Integer id, Integer userId, Integer status, Integer totalPrice, Date orderDate, String destinationName,
-			String destinationEmail, String destinationZipcode, String destinationAddress, String destinationTell,
-			String deliveryTime, Integer pyamentMethod, User user, List<Order> orderList) {
+			String destinationEmail, String destinationZipcode, String destinationAddress, String destinationTel,
+			Timestamp deliveryTime, Integer pyamentMethod, User user, List<Order> orderList) {
 		super();
 		this.id = id;
 		this.userId = userId;
@@ -74,7 +85,7 @@ public class Order {
 		this.destinationEmail = destinationEmail;
 		this.destinationZipcode = destinationZipcode;
 		this.destinationAddress = destinationAddress;
-		this.destinationTell = destinationTell;
+		this.destinationTel = destinationTel;
 		this.deliveryTime = deliveryTime;
 		this.pyamentMethod = pyamentMethod;
 		this.user = user;
@@ -154,19 +165,19 @@ public class Order {
 		this.destinationAddress = destinationAddress;
 	}
 
-	public String getDestinationTell() {
-		return destinationTell;
+	public String getDestinationTel() {
+		return destinationTel;
 	}
 
-	public void setDestinationTell(String destinationTell) {
-		this.destinationTell = destinationTell;
+	public void setDestinationTel(String destinationTel) {
+		this.destinationTel = destinationTel;
 	}
 
-	public String getDeliveryTime() {
+	public Timestamp getDeliveryTime() {
 		return deliveryTime;
 	}
 
-	public void setDeliveryTime(String deliveryTime) {
+	public void setDeliveryTime(Timestamp deliveryTime) {
 		this.deliveryTime = deliveryTime;
 	}
 
