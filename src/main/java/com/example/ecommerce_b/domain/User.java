@@ -19,11 +19,21 @@ public class User {
 	private String address;
 	/** 電話番号 */
 	private String telephone;
+	/**　郵便番号　*/
+	private String zipcode;
 	
+	public String getZipcode() {
+		return zipcode;
+	}
+
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", mailAddress=" + mailAddress + ", password=" + password
-				+ ", address=" + address + ", telephone=" + telephone + "]";
+				+ ", address=" + address + ", telephone=" + telephone + "zipcode="+zipcode+"]";
 	}
 		
 	/** 引数なしのコンストラクタ */
