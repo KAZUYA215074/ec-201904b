@@ -1,5 +1,7 @@
 package com.example.ecommerce_b.repository;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -43,6 +45,20 @@ public class OrderItemRepository {
 		OrderItem item=template.queryForObject(sql, param, ORDERITEM_ROW_MAPPER);
 		return item;
 	}
+
+	/**
+	 * ショッピングカートのidからカート内の注文商品を全件検索する.
+	 * 
+	 * @param orderItemId 取得したいショッピングカートのid
+	 * @return 注文商品のリスト
+	 */
+	public List<OrderItem> findByOrderId(Integer orderId){
+		String sql="select id,item_id,order_id,quantity,size from order_items where order_id=:id";
+		SqlParameterSource param=new MapSqlParameterSource().addValue("id", orderId);
+		List<OrderItem> orderItemList=template.query(sql, param, ORDERITEM_ROW_MAPPER);
+		return orderItemList;
+	}
+	
 	
 	/**
 	 * 注文商品を追加する.
