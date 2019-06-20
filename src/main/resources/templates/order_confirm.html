@@ -1,5 +1,7 @@
 	<!DOCTYPE html>
-<html lang="ja">
+<html lang="ja"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -165,7 +167,7 @@
 		</div>
 
 		<!-- table -->
-		<form action="order_finished.html">
+		<form th:action="@{/order}" method="post">
 			<div class="row">
 				<div
 					class="table-responsive col-lg-offset-3 col-lg-6 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
@@ -179,7 +181,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text">
+									<input type="text" name="destinationName" th:value="${order.user.name}">
 								</td>
 							</tr>
 							<tr>
@@ -189,7 +191,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text">
+									<input type="text" name="destinationMail" th:text="${Email}">
 								</td>
 							</tr>
 							<tr>
@@ -199,7 +201,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text">&nbsp;&nbsp;<button>住所検索</button>
+									<input type="text" name="destinationZipcode" th:text="${zipcode}">&nbsp;&nbsp;<button>住所検索</button>
 								</td>
 							</tr>
 							<tr>
@@ -209,7 +211,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text">
+									<input type="text"name="destinationAddress" th:text="${address}">
 								</td>
 							</tr>
 							<tr>
@@ -219,7 +221,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text">
+									<input type="text"name="destinationTel" th:text="${telephone}">
 								</td>
 							</tr>
 							<tr>
@@ -236,7 +238,7 @@
 													class="control-label" style="color: red" for="inputPeriod">配達日時を入力してください</label>
 											</div>
 											<div class="col-sm-5">
-												<input type="date" name="name" id="name"
+												<input type="date" id="name" name="deliveryTime"
 													class="form-control input-sm" />
 											</div>
 
@@ -245,47 +247,47 @@
 											<div class="col-sm-12">
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany" checked="checked">
+														name="responsibleCompany" value="10" checked="checked">
 													10時
 												</label>
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany">
+														name="responsibleCompany" value="11">
 													11時
 												</label>
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany">
+														name="responsibleCompany" value="12">
 													12時
 												</label><br>
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany">
+														name="responsibleCompany" value="13">
 													13時
 												</label>
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany">
+														name="responsibleCompany" value="14">
 													14時
 												</label>
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany">
+														name="responsibleCompany" value="15">
 													15時
 												</label><br>
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany">
+														name="responsibleCompany" value="16">
 													16時
 												</label>
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany">
+														name="responsibleCompany" value="17">
 													17時
 												</label>
 												<label class="radio-inline">
 													<input type="radio"
-														name="responsibleCompany">
+														name="responsibleCompany" value="18">
 													18時
 												</label><br>
 											</div>
@@ -316,7 +318,7 @@
 										<div class="col-sm-12">
 											<label class="radio-inline">
 												<input type="radio"
-													name="responsibleCompany" checked="checked">
+													name="paymentMethod" checked="checked" value="1">
 												代金引換
 											</label>
 										</div>
@@ -334,7 +336,7 @@
 										<div class="col-sm-12">
 											<label class="radio-inline">
 												<input type="radio"
-													name="responsibleCompany" checked="checked">
+													name="paymentMethod" checked="checked" value="2">
 												クレジットカード
 											</label><br><br>
 										</div>

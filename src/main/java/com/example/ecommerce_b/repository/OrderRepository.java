@@ -26,10 +26,11 @@ public class OrderRepository {
 		order.setId(rs.getInt("id"));
 		order.setUserId(rs.getInt("user_id"));
 		order.setStatus(rs.getInt("status"));
+		order.setTotalPrice(rs.getInt("total_price"));
 		order.setOrderDate(rs.getDate("order_date"));
 		order.setDestinationName(rs.getString("destination_name"));
 		order.setDestinationEmail(rs.getString("destination_email"));
-		order.setDestinationZipcode(rs.getString("destination_zip_code"));
+		order.setDestinationZipcode(rs.getString("destination_zipcode"));
 		order.setDestinationAddress(rs.getString("destination_address"));
 		order.setDestinationTel(rs.getString("destination_tel"));
 		order.setDeliveryTime(rs.getTimestamp("delivery_time"));

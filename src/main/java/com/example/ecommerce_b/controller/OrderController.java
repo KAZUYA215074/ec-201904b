@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.ecommerce_b.domain.Order;
+import com.example.ecommerce_b.domain.User;
 import com.example.ecommerce_b.form.OrderForm;
 import com.example.ecommerce_b.service.OrderService;
 
@@ -46,11 +47,15 @@ public class OrderController {
 	 * @param model
 	 * @return　注文確認画面
 	 */
+	@RequestMapping("/to-order")
 	public String toOrder(Model model) {
-		int userId = 0;//(仮)
+		//(仮)
+		int userId = 0;
 		Order order = orderService.serchByUserIdNotOrdered(userId);
+		User user = new User(1, "name", "mailAddress", "password", "address", "telephone");
+		order.setUser(user);
 		model.addAttribute("order",order);
-		return "order_cofirm";
+		return "order_confirm";
 	}
 	
 	/**
@@ -59,10 +64,13 @@ public class OrderController {
 	 * @param form
 	 * @return 注文確認画面
 	 */
-	public String order(OrderForm form) {
+	@RequestMapping("/order")
+	public String order(OrderForm form, Integer responsibleCompany) {
 		int userId = 0;//(仮)
 		Order order = orderService.serchByUserIdNotOrdered(userId);
 		BeanUtils.copyProperties(form, order);
+		Date deliveryTime = order.getDeliveryTime();
+		deliveryTime.setHours(responsibleCompany);
 		order.setOrderDate(new Date());
 		if(form.getPyamentMethod() == 1) {
 			order.setStatus(1);
