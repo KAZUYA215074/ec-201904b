@@ -1,12 +1,25 @@
 package com.example.ecommerce_b.form;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+
 public class RegistUserForm {
+	@NotBlank(message="お名前を入力して下さい")
 	private String name;
+	@Email(message = "アドレスが不正です")
+	@NotBlank(message="メールアドレスを入力して下さい")
 	private String email;
+	@NotBlank(message="パスワードを入力して下さい")
 	private String password;
+	@NotBlank(message="郵便番号を入力してください")
+	@Pattern(regexp = "^\\d{3}\\-?\\d{4}$",message="郵便番号は7桁の数字で入力してください")
 	private String zipcode;
+	@NotBlank(message="住所を入力して下さい")
 	private String address;
+	@NotBlank(message="電話番号を入力して下さい")
 	private String telephone;
+	@NotBlank(message="確認用パスワードを入力して下さい")
 	private String confirmationPassword;
 
 	public String getName() {

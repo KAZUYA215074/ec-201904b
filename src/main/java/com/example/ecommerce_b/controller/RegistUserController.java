@@ -17,14 +17,15 @@ public class RegistUserController {
 	@Autowired
 	private RegistUserService registUserService;
 	
-	@RequestMapping("toRegist")
-	public String toRegist() {
-		return "register_user";
-	}
 	
 	@ModelAttribute
 	public RegistUserForm setUpRegistUserForm() {
 		return new RegistUserForm();
+	}
+
+	@RequestMapping("to-regist")
+	public String toRegist() {
+		return "register_user";
 	}
 	
 	@RequestMapping("regist")
@@ -32,10 +33,13 @@ public class RegistUserController {
 		if(!form.getPassword().equals(form.getConfirmationPassword())) {
 			result.rejectValue("password", null, "passwordが一致しません");
 		}
-		if(result.hasErrors()) {
-			return"redirect:toRegist";
+		boolean isExist = registUserService.isExist(form.getEmail());
+		if(isExist) {
+			result.rejectValue("email", null, "すでに登録されています");
 		}
-		registUserService.registUser(form);
+		if(result.hasErrors()) {
+			return toRegist();
+		}
 		return "login";
 	}
 }
