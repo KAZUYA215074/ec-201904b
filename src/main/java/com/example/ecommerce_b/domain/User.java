@@ -1,4 +1,4 @@
-package com.example.ecommerce_c.domain;
+package com.example.ecommerce_b.domain;
 
 public class User {
 	

@@ -1,4 +1,4 @@
-package com.example.ecommerce_c.config;
+package com.example.ecommerce_b.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

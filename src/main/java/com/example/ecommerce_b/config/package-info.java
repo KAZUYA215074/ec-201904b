@@ -1,1 +1,1 @@
-package com.example.ecommerce_c.config;
+package com.example.ecommerce_b.config;

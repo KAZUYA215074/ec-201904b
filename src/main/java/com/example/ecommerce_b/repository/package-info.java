@@ -1,1 +1,1 @@
-package com.example.ecommerce_c.repository;
+package com.example.ecommerce_b.repository;
