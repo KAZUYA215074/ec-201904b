@@ -76,11 +76,18 @@
 		<div class="row">
 			<div
 				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
+				<form action="item_list.html" th:action="@{/}" method="post" id="sortForm" >
+					<select id="sortSelect" name="status">
+						<option th:value="id">--------</option>
+						<option th:value="高い">価格（高い順）</option>
+						<option th:value="安い">価格（安い順）</option>
+					</select>
+				</form>
 				<table class="table table-striped">
 					<tbody>
+						<span  th:each="item,status:${itemList}">
 						<tr>
-
-							<th th:each="item,status:${itemList}">
+							<th>
 								<a href="item_detail.html" >
 									<img src="img/1.jpg" th:src="@{'/img/'+${item.imagePath}}"
 										class="img-responsive img-rounded" width="200" height="600">
@@ -89,10 +96,10 @@
 								<span class="price" th:text="${item.priceM}">&nbsp;М&nbsp;</span>&nbsp;&nbsp;1,380円(税抜)<br>
 								<span class="price" th:text="${item.priceL}">&nbsp;Ｌ</span>&nbsp;&nbsp;2,380円(税抜)<br>
 							</th>
+						</tr >
+						</span>
 							
 							
-							
-						</tr>
 						<tr>
 
 							</tr>
@@ -106,5 +113,17 @@
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script >
+	$(function(){
+	
+		$("#sortSelect").change(function(){
+			$("#sortForm").submit();
+		});
+		
+		
+	})
+	
+
+	</script>
 </body>
 </html>

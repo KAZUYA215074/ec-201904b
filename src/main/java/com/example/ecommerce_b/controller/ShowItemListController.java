@@ -33,6 +33,7 @@ public class ShowItemListController {
 	public String showList(String status, Model model) {
 		
 		System.out.println("/開始");
+		System.out.println(status);
 		if(status == null) {
 			status = "id";
 		}
