@@ -1,6 +1,11 @@
 package com.example.ecommerce_b.domain;
 
-public class OderTopping {
+/**
+ * 注文トッピングのためのドメイン.
+ * 
+ * @author ryuheisugita
+ */
+public class OrderTopping {
 	
 	/** ID */
 	private Integer id;
@@ -18,10 +23,10 @@ public class OderTopping {
 	}
 
 	/** 引数なしのコンストラクタ */
-	public OderTopping() {}
+	public OrderTopping() {}
 	
 	/** コンストラクタ */
-	public OderTopping(Integer id, Integer toppingId, Integer orderItemId, Topping topping) {
+	public OrderTopping(Integer id, Integer toppingId, Integer orderItemId, Topping topping) {
 		super();
 		this.id = id;
 		this.toppingId = toppingId;

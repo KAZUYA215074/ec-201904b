@@ -1,5 +1,10 @@
 package com.example.ecommerce_b.domain;
 
+/**
+ * ユーザーのためのドメイン.
+ * 
+ * @author ryuheisugita
+ */
 public class User {
 	
 	/** ID */
