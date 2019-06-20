@@ -2,6 +2,11 @@ package com.example.ecommerce_b.domain;
 
 import java.util.List;
 
+/**
+ * 商品のためのドメイン.
+ * 
+ * @author ryuheisugita
+ */
 public class Item {
 	
 	/** ID */
@@ -11,9 +16,9 @@ public class Item {
 	/** 説明 */
 	private String description;
 	/** Mの価格 */
-	private String priceM;
+	private Integer priceM;
 	/** Lの価格 */
-	private String priceL;
+	private Integer priceL;
 	/** 画像パス */
 	private String imagePath;
 	/** 削除フラグ */
@@ -26,12 +31,12 @@ public class Item {
 		return "Item [id=" + id + ", name=" + name + ", description=" + description + ", priceM=" + priceM + ", priceL="
 				+ priceL + ", imagePath=" + imagePath + ", deleted=" + deleted + ", toppingList=" + toppingList + "]";
 	}
-	
+
 	/** 引数なしのコンストラクタ */
 	public Item() {}
 	
 	/** コンストラクタ */
-	public Item(Integer id, String name, String description, String priceM, String priceL, String imagePath,
+	public Item(Integer id, String name, String description, Integer priceM, Integer priceL, String imagePath,
 			Boolean deleted, List<Topping> toppingList) {
 		super();
 		this.id = id;
@@ -42,9 +47,9 @@ public class Item {
 		this.imagePath = imagePath;
 		this.deleted = deleted;
 		this.toppingList = toppingList;
-	}
+	}	
 	
-	 /** getter/setter */
+	/** getter/setter */
 	public Integer getId() {
 		return id;
 	}
@@ -63,16 +68,16 @@ public class Item {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getPriceM() {
+	public Integer getPriceM() {
 		return priceM;
 	}
-	public void setPriceM(String priceM) {
+	public void setPriceM(Integer priceM) {
 		this.priceM = priceM;
 	}
-	public String getPriceL() {
+	public Integer getPriceL() {
 		return priceL;
 	}
-	public void setPriceL(String priceL) {
+	public void setPriceL(Integer priceL) {
 		this.priceL = priceL;
 	}
 	public String getImagePath() {
@@ -93,5 +98,5 @@ public class Item {
 	public void setToppingList(List<Topping> toppingList) {
 		this.toppingList = toppingList;
 	}
-
+	
 }

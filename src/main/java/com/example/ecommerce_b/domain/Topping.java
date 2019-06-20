@@ -1,5 +1,10 @@
 package com.example.ecommerce_b.domain;
 
+/**
+ * トッピングのためのドメイン.
+ * 
+ * @author ryuheisugita
+ */
 public class Topping {
 	
 	/** ID */
@@ -7,28 +12,28 @@ public class Topping {
 	/** 名前 */
 	private String name;
 	/** Mの価格 */
-	private String priceM;
+	private Integer priceM;
 	/** Lの価格 */
-	private String priceL;
-
+	private Integer priceL;
+	
 	@Override
 	public String toString() {
 		return "Topping [id=" + id + ", name=" + name + ", priceM=" + priceM + ", priceL=" + priceL + "]";
 	}
-	
+
 	/** 引数なしのコンストラクタ */
 	public Topping() {}
 	
 	/** コンストラクタ */
-	public Topping(Integer id, String name, String priceM, String priceL) {
+	public Topping(Integer id, String name, Integer priceM, Integer priceL) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.priceM = priceM;
 		this.priceL = priceL;
-	}
-
-     /** getter/setter */
+	}	
+	
+	/** getter/setter */
 	public Integer getId() {
 		return id;
 	}
@@ -41,17 +46,17 @@ public class Topping {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getPriceM() {
+	public Integer getPriceM() {
 		return priceM;
 	}
-	public void setPriceM(String priceM) {
+	public void setPriceM(Integer priceM) {
 		this.priceM = priceM;
 	}
-	public String getPriceL() {
+	public Integer getPriceL() {
 		return priceL;
 	}
-	public void setPriceL(String priceL) {
+	public void setPriceL(Integer priceL) {
 		this.priceL = priceL;
 	}
-
+	
 }
