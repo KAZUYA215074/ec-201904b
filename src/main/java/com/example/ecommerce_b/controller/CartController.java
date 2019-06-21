@@ -18,8 +18,8 @@ public class CartController {
 		@RequestMapping("/show-cart")
 		public String showCart() {
 			
-			Order cart=cartService.loadOrder(1);
-			System.out.println(cart);
+//			Order cart=cartService.loadOrder(1);
+//			System.out.println(cart);
 			return "cart_list";
 		}
 }
