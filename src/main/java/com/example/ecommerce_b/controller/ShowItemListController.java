@@ -1,14 +1,18 @@
 package com.example.ecommerce_b.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.ecommerce_b.domain.Item;
 import com.example.ecommerce_b.service.GetItemListService;
+
+import jp.co.sample.emp_management.domain.Employee;
 
 /**
  * 商品一覧の表示・検索を行うコントローラ.
@@ -23,8 +27,7 @@ public class ShowItemListController {
 	private GetItemListService getItemListService;
 
 	/**
-	 * 商品一覧を表示する.
-	 * statusがnullの時はid順に並べる。
+	 * 商品一覧を表示する. statusがnullの時はid順に並べる。
 	 * 
 	 * @param status 並び替えるパラメータ
 	 * @param model  モデル
@@ -32,8 +35,8 @@ public class ShowItemListController {
 	 */
 	@RequestMapping("")
 	public String showList(String status, Model model) {
-		
-		if(status == null) {
+
+		if (status == null) {
 			status = "id";
 		}
 		List<Item> itemList = getItemListService.getAll(status);
@@ -41,6 +44,57 @@ public class ShowItemListController {
 		model.addAttribute("status", status);
 
 		return "item_list";
+	}
+
+	/**
+	 * 商品名のあいまい検索を行う. <br>
+	 * 入力が空だった場合は全件検索を行う。
+	 * 一致するものがなければメッセージを表示する。
+	 * 
+	 * @param name 検索する名前
+	 * @param status 並び替えをするステータス
+	 * @return 商品一覧ページ
+	 */
+	@RequestMapping("/search-like-name")
+	public String searchLikeName(String code, String status, Model model) {
+		List<Item> itemList;
+		if ("".equals(code)) {
+			itemList = getItemListService.getAll(status);
+		} else {
+			itemList = getItemListService.searchLikeName(code, status);
+		}
+		
+		// 一致するものがなかった場合は商品一覧とメッセージを表示する
+		if(itemList.size() == 0) {
+			itemList = getItemListService.getAll(status);
+			model.addAttribute("notMatchMessage", "該当する商品がありません");
+		}
+		model.addAttribute("itemList", itemList);
+		model.addAttribute("status", status);
+		model.addAttribute("code", code);
+
+		return "item_list";
+	}
+	
+	
+	/**
+	 * 曖昧検索のオートコンプリート用の名前リストを取得する.<br>
+	 * id順に取得する。
+	 * 
+	 * @return 全商品の名前リスト
+	 */
+	@ResponseBody
+	@RequestMapping("/getAutoComplete")
+	public List<String> getAutoComplete() {
+		List<String> nameList = new ArrayList<String>();
+		String status = "id";
+		List<Item> itemList = getItemListService.getAll(status);
+
+		for (Item item : itemList) {
+			nameList.add(item.getName());
+		}
+
+		return nameList;
 	}
 
 }

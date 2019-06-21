@@ -45,7 +45,7 @@ public class GetItemListService {
 	 */
 	public List<Item> searchLikeName(String name, String status) {
 		List<Item> itemList = itemRepository.findLikeName(name, returnFieldName(status));
-
+		
 		return sortByStatus(status, itemList);
 	}
 
