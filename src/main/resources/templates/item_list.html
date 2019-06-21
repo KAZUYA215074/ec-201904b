@@ -93,30 +93,46 @@
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-		<!-- 並べ替えをする。thymeleafを使っているとjsファイルに切り出せない。 -->
+		<!-- thymeleafを使っているとjsファイルに切り出せない。 -->
 	<script  th:inline="javascript">
 		/*<![CDATA[*/
 
 	$(function(){
 		
+		// 並び替えをする
 		$("#sortSelect").change(function(){
 			$("#sortForm").submit();
 		});
+		
+		// オートコンプリートの情報を取得する	
+		$.getJSON("/getAutoComplete", function(data) {
+			$('#code').autocomplete({
+				source : data,
+				autoFocus : true,
+				delay : 0,
+				minLength : 1
+			});
+	    });
+			
 
+		   $("#code").change(function(){
+		        charactersChange($(this));
+		    });
+
+
+		    charactersChange = function(ele){
+		        var val = ele.val();
+		        var han = val.replace(/[Ａ-Ｚａ-ｚ０-９]/g,function(s){return String.fromCharCode(s.charCodeAt(0)-0xFEE0)});
+
+		        if(val.match(/[Ａ-Ｚａ-ｚ０-９]/g)){
+		            $(ele).val(han);
+		        }
+		    };
+		
+		
 	});
 	
 	/*]]>*/
-	</script>
-	<script>
-	// オートコンプリートの情報を取得する
-	$.getJSON("/getAutoComplete", function(data) {
-		$('#code').autocomplete({
-			source : data,
-			autoFocus : true,
-			delay : 0,
-			minLength : 1
-		});
-	});	
 	</script>
 </body>
 </html>
