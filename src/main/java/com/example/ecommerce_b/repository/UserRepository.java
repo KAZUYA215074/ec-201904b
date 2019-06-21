@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -11,11 +12,20 @@ import org.springframework.stereotype.Repository;
 
 import com.example.ecommerce_b.domain.User;
 
+/**
+ * ユーザドメインのリポジトリ.
+ * 
+ * @author knmrmst
+ *
+ */
 @Repository
-public class LoginUserRepository {
+public class UserRepository {
 	@Autowired
 	private NamedParameterJdbcTemplate template;
 	
+	/**
+	 * ユーザドメインのRowMapper.
+	 */
 	private static final RowMapper<User> USER_ROW_MAPPER=(rs,i)->{
 		User user = new User();
 		user.setId(rs.getInt("id"));
@@ -29,8 +39,23 @@ public class LoginUserRepository {
 	};
 	
 	
+	/**
+	 * ユーザ情報をDBに登録する.
+	 * 
+	 * @param user ユーザ情報
+	 */
+	public void insert(User user) {
+		SqlParameterSource param = new BeanPropertySqlParameterSource(user);
+		String sql = "insert into users(name, email, password, zipcode, address, telephone) values(:name,:mailAddress,:password,:zipcode,:address,:telephone);";
+		template.update(sql,param);
+	}
 	
-	
+	/**
+	 * ユーザ情報をメールアドレスで検索する.
+	 * 
+	 * @param email メールアドレス
+	 * @return　user ユーザ情報
+	 */
 	public User findByMailAddress(String email) {
 		String sql = "select id,name, email, password, zipcode, address, telephone from users where email=:email";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("email", email);
@@ -41,5 +66,5 @@ public class LoginUserRepository {
 		}
 		return userList.get(0);
 	}
-
+	
 }
