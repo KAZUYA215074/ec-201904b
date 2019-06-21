@@ -1,5 +1,7 @@
 package com.example.ecommerce_b.repository;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -52,6 +54,21 @@ public class OrderRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("status", status);
 		Order order = template.queryForObject(sql, param, ORDER_ROW_MAPPER);
 		return order;
+	}
+	
+	/**
+	 * ユーザーIDから注文情報を取得.
+	 * 
+	 * @param userId ユーザーID
+	 * @return　指定したユーザーIDの注文情報
+	 */
+	public List<Order> findByUserId(int userId) {
+		String sql = "SELECT id ,user_id , status , total_price , order_date , destination_name , "
+				+ "destination_email , destination_zipcode , destination_address,destination_tel , delivery_time , payment_method " 
+				+ "FROM orders WHERE user_id=:userId;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
+		List<Order> orderList = template.query(sql, param, ORDER_ROW_MAPPER);
+		return orderList;
 	}
 	
 	/**

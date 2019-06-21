@@ -17,17 +17,19 @@ public class OrderForm {
 	private String destinationAddress;
 	/** 宛先TEL */
 	private String destinationTel;
+	/** 配達日付 */
+	private String deliveryDate;
 	/** 配達時間 */
-	private String deliveryTime;
+	private String deliveryHour;
 	/** 支払い方法 */
 	private Integer paymentMethod;
-	
+
 	@Override
 	public String toString() {
-		return "OderForm [destinationName=" + destinationName + ", destinationEmail=" + destinationEmail
+		return "OrderForm [destinationName=" + destinationName + ", destinationEmail=" + destinationEmail
 				+ ", destinationZipcode=" + destinationZipcode + ", destinationAddress=" + destinationAddress
-				+ ", destinationTel=" + destinationTel + ", deliveryTime=" + deliveryTime + ", paymentMethod="
-				+ paymentMethod + "]";
+				+ ", destinationTel=" + destinationTel + ", deliveryDate=" + deliveryDate + ", deliveryHour="
+				+ deliveryHour + ", paymentMethod=" + paymentMethod + "]";
 	}
 
 	/** 引数なしのコンストラクタ */
@@ -35,15 +37,17 @@ public class OrderForm {
 	
 	/** コンストラクタ */
 	public OrderForm(String destinationName, String destinationEmail, String destinationZipcode,
-			String destinationAddress, String destinationTell, String deliveryTime, Integer pyamentMethod) {
+			String destinationAddress, String destinationTel, String deliveryDate, String deliveryHour,
+			Integer paymentMethod) {
 		super();
 		this.destinationName = destinationName;
 		this.destinationEmail = destinationEmail;
 		this.destinationZipcode = destinationZipcode;
 		this.destinationAddress = destinationAddress;
-		this.destinationTel = destinationTell;
-		this.deliveryTime = deliveryTime;
-		this.paymentMethod = pyamentMethod;
+		this.destinationTel = destinationTel;
+		this.deliveryDate = deliveryDate;
+		this.deliveryHour = deliveryHour;
+		this.paymentMethod = paymentMethod;
 	}
 	
 	/** getter/setter */
@@ -77,11 +81,17 @@ public class OrderForm {
 	public void setDestinationTel(String destinationTel) {
 		this.destinationTel = destinationTel;
 	}
-	public String getDeliveryTime() {
-		return deliveryTime;
+	public String getDeliveryDate() {
+		return deliveryDate;
 	}
-	public void setDeliveryTime(String deliveryTime) {
-		this.deliveryTime = deliveryTime;
+	public void setDeliveryDate(String deliveryDate) {
+		this.deliveryDate = deliveryDate;
+	}
+	public String getDeliveryHour() {
+		return deliveryHour;
+	}
+	public void setDeliveryHour(String deliveryHour) {
+		this.deliveryHour = deliveryHour;
 	}
 	public Integer getPaymentMethod() {
 		return paymentMethod;
