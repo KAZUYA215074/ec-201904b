@@ -73,7 +73,7 @@ public class UserRepository {
 	 * @param id ユーザid
 	 * @return ユーザ情報
 	 */
-	public User findByIdl(int id) {
+	public User findById(int id) {
 		String sql = "select id,name, email, password, zipcode, address, telephone from users where id=:id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
 		List<User> userList = template.query(sql, param, USER_ROW_MAPPER);

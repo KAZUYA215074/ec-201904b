@@ -1,11 +1,17 @@
 package com.example.ecommerce_b.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.ecommerce_b.domain.Order;
+import com.example.ecommerce_b.domain.OrderItem;
+import com.example.ecommerce_b.repository.OrderItemRepository;
 import com.example.ecommerce_b.repository.OrderRepository;
+import com.example.ecommerce_b.repository.OrderToppingRepository;
+import com.example.ecommerce_b.repository.UserRepository;
 
 /**
  * 注文情報を操作するサービス.
@@ -17,7 +23,16 @@ import com.example.ecommerce_b.repository.OrderRepository;
 public class OrderService {
 	
 	@Autowired
-	private OrderRepository repository;
+	private OrderRepository orderRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
+	private OrderItemRepository orderItemRepository;
+	
+	@Autowired
+	private OrderToppingRepository orderToppingRepository;
 	
 	/**
 	 * ユーザーIDから注文前の注文情報を取得する.
@@ -27,7 +42,21 @@ public class OrderService {
 	 */
 	public Order serchByUserIdNotOrdered(int userId) {
 		int status = 0;
-		Order order = repository.findByUserIdAndStatus(userId, status);
+		Order order = orderRepository.findByUserIdAndStatus(userId, status);
+		if(order==null) {
+			return null;
+		}
+		int orderId=order.getId();
+		System.out.println(orderId);
+		List<OrderItem> orderItemList=orderItemRepository.findByOrderId(orderId);
+		for(int i=0;i<orderItemList.size();i++) {
+			OrderItem item=orderItemList.get(i);
+			item.setOrderToppingList(orderToppingRepository.findByOrderItemId(item.getId()));
+			orderItemList.set(i, item);
+		}
+		order.setOrderItemList(orderItemList);
+		
+		order.setUser(userRepository.findById(userId));
 		return order;
 	}
 	
@@ -37,7 +66,7 @@ public class OrderService {
 	 * @param order 注文情報
 	 */
 	public void order(Order order) {
-		repository.updateOrder(order);
+		orderRepository.updateOrder(order);
 	}
 
 }

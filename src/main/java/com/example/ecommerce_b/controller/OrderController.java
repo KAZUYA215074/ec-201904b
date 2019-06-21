@@ -55,8 +55,9 @@ public class OrderController {
 	public String toOrder(Model model) {
 		int userId = 0;
 //		Integer userId = (Integer) session.getAttribute("userId");
-		Order order = orderService.serchByUserIdNotOrdered(1);
+		Order order = orderService.serchByUserIdNotOrdered(2);
 		model.addAttribute("order",order);
+		System.out.println(order);
 		return "order_confirm";
 	}
 	
