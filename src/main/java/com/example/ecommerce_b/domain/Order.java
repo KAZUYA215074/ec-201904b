@@ -24,7 +24,6 @@ public class Order {
 	/** 宛先氏名 */
 	private String destinationName;
 	/** 宛先Eメール */
-	
 	private String destinationEmail;
 	/** 宛先郵便番号 */
 	private String destinationZipcode;
@@ -35,7 +34,7 @@ public class Order {
 	/** 配達時間 */
 	private Timestamp deliveryTime;
 	/** 支払い方法 */
-	private Integer pyamentMethod;
+	private Integer paymentMethod;
 	/** ユーザー */
 	private User user;
 	/** 注文アイテムリスト */
@@ -65,7 +64,7 @@ public class Order {
 				+ ", orderDate=" + orderDate + ", destinationName=" + destinationName + ", destinationEmail="
 				+ destinationEmail + ", destinationZipcode=" + destinationZipcode + ", destinationAddress="
 				+ destinationAddress + ", destinationTel=" + destinationTel + ", deliveryTime=" + deliveryTime
-				+ ", pyamentMethod=" + pyamentMethod + ", user=" + user + ", orderList=" + orderList + "]";
+				+ ", paymentMethod=" + paymentMethod + ", user=" + user + ", orderList=" + orderList + "]";
 	}
 
 	/** 引数なしのコンストラクタ */
@@ -74,7 +73,7 @@ public class Order {
 	/** コンストラクタ */
 	public Order(Integer id, Integer userId, Integer status, Integer totalPrice, Date orderDate, String destinationName,
 			String destinationEmail, String destinationZipcode, String destinationAddress, String destinationTel,
-			Timestamp deliveryTime, Integer pyamentMethod, User user, List<Order> orderList) {
+			Timestamp deliveryTime, Integer paymentMethod, User user, List<Order> orderList) {
 		super();
 		this.id = id;
 		this.userId = userId;
@@ -87,7 +86,7 @@ public class Order {
 		this.destinationAddress = destinationAddress;
 		this.destinationTel = destinationTel;
 		this.deliveryTime = deliveryTime;
-		this.pyamentMethod = pyamentMethod;
+		this.paymentMethod = paymentMethod;
 		this.user = user;
 		this.orderList = orderList;
 	}
@@ -181,12 +180,12 @@ public class Order {
 		this.deliveryTime = deliveryTime;
 	}
 
-	public Integer getPyamentMethod() {
-		return pyamentMethod;
+	public Integer getPaymentMethod() {
+		return paymentMethod;
 	}
 
-	public void setPyamentMethod(Integer pyamentMethod) {
-		this.pyamentMethod = pyamentMethod;
+	public void setPaymentMethod(Integer paymentMethod) {
+		this.paymentMethod = paymentMethod;
 	}
 
 	public User getUser() {
