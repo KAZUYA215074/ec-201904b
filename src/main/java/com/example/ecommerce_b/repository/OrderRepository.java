@@ -1,6 +1,7 @@
 package com.example.ecommerce_b.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -43,15 +44,22 @@ public class OrderRepository {
 	 * 
 	 * @param userId ユーザーID
 	 * @param status 状態
-	 * @return　指定したユーザーIDと状態に一致する注文情報
+	 * @return　指定したユーザーIDと状態に一致する注文情報、なければnull
 	 */
+	@SuppressWarnings("finally")
 	public Order findByUserIdAndStatus(int userId,int status) {
 		String sql = "SELECT id ,user_id , status , total_price , order_date , destination_name , "
 				+ "destination_email , destination_zipcode , destination_address,destination_tel , delivery_time , payment_method " 
 				+ "FROM orders WHERE user_id=:userId and status=:status;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("status", status);
-		Order order = template.queryForObject(sql, param, ORDER_ROW_MAPPER);
-		return order;
+		Order order=null;
+		try {
+			order = template.queryForObject(sql, param, ORDER_ROW_MAPPER);
+		}catch(EmptyResultDataAccessException e) {
+			System.out.println(e);
+		}finally {
+			return order;
+		}
 	}
 	
 	/**
@@ -65,6 +73,16 @@ public class OrderRepository {
 					 + "destination_tel=:destinationTel , delivery_time=:deliveryTime , payment_method=:paymentMethod"
 					 + " where id=:id";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
+		template.update(sql, param);
+	}
+	
+	/**
+	 * 注文情報(ショッピングカート)	を新規発行する
+	 * @param order
+	 */
+	public void insertOrder(Order order) {
+		String sql="insert into orders(user_id,status,total_price,order_date,destination_name,destination_email,destination_zipcode,destination_address,destination_tel,delivery_time,payment_method) values (:userId,:status,:totalPrice,:orderDate,:destinationName,:destinationEmail,:destinationZipcode,:destinationAddress,:destinationTel,:deliveryTime,:paymentMethod)";
+		SqlParameterSource param=new BeanPropertySqlParameterSource(order);
 		template.update(sql, param);
 	}
 }
