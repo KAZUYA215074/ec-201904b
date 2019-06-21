@@ -45,8 +45,7 @@ public class LoginUserController {
 	@RequestMapping("/login")
 	public String login(@AuthenticationPrincipal LoginUser loginUser) {
 		
-		System.out.println(loginUser.getUser().getId());
 		session.setAttribute("userId", loginUser.getUser().getId());
-		return "item_list";
+		return "redirect:/";
 	}
 }

@@ -29,12 +29,12 @@ public class RegistUserService {
 	 * @param form ユーザ登録フォーム
 	 */
 	public void registUser(RegistUserForm form) {
-		
-		System.out.println(form);
 		User user = new User();
 		BeanUtils.copyProperties(form, user);
 		user.setMailAddress(form.getEmail());
 		user.setPassword(encodePassword(user.getPassword()));
+		String zipCode = user.getZipcode().replace("-", "");
+		user.setZipcode(zipCode);
 		userRepository.insert(user);
 	}
 	
