@@ -7,14 +7,12 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.ecommerce_b.domain.Order;
-import com.example.ecommerce_b.domain.User;
 import com.example.ecommerce_b.form.OrderForm;
 import com.example.ecommerce_b.service.OrderService;
 
@@ -53,9 +51,8 @@ public class OrderController {
 	 */
 	@RequestMapping("/to-order")
 	public String toOrder(Model model) {
-		int userId = 0;
-//		Integer userId = (Integer) session.getAttribute("userId");
-		Order order = orderService.serchByUserIdNotOrdered(2);
+		Integer userId = (Integer) session.getAttribute("userId");
+		Order order = orderService.serchByUserIdNotOrdered(userId);
 		model.addAttribute("order",order);
 		System.out.println(order);
 		return "order_confirm";
@@ -69,8 +66,7 @@ public class OrderController {
 	 */
 	@RequestMapping("/order")
 	public String order(OrderForm form) {
-		int userId = 0;//(仮)
-//		Integer userId = (Integer) session.getAttribute("userId");
+		Integer userId = (Integer) session.getAttribute("userId");
 		Order order = orderService.serchByUserIdNotOrdered(userId);
 		BeanUtils.copyProperties(form, order);
 		
