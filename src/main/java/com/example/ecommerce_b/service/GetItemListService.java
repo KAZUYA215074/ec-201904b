@@ -30,7 +30,7 @@ public class GetItemListService {
 	 * @return 取得した商品情報一覧
 	 */
 	public List<Item> getAll(String status) {
-		List<Item> itemList = itemRepository.findAll(status);
+		List<Item> itemList = itemRepository.findAll(returnFieldName(status));
 
 		return sortByStatus(status, itemList);
 	}
@@ -44,7 +44,7 @@ public class GetItemListService {
 	 * @return 取得した商品情報一覧
 	 */
 	public List<Item> searchLikeName(String name, String status) {
-		List<Item> itemList = itemRepository.findLikeName(name, status);
+		List<Item> itemList = itemRepository.findLikeName(name, returnFieldName(status));
 
 		return sortByStatus(status, itemList);
 	}
@@ -64,4 +64,17 @@ public class GetItemListService {
 		return itemList;
 	}
 
+	/**
+	 * ステータスから、並べ替える値の名前を返す. "id"なら"id", "安い"または"高い" なら "price_m"
+	 * 
+	 * @param status ステータス
+	 * @return 並び替える値のフィールド名
+	 */
+	public String returnFieldName(String status) {
+		if ("id".equals(status)) {
+			return "id";
+		} else {
+			return "price_m";
+		}
+	}
 }

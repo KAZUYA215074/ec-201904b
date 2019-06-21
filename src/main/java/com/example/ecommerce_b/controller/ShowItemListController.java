@@ -24,6 +24,7 @@ public class ShowItemListController {
 
 	/**
 	 * 商品一覧を表示する.
+	 * statusがnullの時はid順に並べる。
 	 * 
 	 * @param status 並び替えるパラメータ
 	 * @param model  モデル
@@ -32,15 +33,12 @@ public class ShowItemListController {
 	@RequestMapping("")
 	public String showList(String status, Model model) {
 		
-		System.out.println(status);
 		if(status == null) {
 			status = "id";
 		}
 		List<Item> itemList = getItemListService.getAll(status);
-		System.out.println(itemList.size());
 		model.addAttribute("itemList", itemList);
-		
-		System.out.println(itemList.get(0).getId());
+		model.addAttribute("status", status);
 
 		return "item_list";
 	}
