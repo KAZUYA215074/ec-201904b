@@ -67,4 +67,21 @@ public class UserRepository {
 		return userList.get(0);
 	}
 	
+	/**
+	 * ユーザIDがユーザ情報を呼び出す.
+	 * 
+	 * @param id ユーザid
+	 * @return ユーザ情報
+	 */
+	public User findByIdl(int id) {
+		String sql = "select id,name, email, password, zipcode, address, telephone from users where id=:id";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
+		List<User> userList = template.query(sql, param, USER_ROW_MAPPER);
+		System.out.println(userList);
+		if (userList.size() == 0) {
+			return null;
+		}
+		return userList.get(0);
+	}
+	
 }
