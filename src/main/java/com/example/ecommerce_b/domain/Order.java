@@ -38,7 +38,7 @@ public class Order {
 	/** ユーザー */
 	private User user;
 	/** 注文アイテムリスト */
-	private List<Order> orderList;
+	private List<OrderItem> orderItemList;
 	
 	/**
 	 * 合計金額から消費税を計算する.
@@ -64,7 +64,7 @@ public class Order {
 				+ ", orderDate=" + orderDate + ", destinationName=" + destinationName + ", destinationEmail="
 				+ destinationEmail + ", destinationZipcode=" + destinationZipcode + ", destinationAddress="
 				+ destinationAddress + ", destinationTel=" + destinationTel + ", deliveryTime=" + deliveryTime
-				+ ", paymentMethod=" + paymentMethod + ", user=" + user + ", orderList=" + orderList + "]";
+				+ ", paymentMethod=" + paymentMethod + ", user=" + user + ",\\n\\t orderItemList=" + orderItemList + "]";
 	}
 
 	/** 引数なしのコンストラクタ */
@@ -73,7 +73,7 @@ public class Order {
 	/** コンストラクタ */
 	public Order(Integer id, Integer userId, Integer status, Integer totalPrice, Date orderDate, String destinationName,
 			String destinationEmail, String destinationZipcode, String destinationAddress, String destinationTel,
-			Timestamp deliveryTime, Integer paymentMethod, User user, List<Order> orderList) {
+			Timestamp deliveryTime, Integer paymentMethod, User user, List<OrderItem> orderItemList) {
 		super();
 		this.id = id;
 		this.userId = userId;
@@ -88,7 +88,7 @@ public class Order {
 		this.deliveryTime = deliveryTime;
 		this.paymentMethod = paymentMethod;
 		this.user = user;
-		this.orderList = orderList;
+		this.orderItemList = orderItemList;
 	}
 
 	/** getter/setter */
@@ -196,12 +196,12 @@ public class Order {
 		this.user = user;
 	}
 
-	public List<Order> getOrderList() {
-		return orderList;
+	public List<OrderItem> getOrderItemList() {
+		return orderItemList;
 	}
 
-	public void setOrderList(List<Order> orderList) {
-		this.orderList = orderList;
+	public void setOrderItemList(List<OrderItem> orderItemList) {
+		this.orderItemList = orderItemList;
 	}
 	
 }
