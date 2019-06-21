@@ -64,14 +64,14 @@ public class OrderController {
 	 * @return 注文確認画面
 	 */
 	@RequestMapping("/order")
-	public String order(OrderForm form, Integer responsibleCompany) {
+	public String order(OrderForm form) {
 		int userId = 0;//(仮)
 //		Integer userId = (Integer) session.getAttribute("userId");
 		Order order = orderService.serchByUserIdNotOrdered(userId);
 		BeanUtils.copyProperties(form, order);
 		
-		String strDeliveryTime = form.getDeliveryTime();
-		strDeliveryTime = strDeliveryTime + " " + responsibleCompany +":00:00";
+		String strDeliveryTime = form.getDeliveryDate() + " " + form.getDeliveryHour() +":00:00";
+		System.out.println(strDeliveryTime);
 		order.setDeliveryTime(Timestamp.valueOf(strDeliveryTime));
 		
 		order.setOrderDate(new Date());
