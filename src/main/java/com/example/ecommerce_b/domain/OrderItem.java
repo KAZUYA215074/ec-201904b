@@ -30,7 +30,17 @@ public class OrderItem {
 	 * @return 合計金額
 	 */
 	public int getSubTotal() {
-		return 0;
+		int itemSum=0;
+		int toppingSum=0;
+		if(this.size=='M' ||this.size=='m') {
+			itemSum=item.getPriceM()*this.quantity;
+			toppingSum=orderToppingList.size()*200;
+		}else if(this.size=='L' ||this.size=='l') {
+			itemSum=item.getPriceL()*this.quantity;			
+			toppingSum=orderToppingList.size()*300;
+		}
+		
+		return itemSum+toppingSum;
 	}
 	
 	@Override
