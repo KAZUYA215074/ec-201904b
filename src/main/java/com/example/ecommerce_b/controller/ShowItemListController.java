@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.ecommerce_b.domain.Item;
 import com.example.ecommerce_b.service.GetItemListService;
 
-import jp.co.sample.emp_management.domain.Employee;
-
 /**
  * 商品一覧の表示・検索を行うコントローラ.
  * 
