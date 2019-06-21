@@ -33,7 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests() // 認可に関する設定
-		.antMatchers("/","/to-login","/to-regist","/regist").permitAll() //「/」などのパスは全てのユーザに許可
+		.antMatchers("/**").permitAll() //「/」などのパスは全てのユーザに許可
 		.anyRequest().authenticated(); // それ以外のパスは認証が必要
 		http.formLogin() // ログインに関する設定
 		.loginPage("/to-login") // ログイン画面に遷移させるパス(ログイン認証が必要なパスを指定してかつログインされていないとこのパスに遷移される)

@@ -58,6 +58,7 @@ public class RegistUserController {
 		if(result.hasErrors()) {
 			return toRegist();
 		}
+		registUserService.registUser(form);
 		return "login";
 	}
 }
