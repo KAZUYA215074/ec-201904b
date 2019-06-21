@@ -1,6 +1,8 @@
 package com.example.ecommerce_b.repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
@@ -70,8 +72,17 @@ public class OrderToppingRepository {
 	 * 
 	 * @param topping 追加する注文トッピング
 	 */
-	public void insertOrderItem(OrderTopping topping) {
-		
+	public void insertOrderTopping(int orderItemId,Integer[] toppingIdList) {
+		String sql="insert into order_toppings(topping_id,order_item_id) values";
+		Map<String,Integer> paramMap=new HashMap<>();
+		for(int i=0;i<toppingIdList.length;i++) {
+			if(i!=0) {sql+=",";}
+			sql+="(:toppingId"+i+",:orderItemId"+i+")";
+			paramMap.put("toppingId"+i, toppingIdList[i]);
+		}
+		SqlParameterSource param=new MapSqlParameterSource().addValues(paramMap);
+		System.out.println(sql);
+		template.update(sql, param);		
 	}
 	
 	/**
