@@ -48,12 +48,8 @@ public class ItemRepository {
 	public List<Item> findAll(String status) {
 		String sql = "SELECT id,name,description , price_m , price_l , image_path , deleted"
 				+ " FROM items"
-				+ " ORDER BY :status;";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("status", status);
-		List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
-		
-		System.out.println(itemList.get(0).getId());
-
+				+ " ORDER BY " + status;
+		List<Item> itemList = template.query(sql,  ITEM_ROW_MAPPER);
 		return itemList;
 	}
 
