@@ -14,6 +14,12 @@ import org.springframework.stereotype.Service;
 import com.example.ecommerce_b.domain.LoginUser;
 import com.example.ecommerce_b.domain.User;
 import com.example.ecommerce_b.repository.UserRepository;
+/**
+ * ログイン後のユーザ情報に権限情報を付与するサービスクラス.
+ * 
+ * @author knmrmst
+ *
+ */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 	
