@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.ecommerce_b.domain.Order;
+import com.example.ecommerce_b.domain.OrderItem;
 import com.example.ecommerce_b.repository.OrderItemRepository;
 import com.example.ecommerce_b.repository.OrderRepository;
 import com.example.ecommerce_b.repository.OrderToppingRepository;
-import com.example.ecommerce_b.repository.ToppingRepository;
 
 /**
  * ショッピングカートを管理するサービス.
@@ -30,14 +30,14 @@ public class CartService {
 		private OrderToppingRepository orderToppingRepository; 
 //	@Autowired 
 //		private UserRepository userRepository; 
-	@Autowired 
-		private GetItemDetailService getItemDetailService;  
-	@Autowired 
-		private ToppingRepository ToppingRepository;
+
 	
 	
 	/**
 	 * 現在のショッピングカート内容をユーザidから取得する.
+	 * 
+	 * ここではUserを詰め込んでいないので、必要なら編集するか、
+	 * orderRepository.findByUserIdAndStatusにて詰め込んでください.
 	 * 
 	 * @param userId ログインしている(または一時的に発行されている)ユーザid
 	 * @return ショッピングカート内容
@@ -47,8 +47,16 @@ public class CartService {
 		if(order==null) {
 			return null;
 		}
-		//order.setOrderList(orderList);
-		return null;
+		int orderId=order.getId();
+		System.out.println(orderId);
+		List<OrderItem> orderItemList=orderItemRepository.findByOrderId(orderId);
+		for(int i=0;i<orderItemList.size();i++) {
+			OrderItem item=orderItemList.get(i);
+			item.setOrderToppingList(orderToppingRepository.findByOrderItemId(item.getId()));
+			orderItemList.set(i, item);
+		}
+		order.setOrderItemList(orderItemList);
+		return order;		//ここではUserを詰め込んでいない
 	}
 	
 	/**

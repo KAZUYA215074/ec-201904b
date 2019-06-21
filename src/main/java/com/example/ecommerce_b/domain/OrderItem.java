@@ -36,7 +36,7 @@ public class OrderItem {
 	@Override
 	public String toString() {
 		return "OrderItem [id=" + id + ", itemId=" + itemId + ", orderId=" + orderId + ", quantity=" + quantity
-				+ ", size=" + size + ", item=" + item + ", orderToppingList=" + orderToppingList + "]";
+				+ ", size=" + size + ",\n\t item=" + item + ",\n\t\t orderToppingList=" + orderToppingList + "]";
 	}
 
 	/** 引数なしのコンストラクタ */

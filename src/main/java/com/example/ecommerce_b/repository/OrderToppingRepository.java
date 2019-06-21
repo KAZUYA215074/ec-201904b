@@ -25,16 +25,16 @@ public class OrderToppingRepository {
 	private NamedParameterJdbcTemplate template;
 	
 	private static final RowMapper<OrderTopping> ORDERTOPPING_ROW_MAPPER=(rs,i) ->{
-		OrderTopping orderTopping=new OrderTopping();
-		orderTopping.setId(rs.getInt("id"));
+		OrderTopping orderTopping=new OrderTopping();   //orderTopping
+		orderTopping.setId(rs.getInt("order_topping_id"));
 		orderTopping.setId(rs.getInt("topping_id"));
 		orderTopping.setId(rs.getInt("order_item_id"));
-		Topping topping=new Topping();
+		Topping topping=new Topping();					//Topping
 		topping.setId(rs.getInt("topping_id"));
 		topping.setName(rs.getString("name"));
 		topping.setPriceM(rs.getInt("price_m"));
 		topping.setPriceL(rs.getInt("price_l"));
-		orderTopping.setTopping(topping);
+		orderTopping.setTopping(topping);				//orderToppingを詰める
 		return orderTopping;
 	};
 	
@@ -45,7 +45,7 @@ public class OrderToppingRepository {
 	 * @return 注文トッピング
 	 */
 	public OrderTopping load(Integer orderToppingId){
-		String sql="select o.id,o.topping_id,o.order_item_id,t.name,t.price_m,t.price_l from order_toppings o left outer join toppings t on o.topping_id = t.id where o.id=id";
+		String sql="select o.id as order_topping_id,o.topping_id,o.order_item_id,t.name,t.price_m,t.price_l from order_toppings o left outer join toppings t on o.topping_id = t.id where o.id=:id";
 		SqlParameterSource param=new MapSqlParameterSource().addValue("id", orderToppingId);
 		OrderTopping topping=template.queryForObject(sql, param, ORDERTOPPING_ROW_MAPPER);
 		return topping;
@@ -58,7 +58,7 @@ public class OrderToppingRepository {
 	 * @return トッピングのリスト
 	 */
 	public List<OrderTopping> findByOrderItemId(Integer orderItemId){
-		String sql="select o.id,o.topping_id,o.order_item_id,t.name,t.price_m,t.price_l from order_toppings o left outer join toppings t on o.topping_id = t.id where order_item_id=id";
+		String sql="select o.id as order_topping_id,o.topping_id,o.order_item_id,t.name,t.price_m,t.price_l from order_toppings o left outer join toppings t on o.topping_id = t.id where order_item_id=:id";
 		SqlParameterSource param=new MapSqlParameterSource().addValue("id", orderItemId);
 		List<OrderTopping> orderToppingList=template.query(sql, param, ORDERTOPPING_ROW_MAPPER);
 		return orderToppingList;
