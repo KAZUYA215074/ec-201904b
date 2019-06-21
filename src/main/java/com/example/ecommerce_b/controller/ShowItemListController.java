@@ -1,14 +1,18 @@
 package com.example.ecommerce_b.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.ecommerce_b.domain.Item;
 import com.example.ecommerce_b.service.GetItemListService;
+
+import jp.co.sample.emp_management.domain.Employee;
 
 /**
  * 商品一覧の表示・検索を行うコントローラ.
@@ -70,6 +74,27 @@ public class ShowItemListController {
 		model.addAttribute("code", code);
 
 		return "item_list";
+	}
+	
+	
+	/**
+	 * 曖昧検索のオートコンプリート用の名前リストを取得する.<br>
+	 * id順に取得する。
+	 * 
+	 * @return 全商品の名前リスト
+	 */
+	@ResponseBody
+	@RequestMapping("/getAutoComplete")
+	public List<String> getAutoComplete() {
+		List<String> nameList = new ArrayList<String>();
+		String status = "id";
+		List<Item> itemList = getItemListService.getAll(status);
+
+		for (Item item : itemList) {
+			nameList.add(item.getName());
+		}
+
+		return nameList;
 	}
 
 }
