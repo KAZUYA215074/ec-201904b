@@ -32,7 +32,6 @@ public class ShowItemListController {
 	@RequestMapping("")
 	public String showList(String status, Model model) {
 		
-		System.out.println("/開始");
 		System.out.println(status);
 		if(status == null) {
 			status = "id";
@@ -40,6 +39,8 @@ public class ShowItemListController {
 		List<Item> itemList = getItemListService.getAll(status);
 		System.out.println(itemList.size());
 		model.addAttribute("itemList", itemList);
+		
+		System.out.println(itemList.get(0).getId());
 
 		return "item_list";
 	}

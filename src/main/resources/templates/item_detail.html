@@ -52,14 +52,14 @@
 				<h3 class="text-center">商品詳細</h3>
 				<div class="row">
 					<div class="col-xs-5">
-						<img src="img/1.jpg" class="img-responsive img-rounded">
+						<img src="img/1.jpg" class="img-responsive img-rounded" th:src="'/img/'+${item.imagePath}">
 					</div>
 
 					<div class="col-xs-5">
 						<div class="bs-component">
-							<h4>じゃがバターベーコン</h4> <br>
+							<h4><span th:text="${item.name}">じゃがバターベーコン</span></h4> <br>
 							<br>
-							<p>マイルドな味付けのカレーに大きくカットしたポテトをのせた、バターとチーズの風味が食欲をそそるお子様でも楽しめる商品です。</p>
+							<p><span th:text="${item.description}">マイルドな味付けのカレーに大きくカットしたポテトをのせた、バターとチーズの風味が食欲をそそるお子様でも楽しめる商品です。</span></p>
 						</div>
 					</div>
 				</div><br>
@@ -73,13 +73,13 @@
 								<div class="col-sm-12">
 									<label class="radio-inline">
 										<input type="radio"
-											name="responsibleCompany" checked="checked">
-										<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;1,380円(税抜)
+											name="responsibleCompany" checked="checked" id="size" class="size" value="M">
+										<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;<span th:text="${#numbers.formatInteger(item.priceM, 1, 'COMMA')}">1,380</span>円(税抜)
 									</label>
 									<label class="radio-inline">
 										<input type="radio"
-											name="responsibleCompany">
-										<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;2,380円(税抜)
+											name="responsibleCompany" class="size" value="L">
+										<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;<span th:text="${#numbers.formatInteger(item.priceL, 1, 'COMMA')}">2,380</span>円(税抜)
 									</label>
 								</div>
 							</div>
@@ -97,30 +97,9 @@
 										<span>&nbsp;Ｌ</span>&nbsp;&nbsp;300円(税抜)
 									</label>
 								</div>
-								<div class="col-sm-12">
-									<label class="checkbox-inline">
-										<input type="checkbox" value="">オニオン
-									</label>
-									<label class="checkbox-inline">
-										<input type="checkbox" value="">チーズ
-									</label>
-									<label class="checkbox-inline">
-										<input type="checkbox" value="">ピーマン
-									</label>
-									<label class="checkbox-inline">
-										<input type="checkbox" value="">ロースハム
-									</label><br>
-									<label class="checkbox-inline">
-										<input type="checkbox" value="">ほうれん草
-									</label>
-									<label class="checkbox-inline">
-										<input type="checkbox" value="">ぺパロに
-									</label>
-									<label class="checkbox-inline">
-										<input type="checkbox" value="">グリルナス
-									</label>
-									<label class="checkbox-inline">
-										<input type="checkbox" value="">あらびきソーセージ
+								<div class="col-sm-12" id="topping">
+									<label class="checkbox-inline" th:each="topping:${item.toppingList}">
+										<input type="checkbox" th:value="${topping.id}" th:text="${topping.name}" class="topping">
 									</label>
 								</div>
 							</div>
@@ -135,7 +114,7 @@
 									<label for="">数量:</label>
 									<label class="control-label"
 										style="color: red" for="inputError">数量を選択してください</label> <select
-										name="area" class="form-control">
+										name="area" class="form-control" id="pizanum">
 										<option value="1">1</option>
 										<option value="2">2</option>
 										<option value="3">3</option>
@@ -158,7 +137,7 @@
 				<div class="row">
 					<div class="col-xs-offset-2 col-xs-10">
 						<div class="form-group">
-							<span id="total-price">この商品金額：38,000 円(税抜)</span>
+							<span id="total-price">この商品金額：<span id="total-price-num">38,000</span> 円(税抜)</span>
 						</div>
 					</div>
 				</div>
@@ -182,5 +161,43 @@
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<!-- 合計金額の計算をする。thymeleafを使っているとjsファイルに切り出せない。 -->
+	<script  th:inline="javascript">
+		/*<![CDATA[*/
+
+		$(function() {
+			calc_price();
+			$(".size").on("change",function() {
+				calc_price();
+			});
+
+			$(".topping").on("change",function() {
+				calc_price();
+			});
+	
+			$("#pizanum").on("change",function() {
+				calc_price();
+			});
+	
+			// 値段の計算をして変更する関数
+			function calc_price() {
+				var size = $(".size:checked").val();
+				var topping_count = $("#topping input:checkbox:checked").length;
+				var piza_num = $("#pizanum option:selected").val();
+				if (size == "M") {
+					var size_price = /*[[${item.priceM}]]*/;
+					var topping_price = 200 * topping_count;
+				} else {
+					var size_price =  /*[[${item.priceL}]]*/;
+					var topping_price = 300 * topping_count;
+				}
+				var price = (size_price + topping_price) * piza_num;
+				$("#total-price-num").text(price.toLocaleString());
+			}
+			;
+		});
+	
+		/*]]>*/
+	</script>
 </body>
 </html>
