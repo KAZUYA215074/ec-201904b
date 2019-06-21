@@ -3,8 +3,11 @@ package com.example.ecommerce_b.controller;
 import java.sql.Timestamp;
 import java.util.Date;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,8 +30,10 @@ public class OrderController {
 	@Autowired
 	private OrderService orderService;
 	
-//	@Autowired
-//	private HttpSession session;
+	
+	@Autowired
+	private HttpSession session;
+	
 	
 	/**
 	 * 使用するフォームオブジェクトをリクエストスコープに格納する.
@@ -51,8 +56,6 @@ public class OrderController {
 		int userId = 0;
 //		Integer userId = (Integer) session.getAttribute("userId");
 		Order order = orderService.serchByUserIdNotOrdered(userId);
-		User user = new User(1, "name", "mailAddress", "password", "address", "telephone","zipcode");
-		order.setUser(user);
 		model.addAttribute("order",order);
 		return "order_confirm";
 	}
