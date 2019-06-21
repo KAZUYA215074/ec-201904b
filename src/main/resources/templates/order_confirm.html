@@ -191,7 +191,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text" name="destinationMail" th:text="${Email}">
+									<input type="text" name="destinationEmail" th:value="${order.user.mailAddress}">
 								</td>
 							</tr>
 							<tr>
@@ -201,7 +201,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text" name="destinationZipcode" th:text="${zipcode}">&nbsp;&nbsp;<button>住所検索</button>
+									<input type="text" name="destinationZipcode" th:value="${order.user.zipcode}">&nbsp;&nbsp;<button>住所検索</button>
 								</td>
 							</tr>
 							<tr>
@@ -211,7 +211,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text"name="destinationAddress" th:text="${address}">
+									<input type="text"name="destinationAddress" th:value="${order.user.address}">
 								</td>
 							</tr>
 							<tr>
@@ -221,7 +221,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text"name="destinationTel" th:text="${telephone}">
+									<input type="text"name="destinationTel" th:value="${order.user.telephone}">
 								</td>
 							</tr>
 							<tr>

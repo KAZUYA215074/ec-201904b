@@ -34,7 +34,7 @@ public class OrderRepository {
 		order.setDestinationAddress(rs.getString("destination_address"));
 		order.setDestinationTel(rs.getString("destination_tel"));
 		order.setDeliveryTime(rs.getTimestamp("delivery_time"));
-		order.setPyamentMethod(rs.getInt("payment_method"));
+		order.setPaymentMethod(rs.getInt("payment_method"));
 		return order;
 	};
 	
@@ -60,10 +60,10 @@ public class OrderRepository {
 	 * @param order 注文情報
 	 */
 	public void updateOrder(Order order) {
-		String sql = "update orders set status=:status , total_price=totalPrice , order_date=:orderDate , destination_name=:destinationName , " + 
+		String sql = "update orders set status=:status , total_price=:totalPrice , order_date=:orderDate , destination_name=:destinationName , " + 
 					 "destination_email=:destinationEmail , destination_zipcode=:destinationZipcode , destination_address=:destinationAddress,"
 					 + "destination_tel=:destinationTel , delivery_time=:deliveryTime , payment_method=:paymentMethod"
-					 + "where id=:id";
+					 + " where id=:id";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
 		template.update(sql, param);
 	}

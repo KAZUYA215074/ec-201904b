@@ -40,7 +40,8 @@ public class User {
 	public User() {}
 	
 	/** コンストラクタ */
-	public User(Integer id, String name, String mailAddress, String password, String address, String telephone) {
+	public User(Integer id, String name, String mailAddress, String password, String address, String telephone,
+			String zipcode) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -48,12 +49,14 @@ public class User {
 		this.password = password;
 		this.address = address;
 		this.telephone = telephone;
+		this.zipcode = zipcode;
 	}
-
+	
 	/** getter/setter */
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}

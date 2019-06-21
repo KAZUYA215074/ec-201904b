@@ -1,8 +1,7 @@
 package com.example.ecommerce_b.controller;
 
+import java.sql.Timestamp;
 import java.util.Date;
-
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +27,8 @@ public class OrderController {
 	@Autowired
 	private OrderService orderService;
 	
-	@Autowired
-	private HttpSession session;
+//	@Autowired
+//	private HttpSession session;
 	
 	/**
 	 * 使用するフォームオブジェクトをリクエストスコープに格納する.
@@ -49,10 +48,10 @@ public class OrderController {
 	 */
 	@RequestMapping("/to-order")
 	public String toOrder(Model model) {
-		//(仮)
 		int userId = 0;
+//		Integer userId = (Integer) session.getAttribute("userId");
 		Order order = orderService.serchByUserIdNotOrdered(userId);
-		User user = new User(1, "name", "mailAddress", "password", "address", "telephone");
+		User user = new User(1, "name", "mailAddress", "password", "address", "telephone","zipcode");
 		order.setUser(user);
 		model.addAttribute("order",order);
 		return "order_confirm";
@@ -67,19 +66,26 @@ public class OrderController {
 	@RequestMapping("/order")
 	public String order(OrderForm form, Integer responsibleCompany) {
 		int userId = 0;//(仮)
+//		Integer userId = (Integer) session.getAttribute("userId");
 		Order order = orderService.serchByUserIdNotOrdered(userId);
 		BeanUtils.copyProperties(form, order);
-		Date deliveryTime = order.getDeliveryTime();
-		deliveryTime.setHours(responsibleCompany);
+		
+		String strDeliveryTime = form.getDeliveryTime();
+		strDeliveryTime = strDeliveryTime + " " + responsibleCompany +":00:00";
+		order.setDeliveryTime(Timestamp.valueOf(strDeliveryTime));
+		
 		order.setOrderDate(new Date());
-		if(form.getPyamentMethod() == 1) {
+		
+		if(form.getPaymentMethod() == 1) {
 			order.setStatus(1);
 		}else {
 			order.setStatus(2);			
 		}
+		
 		orderService.order(order);
 //		sendMailService.mail(order);
-		return "oder_finished";
+		
+		return "order_finished";
 	}
 
 }

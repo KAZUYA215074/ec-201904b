@@ -16,18 +16,18 @@ public class OrderForm {
 	/** 宛先住所 */
 	private String destinationAddress;
 	/** 宛先TEL */
-	private String destinationTell;
+	private String destinationTel;
 	/** 配達時間 */
 	private String deliveryTime;
 	/** 支払い方法 */
-	private Integer pyamentMethod;
+	private Integer paymentMethod;
 	
 	@Override
 	public String toString() {
 		return "OderForm [destinationName=" + destinationName + ", destinationEmail=" + destinationEmail
 				+ ", destinationZipcode=" + destinationZipcode + ", destinationAddress=" + destinationAddress
-				+ ", destinationTell=" + destinationTell + ", deliveryTime=" + deliveryTime + ", pyamentMethod="
-				+ pyamentMethod + "]";
+				+ ", destinationTel=" + destinationTel + ", deliveryTime=" + deliveryTime + ", paymentMethod="
+				+ paymentMethod + "]";
 	}
 
 	/** 引数なしのコンストラクタ */
@@ -41,9 +41,9 @@ public class OrderForm {
 		this.destinationEmail = destinationEmail;
 		this.destinationZipcode = destinationZipcode;
 		this.destinationAddress = destinationAddress;
-		this.destinationTell = destinationTell;
+		this.destinationTel = destinationTell;
 		this.deliveryTime = deliveryTime;
-		this.pyamentMethod = pyamentMethod;
+		this.paymentMethod = pyamentMethod;
 	}
 	
 	/** getter/setter */
@@ -71,11 +71,11 @@ public class OrderForm {
 	public void setDestinationAddress(String destinationAddress) {
 		this.destinationAddress = destinationAddress;
 	}
-	public String getDestinationTell() {
-		return destinationTell;
+	public String getDestinationTel() {
+		return destinationTel;
 	}
-	public void setDestinationTell(String destinationTell) {
-		this.destinationTell = destinationTell;
+	public void setDestinationTel(String destinationTel) {
+		this.destinationTel = destinationTel;
 	}
 	public String getDeliveryTime() {
 		return deliveryTime;
@@ -83,11 +83,11 @@ public class OrderForm {
 	public void setDeliveryTime(String deliveryTime) {
 		this.deliveryTime = deliveryTime;
 	}
-	public Integer getPyamentMethod() {
-		return pyamentMethod;
+	public Integer getPaymentMethod() {
+		return paymentMethod;
 	}
-	public void setPyamentMethod(Integer pyamentMethod) {
-		this.pyamentMethod = pyamentMethod;
+	public void setPaymentMethod(Integer paymentMethod) {
+		this.paymentMethod = paymentMethod;
 	}
 
 }
