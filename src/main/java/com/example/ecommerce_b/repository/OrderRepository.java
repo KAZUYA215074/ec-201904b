@@ -48,16 +48,10 @@ public class OrderRepository {
 	 * 
 	 * @param userId ユーザーID
 	 * @param status 状態
-<<<<<<< HEAD
-	 * @return 指定したユーザーIDと状態に一致する注文情報
-	 */
-	public Order findByUserIdAndStatus(int userId, int status) {
-=======
 	 * @return　指定したユーザーIDと状態に一致する注文情報、なければnull
 	 */
 	@SuppressWarnings("finally")
 	public Order findByUserIdAndStatus(int userId,int status) {
->>>>>>> feature/createOrder
 		String sql = "SELECT id ,user_id , status , total_price , order_date , destination_name , "
 				+ "destination_email , destination_zipcode , destination_address,destination_tel , delivery_time , payment_method "
 				+ "FROM orders WHERE user_id=:userId and status=:status;";
