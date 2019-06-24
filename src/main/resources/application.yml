@@ -4,3 +4,9 @@ spring:
     url: jdbc:postgresql://localhost:5432/student
     username: postgres
     password: postgres
+#  jmx:
+#    default-domain: ec-201904b
+#server:
+#  servlet:
+#    context-path: /ec-201904b
+  
