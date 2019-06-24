@@ -54,7 +54,7 @@ public class OrderController {
 	@RequestMapping("/to-order")
 	public String toOrder(Model model) {
 		Integer userId = (Integer) session.getAttribute("userId");
-		Order order = orderService.serchByUserIdNotOrdered(userId);
+		Order order = orderService.serchByUserIdNotOrdered(2);
 		model.addAttribute("order",order);
 		System.out.println(order);
 		return "order_confirm";

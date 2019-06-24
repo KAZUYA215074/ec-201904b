@@ -36,17 +36,15 @@ public class OrderHistoryController {
 	@RequestMapping("/history")
 	public String toOrderHistory(Model model) {
 		Integer userId = (Integer) session.getAttribute("userId");
-		List<Order> orderList = orderHistoryService.showOrderHistory(userId);
+		List<Order> orderList = orderHistoryService.showOrderHistory(0);
+		model.addAttribute("historyStatus",false);
 		if(orderList==null) {
 			model.addAttribute("historyStatus",true);
 			return "order_history";
 		}
 		model.addAttribute("orderList",orderList);
+		
 		System.out.println(orderList);
-		System.out.println(orderList.get(0).getUser());
-		System.out.println(orderList.get(0).getOrderItemList().get(0));
-		System.out.println(orderList.get(0).getOrderItemList().get(0).getOrderToppingList().get(0));
-		System.out.println(orderList.get(1));
 		return "order_history";
 	}
 	

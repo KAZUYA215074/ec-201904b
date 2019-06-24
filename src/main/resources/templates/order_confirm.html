@@ -37,7 +37,7 @@
 									サイズ、価格(税抜)、数量
 								</div>
 							</th>
-							<th>
+							<th colspan="2">
 								<div class="text-center">
 									トッピング、価格(税抜)
 								</div>
@@ -56,18 +56,25 @@
 									<span th:text="${orderItem.item.name}">じゃがバターベーコン</span>
 								</div>
 							</td>
-							<td>
+							<td>							
+								<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 								<span class="price" th:text="${'&nbsp;'+orderItem.size}">&nbsp;Ｌ</span>
-								<span th:if="${orderItem.size}=='m'" th:text="${'&nbsp;&nbsp;'+#numbers.formatInteger(orderItem.item.priceM,1,'COMMA')+'円'}">&nbsp;&nbsp;2,380円</span>
-								<span th:if="${orderItem.size}=='l'" th:text="${'&nbsp;&nbsp;'+#numbers.formatInteger(orderItem.item.priceL,1,'COMMA')+'円'}">&nbsp;&nbsp;2,380円</span>
-								<span th:text="${'&nbsp;&nbsp;'+orderItem.quantity}+'個'"> &nbsp;&nbsp;1個</span>
+								<span th:if="${orderItem.size}=='M'" th:text="${'&nbsp;&nbsp;&nbsp;&nbsp;'+#numbers.formatInteger(orderItem.item.priceM,1,'COMMA')+'円'}">&nbsp;&nbsp;2,380円</span>
+								<span th:if="${orderItem.size}=='L'" th:text="${'&nbsp;&nbsp;&nbsp;&nbsp;'+#numbers.formatInteger(orderItem.item.priceL,1,'COMMA')+'円'}">&nbsp;&nbsp;2,380円</span>
+								<span th:text="${'&nbsp;&nbsp;&nbsp;&nbsp;'+orderItem.quantity}+'個'"> &nbsp;&nbsp;1個</span>
 							</td>
 							<td>
 								<ul th:each="orderTopping:${orderItem.orderToppingList}">
 									<li>
 										<span th:text="${orderTopping.topping.name}">ピーマン</span>
-										<span th:if="${orderItem.size}=='m'" th:text="${#numbers.formatInteger(orderTopping.topping.priceM,1,'COMMA')+'円'}">300円</span>
-										<span th:if="${orderItem.size}=='l'" th:text="${#numbers.formatInteger(orderTopping.topping.priceL,1,'COMMA')+'円'}">300円</span>
+									</li>
+								</ul>
+							</td>
+							<td>
+								<ul th:each="orderTopping:${orderItem.orderToppingList}">
+									<li  style="list-style-type: none;">
+										<span th:if="${orderItem.size}=='M'" th:text="${#numbers.formatInteger(orderTopping.topping.priceM,1,'COMMA')+'円'}">300円</span>
+										<span th:if="${orderItem.size}=='L'" th:text="${#numbers.formatInteger(orderTopping.topping.priceL,1,'COMMA')+'円'}">300円</span>
 									</li>
 								</ul>
 							</td>
@@ -92,12 +99,12 @@
 		</div>
 
 		<!-- table -->
-		<form th:action="@{/order}" method="post">
+		<form th:action="@{/order}" method="post" th:object="${orderForm}">
 			<div class="row">
 				<div
 					class="table-responsive col-lg-offset-3 col-lg-6 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
 					<h3 class="text-center">お届け先情報</h3>
-					<table class="table table-striped">
+					<table class="table table-striped" >
 						<tbody>
 							<tr>
 								<td>
@@ -106,7 +113,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text" name="destinationName" th:value="${order.user.name}">
+									<input type="text" name="destinationName" th:value="${order.user.name}" th:field="*{destinationName}" >
 									<span th:if="${#fields.hasErrors('destinationName')}" th:errors="*{destinationName}" style="color: red">エラーメッセージ</span>
 								</td>
 							</tr>
@@ -117,7 +124,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text" name="destinationEmail" th:value="${order.user.mailAddress}">
+									<input type="text" name="destinationEmail" th:value="${order.user.mailAddress}" th:field="*{destinationEmail}">
 									<span th:if="${#fields.hasErrors('destinationEmail')}" th:errors="*{destinationEmail}" style="color: red">エラーメッセージ</span>
 								</td>
 							</tr>
@@ -128,9 +135,9 @@
 									</div>
 								</td>
 								<td>
-									<input type="text" name="destinationZipcode" th:value="${order.user.zipcode}">&nbsp;&nbsp;<button>住所検索</button>
-								    <input type="text" id="inputZipcode" name="zipcode" th:field="*{zipcode}" class="form-control"
-									placeholder="Zipcode" onKeyUp="AjaxZip3.zip2addr(this,'','address','address');">
+								    <input type="text" id="inputZipcode" name="destinationZipcode" 
+								    th:field="*{destinationZipcode}" class="form-control" th:value="${order.user.zipcode}"
+									onKeyUp="AjaxZip3.zip2addr(this,'','destinationAddress','destinationAddress');">&nbsp;&nbsp;<button>住所検索</button>
 									<span th:if="${#fields.hasErrors('destinationEmail')}" th:errors="*{destinationEmail}" style="color: red">エラーメッセージ</span>
 								</td>
 							</tr>
@@ -141,7 +148,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text"name="destinationAddress" th:value="${order.user.address}">
+									<input type="text" id="destinationAddress" name="destinationAddress" th:value="${order.user.address}"　th:field="*{destinationAddress}">
 									<span th:if="${#fields.hasErrors('destinationAddress')}" th:errors="*{destinationAddress}" style="color: red">エラーメッセージ</span>
 								</td>
 							</tr>
@@ -152,7 +159,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text"name="destinationTel" th:value="${order.user.telephone}">
+									<input type="text"name="destinationTel" th:value="${order.user.telephone}" th:field="*{destinationTel}">
 									<span th:if="${#fields.hasErrors('destinationTel')}" th:errors="*{destinationTel}" style="color: red">エラーメッセージ</span>
 								</td>
 							</tr>
@@ -170,7 +177,7 @@
 													class="control-label" style="color: red" for="inputPeriod">配達日時を入力してください</label>
 											</div>
 											<div class="col-sm-5">
-												<input type="date" id="name" name="deliveryDate"
+												<input type="date" id="name" name="deliveryDate" th:field="*{deliveryDate}"
 													class="form-control input-sm" />
                									<span th:if="${#fields.hasErrors('deliveryDate')}" th:errors="*{deliveryDate}" style="color: red">エラーメッセージ</span>
 											</div>
