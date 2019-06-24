@@ -36,7 +36,7 @@ public class OrderHistoryController {
 	@RequestMapping("/history")
 	public String toOrderHistory(Model model) {
 		Integer userId = (Integer) session.getAttribute("userId");
-		List<Order> orderList = orderHistoryService.showOrderHistory(0);
+		List<Order> orderList = orderHistoryService.showOrderHistory(userId);
 		model.addAttribute("historyStatus",false);
 		if(orderList==null) {
 			model.addAttribute("historyStatus",true);

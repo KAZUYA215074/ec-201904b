@@ -54,7 +54,7 @@ public class OrderController {
 	@RequestMapping("/to-order")
 	public String toOrder(Model model) {
 		Integer userId = (Integer) session.getAttribute("userId");
-		Order order = orderService.serchByUserIdNotOrdered(2);
+		Order order = orderService.serchByUserIdNotOrdered(userId);
 		model.addAttribute("order",order);
 		model.addAttribute("tax",order.getTax());
 		model.addAttribute("totalPrice",order.getCalcTotalPrice());
