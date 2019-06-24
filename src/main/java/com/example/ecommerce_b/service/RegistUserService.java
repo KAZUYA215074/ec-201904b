@@ -35,6 +35,9 @@ public class RegistUserService {
 		user.setPassword(encodePassword(user.getPassword()));
 		String zipCode = user.getZipcode().replace("-", "");
 		user.setZipcode(zipCode);
+		String telephone = user.getTelephone().replace("-", "");
+		user.setTelephone(telephone);
+		System.out.println(user);
 		userRepository.insert(user);
 	}
 	

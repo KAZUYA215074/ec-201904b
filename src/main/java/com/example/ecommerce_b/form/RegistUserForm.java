@@ -3,6 +3,7 @@ package com.example.ecommerce_b.form;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 /**
  * ユーザ登録のフォーム.
@@ -21,6 +22,8 @@ public class RegistUserForm {
 	private String email;
 	/** パスワード */
 	@NotBlank(message = "パスワードを入力して下さい")
+	@Size(min=8,max=16,message="パスワードは{min}文字以上{max}文字以下です。")
+	@Pattern(regexp="^[a-zA-Z0-9,._=!*]+$",message="パスワードに使用できる文字はの半角英数字のみです")
 	private String password;
 	/** 郵便番号 */
 	@NotBlank(message = "郵便番号を入力してください")
@@ -31,6 +34,7 @@ public class RegistUserForm {
 	private String address;
 	/** 電話番号 */
 	@NotBlank(message = "電話番号を入力して下さい")
+	@Pattern(regexp = "^0\\d{1,4}-?\\d{1,4}-?\\d{4}$", message = "電話番号は半角数字で正しく入力してください")
 	private String telephone;
 	/** 確認用パスワード */
 	@NotBlank(message = "確認用パスワードを入力して下さい")

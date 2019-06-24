@@ -29,7 +29,7 @@
 							class="icon-bar"></span>
 					</button>
 					<a class="navbar-brand" href="item_list.html"> <!-- 企業ロゴ --> <img
-						alt="main log" src="img/header_logo.png" height="35">
+						alt="main log" th:src="@{/img/header_logo.png}" height="35">
 					</a>
 				</div>
 
@@ -39,7 +39,10 @@
 					<p class="navbar-text navbar-right">
 						<a href="cart_list.html" th:href="@{/cart/show-cart}" class="navbar-link">ショッピングカート</a>&nbsp;&nbsp;
 						<a href="order_history.html" th:href="@{/history}" class="navbar-link">注文履歴</a>&nbsp;&nbsp;
-						<span >
+						<span sec:authorize="isAnonymous()">
+						<a href="login.html" th:href="@{/to-regist}" class="navbar-link" >新規登録</a>&nbsp;&nbsp;
+						</span>
+						<span sec:authorize="isAnonymous()">
 						<a href="login.html" th:href="@{/to-login}" class="navbar-link" >ログイン</a>&nbsp;&nbsp;
 						</span>
 						<span sec:authorize="hasRole('ROLE_USER')">
