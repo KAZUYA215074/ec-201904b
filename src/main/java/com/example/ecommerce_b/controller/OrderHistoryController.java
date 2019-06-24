@@ -29,7 +29,7 @@ public class OrderHistoryController {
 	
 	/**
 	 * 注文履歴画面を表示する.
-	 * test
+	 * test2
 	 * 
 	 * @param model
 	 * @return　注文履歴画面
