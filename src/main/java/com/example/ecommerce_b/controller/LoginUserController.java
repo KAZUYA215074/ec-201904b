@@ -35,6 +35,7 @@ public class LoginUserController {
 	@RequestMapping("/to-login")
 	public String toLogin(Model model, @RequestParam(required = false) String error, HttpServletRequest request) {
 		System.out.println("/to-login *****");
+		System.out.println("/to-login " + request.getHeader("REFERER"));
 		if (error != null) {
 			System.err.println("login failed");
 			model.addAttribute("errorMessage", "メールアドレスまたはパスワードが不正です。");
@@ -42,12 +43,12 @@ public class LoginUserController {
 		if (!"http://localhost:8080/to-login".equals(request.getHeader("REFERER"))
 				|| "http://localhost:8080/to-login?error=true".equals(request.getHeader("REFERER"))) {
 			String beforePage = request.getHeader("REFERER");
-			System.out.println("/to-login " + beforePage);
 			session.setAttribute("beforePage", beforePage);
 		}
 
 		return "login";
 	}
+
 
 	/**
 	 * ログイン処理後に画面を表示させる.
