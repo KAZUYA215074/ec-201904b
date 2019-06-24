@@ -23,7 +23,7 @@ import com.example.ecommerce_b.service.CartService;
 public class LoginUserController {
 
 	@Autowired
-	HttpSession session;
+	private HttpSession session;
 	@Autowired
 	private CartService cartService;
 
@@ -34,8 +34,6 @@ public class LoginUserController {
 	 */
 	@RequestMapping("/to-login")
 	public String toLogin(Model model, @RequestParam(required = false) String error, HttpServletRequest request) {
-		System.out.println("/to-login *****");
-		System.out.println("/to-login " + request.getHeader("REFERER"));
 		if (error != null) {
 			System.err.println("login failed");
 			model.addAttribute("errorMessage", "メールアドレスまたはパスワードが不正です。");
@@ -57,7 +55,7 @@ public class LoginUserController {
 	 * @return デフォルトでは商品一覧画面
 	 */
 	@RequestMapping("/success-login")
-	public String login(@AuthenticationPrincipal LoginUser loginUser) {
+	public String login(@AuthenticationPrincipal LoginUser loginUser,HttpServletRequest request) {
 		/// コンフリクト修正箇所 session.setあたりの記述あってるか確認
 		Integer userId = (Integer) session.getAttribute("userId");
 		if (userId != null) {
@@ -67,12 +65,21 @@ public class LoginUserController {
 
 		session.setAttribute("userId", loginUser.getUser().getId());
 		String beforePage = (String) session.getAttribute("beforePage");
-		System.out.println("/login " + beforePage);
-		System.out.println("http://localhost:8080/show-cart".equals(beforePage));
-		if ("http://localhost:8080/show-cart".equals(beforePage)) {
+		String url = getPath(request);
+		if (url.equals(beforePage)) {
 			return "redirect:/to-order";
 		}
 
 		return "redirect:/";
+	}
+
+
+	private String getPath(HttpServletRequest request) {
+		String schema = request.getScheme();
+        String serverName = request.getServerName();
+        int serverPort = request.getServerPort();
+        String contextPath = request.getContextPath();
+        String url = schema+"://"+serverName+":"+serverPort+contextPath+"/show-cart";
+		return url;
 	}
 }

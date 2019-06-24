@@ -13,6 +13,6 @@ spring:
     password: sclrevxyxbvtezni
     properties.mail.smtp.auth: true
     properties.mail.smtp.starttls.enable: true
-server:
-  servlet:
-    context-path: /ec-201904b
+#server:
+#  servlet:
+#    context-path: /ec-201904b
