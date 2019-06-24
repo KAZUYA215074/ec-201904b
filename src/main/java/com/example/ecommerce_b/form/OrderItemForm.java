@@ -1,6 +1,6 @@
 package com.example.ecommerce_b.form;
 
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * 注文商品を追加するフォーム.
@@ -17,13 +17,13 @@ public class OrderItemForm {
 	/** サイズ */
 	private String size;
 	/** トッピングのidのリスト */
-	private Integer[] orderToppingIdList;
+	private List<Integer> orderToppingIdList;
 	
 	
 	@Override
 	public String toString() {
 		return "OrderItemForm [itemId=" + itemId + ", quantity=" + quantity + ", size=" + size + ", orderToppingIdList="
-				+ Arrays.toString(orderToppingIdList) + "]";
+				+ orderToppingIdList + "]";
 	}
 	
 	//get&set
@@ -45,10 +45,10 @@ public class OrderItemForm {
 	public void setSize(String size) {
 		this.size = size;
 	}
-	public Integer[] getOrderToppingIdList() {
+	public List<Integer> getOrderToppingIdList() {
 		return orderToppingIdList;
 	}
-	public void setOrderToppingIdList(Integer[] orderToppingIdList) {
+	public void setOrderToppingIdList(List<Integer> orderToppingIdList) {
 		this.orderToppingIdList = orderToppingIdList;
 	}
 	

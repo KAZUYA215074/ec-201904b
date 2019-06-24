@@ -15,7 +15,7 @@ import com.example.ecommerce_b.form.OrderItemForm;
 import com.example.ecommerce_b.service.CartService;
 
 @Controller
-@RequestMapping("/cart")
+@RequestMapping("/")
 public class CartController {
 
 		@Autowired
@@ -59,17 +59,26 @@ public class CartController {
 			return "cart_list";
 		}
 		
+		/**
+		 * ショッピングカートに注文商品を追加する.
+		 * 
+		 * @param form
+		 * @param model
+		 * @return
+		 */
 		@RequestMapping("/add-item")
 		public String addItem(OrderItemForm form,Model model) {
 			Integer userId=(Integer)session.getAttribute("userId");
 			if(userId==null) {
 				userId=(int)Math.random()*(-100000000);
+				System.out.println("発行したuserId="+userId);
 				session.setAttribute("userId",userId);
 			}
+			
 			OrderItem orderItem=new OrderItem();
 			BeanUtils.copyProperties(form, orderItem);
-			
+			orderItem.setSize(form.getSize().charAt(0));
 			cartService.addOrderItem(userId, orderItem, form.getOrderToppingIdList());
-			return "redirect:/cart/show-cart";
+			return "redirect:/show-cart";
 		}
 }

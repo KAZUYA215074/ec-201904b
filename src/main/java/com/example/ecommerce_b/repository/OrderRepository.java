@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -80,7 +79,7 @@ public class OrderRepository {
 		List<Order> orderList = new ArrayList<Order>();
 		try {
 			orderList = template.query(sql, param, ORDER_ROW_MAPPER);
-		} catch (DataAccessException e) {
+		} catch (Exception e) {
 			return null;
 		}
 		return orderList;
@@ -92,7 +91,7 @@ public class OrderRepository {
 	 * @param order 注文情報
 	 */
 	public void updateOrder(Order order) {
-		String sql = "update orders set status=:status , total_price=:totalPrice , order_date=:orderDate , destination_name=:destinationName , "
+		String sql = "update orders set status=:status , total_price=total_price+:totalPrice , order_date=:orderDate , destination_name=:destinationName , "
 				+ "destination_email=:destinationEmail , destination_zipcode=:destinationZipcode , destination_address=:destinationAddress,"
 				+ "destination_tel=:destinationTel , delivery_time=:deliveryTime , payment_method=:paymentMethod"
 				+ " where id=:id";
@@ -104,9 +103,9 @@ public class OrderRepository {
 	 * 注文情報(ショッピングカート)	を新規発行する
 	 * @param order
 	 */
-	public void insertOrder(Order order) {
-		String sql="insert into orders(user_id,status,total_price,order_date,destination_name,destination_email,destination_zipcode,destination_address,destination_tel,delivery_time,payment_method) values (:userId,:status,:totalPrice,:orderDate,:destinationName,:destinationEmail,:destinationZipcode,:destinationAddress,:destinationTel,:deliveryTime,:paymentMethod)";
+	public int insertOrder(Order order) {
+		String sql="insert into orders(user_id,status,total_price,order_date,destination_name,destination_email,destination_zipcode,destination_address,destination_tel,delivery_time,payment_method) values (:userId,:status,:totalPrice,:orderDate,:destinationName,:destinationEmail,:destinationZipcode,:destinationAddress,:destinationTel,:deliveryTime,:paymentMethod) returning id";
 		SqlParameterSource param=new BeanPropertySqlParameterSource(order);
-		template.update(sql, param);
+		return template.queryForObject(sql, param,Integer.class);
 	}
 }
