@@ -8,6 +8,7 @@
 <title>ピザ屋のネット注文</title>
 <link href="css/bootstrap.css" rel="stylesheet">
 <link href="css/piza.css" rel="stylesheet">
+<script src="https://ajaxzip3.github.io/ajaxzip3.js"></script>
 <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -106,6 +107,7 @@
 								</td>
 								<td>
 									<input type="text" name="destinationName" th:value="${order.user.name}">
+									<span th:if="${#fields.hasErrors('destinationName')}" th:errors="*{destinationName}" style="color: red">エラーメッセージ</span>
 								</td>
 							</tr>
 							<tr>
@@ -116,6 +118,7 @@
 								</td>
 								<td>
 									<input type="text" name="destinationEmail" th:value="${order.user.mailAddress}">
+									<span th:if="${#fields.hasErrors('destinationEmail')}" th:errors="*{destinationEmail}" style="color: red">エラーメッセージ</span>
 								</td>
 							</tr>
 							<tr>
@@ -126,6 +129,9 @@
 								</td>
 								<td>
 									<input type="text" name="destinationZipcode" th:value="${order.user.zipcode}">&nbsp;&nbsp;<button>住所検索</button>
+								    <input type="text" id="inputZipcode" name="zipcode" th:field="*{zipcode}" class="form-control"
+									placeholder="Zipcode" onKeyUp="AjaxZip3.zip2addr(this,'','address','address');">
+									<span th:if="${#fields.hasErrors('destinationEmail')}" th:errors="*{destinationEmail}" style="color: red">エラーメッセージ</span>
 								</td>
 							</tr>
 							<tr>
@@ -136,6 +142,7 @@
 								</td>
 								<td>
 									<input type="text"name="destinationAddress" th:value="${order.user.address}">
+									<span th:if="${#fields.hasErrors('destinationAddress')}" th:errors="*{destinationAddress}" style="color: red">エラーメッセージ</span>
 								</td>
 							</tr>
 							<tr>
@@ -146,6 +153,7 @@
 								</td>
 								<td>
 									<input type="text"name="destinationTel" th:value="${order.user.telephone}">
+									<span th:if="${#fields.hasErrors('destinationTel')}" th:errors="*{destinationTel}" style="color: red">エラーメッセージ</span>
 								</td>
 							</tr>
 							<tr>
@@ -164,6 +172,7 @@
 											<div class="col-sm-5">
 												<input type="date" id="name" name="deliveryDate"
 													class="form-control input-sm" />
+               									<span th:if="${#fields.hasErrors('deliveryDate')}" th:errors="*{deliveryDate}" style="color: red">エラーメッセージ</span>
 											</div>
 
 										</div>

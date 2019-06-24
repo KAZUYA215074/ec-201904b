@@ -1,5 +1,9 @@
 package com.example.ecommerce_b.form;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+
 /**
  * 注文のためのフォーム
  * 
@@ -8,16 +12,24 @@ package com.example.ecommerce_b.form;
 public class OrderForm {
 	
 	/** 宛先氏名 */
+	@NotBlank(message = "お名前を入力して下さい")
 	private String destinationName;
 	/** 宛先Eメール */
+	@Email(message = "アドレスが不正です")
+	@NotBlank(message = "メールアドレスを入力して下さい")
 	private String destinationEmail;
 	/** 宛先郵便番号 */
+	@NotBlank(message = "郵便番号を入力してください")
+	@Pattern(regexp = "^\\d{3}\\-?\\d{4}$", message = "郵便番号は7桁の数字で入力してください")
 	private String destinationZipcode;
 	/** 宛先住所 */
+	@NotBlank(message = "住所を入力して下さい")
 	private String destinationAddress;
 	/** 宛先TEL */
+	@NotBlank(message = "電話番号を入力して下さい")
 	private String destinationTel;
 	/** 配達日付 */
+	@NotBlank(message = "配達日時を選択して下さい")
 	private String deliveryDate;
 	/** 配達時間 */
 	private String deliveryHour;
