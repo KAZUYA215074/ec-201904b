@@ -33,14 +33,15 @@ public class OrderItem {
 		int itemSum=0;
 		int toppingSum=0;
 		if(this.size=='M' ||this.size=='m') {
-			itemSum=item.getPriceM()*this.quantity;
+			itemSum=item.getPriceM();
 			toppingSum=orderToppingList.size()*200;
 		}else if(this.size=='L' ||this.size=='l') {
-			itemSum=item.getPriceL()*this.quantity;			
+			itemSum=item.getPriceL();			
 			toppingSum=orderToppingList.size()*300;
+			
 		}
 		
-		return itemSum+toppingSum;
+		return (itemSum+toppingSum)*this.quantity;
 	}
 	
 	@Override
