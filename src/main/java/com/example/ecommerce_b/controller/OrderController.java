@@ -56,6 +56,9 @@ public class OrderController {
 		Integer userId = (Integer) session.getAttribute("userId");
 		Order order = orderService.serchByUserIdNotOrdered(2);
 		model.addAttribute("order",order);
+		model.addAttribute("tax",order.getTax());
+		model.addAttribute("totalPrice",order.getCalcTotalPrice());
+		
 		System.out.println(order);
 		return "order_confirm";
 	}
