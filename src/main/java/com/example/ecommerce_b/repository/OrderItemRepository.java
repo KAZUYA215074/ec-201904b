@@ -64,7 +64,7 @@ public class OrderItemRepository {
 	 * @return 注文商品のリスト
 	 */
 	public List<OrderItem> findByOrderId(Integer orderId){
-		String sql="SELECT o.id as order_item_id, o.item_id , o.order_id , o.quantity , o.size,i.name,i.description , i.price_m , i.price_l , image_path , deleted FROM order_items as o left outer join items i on (o.item_id=i.id) where o.order_id=:id";
+		String sql="SELECT o.id as order_item_id, o.item_id , o.order_id , o.quantity , o.size,i.name,i.description , i.price_m , i.price_l , image_path , deleted FROM order_items as o left outer join items i on (o.item_id=i.id) where o.order_id=:id order by i.id desc";
 		SqlParameterSource param=new MapSqlParameterSource().addValue("id", orderId);
 		List<OrderItem> orderItemList=template.query(sql, param, ORDERITEM_ROW_MAPPER);
 		return orderItemList;
@@ -82,6 +82,18 @@ public class OrderItemRepository {
 		SqlParameterSource param=new BeanPropertySqlParameterSource(item);
 		int orderItemId=template.queryForObject(sql, param,Integer.class);
 		return orderItemId;
+	}
+	
+	/**
+	 * 注文商品とそのトッピングorderIdを書き換える
+	 * @param userId　もとのorderのUserId
+	 * @param loginOrderId　書き換えたいorderId
+	 * @return
+	 */
+	public void updateOrderId(Integer userId,Integer loginOrderId) {
+		String sql="update order_items set order_id=:loginOrderId where order_id=(select id from orders where user_id=:userId); ";
+		SqlParameterSource param=new MapSqlParameterSource().addValue("loginOrderId", loginOrderId).addValue("userId", userId);
+		template.update(sql, param);
 	}
 	
 	/**

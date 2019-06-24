@@ -91,7 +91,7 @@ public class OrderRepository {
 	 * @param order 注文情報
 	 */
 	public void updateOrder(Order order) {
-		String sql = "update orders set status=:status , total_price=total_price+:totalPrice , order_date=:orderDate , destination_name=:destinationName , "
+		String sql = "update orders set status=:status , total_price=:totalPrice , order_date=:orderDate , destination_name=:destinationName , "
 				+ "destination_email=:destinationEmail , destination_zipcode=:destinationZipcode , destination_address=:destinationAddress,"
 				+ "destination_tel=:destinationTel , delivery_time=:deliveryTime , payment_method=:paymentMethod"
 				+ " where id=:id";
@@ -107,5 +107,30 @@ public class OrderRepository {
 		String sql="insert into orders(user_id,status,total_price,order_date,destination_name,destination_email,destination_zipcode,destination_address,destination_tel,delivery_time,payment_method) values (:userId,:status,:totalPrice,:orderDate,:destinationName,:destinationEmail,:destinationZipcode,:destinationAddress,:destinationTel,:deliveryTime,:paymentMethod) returning id";
 		SqlParameterSource param=new BeanPropertySqlParameterSource(order);
 		return template.queryForObject(sql, param,Integer.class);
+	}
+	
+	/**
+	 * UserIdを変更する.
+	 * 
+	 * @param userId 以前のユーザid
+	 * @param loginUserId　新しいユーザid
+	 * @return
+	 */
+	public int updateUserId(Integer userId,Integer loginUserId) {
+		String sql="update orders set user_id=:loginUserId where user_id=:userId returning id";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("loginUserId", loginUserId);
+		return template.queryForObject(sql, param,Integer.class);
+	}
+	
+	/**
+	 * 小計を更新する.
+	 * 
+	 * @param orderId カートのid
+	 * @param totalPrice 合計にプラスしたい値
+	 */
+	public void addTotalPrice(Integer orderId,Integer totalPrice) {
+		String sql="update orders set total_price=total_price+:totalPrice where id=:id";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("id", orderId).addValue("totalPrice", totalPrice);
+		template.update(sql, param);
 	}
 }

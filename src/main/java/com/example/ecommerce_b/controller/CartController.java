@@ -55,6 +55,7 @@ public class CartController {
 			System.out.println(cart);
 			model.addAttribute("cartStatus", true);
 			model.addAttribute("cart", cart);
+
 			return "cart_list";
 		}
 		
@@ -70,7 +71,7 @@ public class CartController {
 			Integer userId=(Integer)session.getAttribute("userId");
 			System.out.println(userId);
 			if(userId==null) {
-				userId=(int)Math.random()*(-100000000);
+				userId=(int) (Math.random()*(100000)*(-1));
 				System.out.println("発行したuserId="+userId);
 				session.setAttribute("userId",userId);
 			}
