@@ -72,14 +72,15 @@ public class OrderToppingRepository {
 	 * 
 	 * @param topping 追加する注文トッピング
 	 */
-	public void insertOrderTopping(int orderItemId,Integer[] toppingIdList) {
+	public void insertOrderTopping(int orderItemId,List<Integer> toppingIdList) {
 		String sql="insert into order_toppings(topping_id,order_item_id) values";
 		Map<String,Integer> paramMap=new HashMap<>();
-		for(int i=0;i<toppingIdList.length;i++) {
+		for(int i=0;i<toppingIdList.size();i++) {
 			if(i!=0) {sql+=",";}
-			sql+="(:toppingId"+i+",:orderItemId"+i+")";
-			paramMap.put("toppingId"+i, toppingIdList[i]);
+			sql+="(:toppingId"+i+",:orderItemId)";
+			paramMap.put("toppingId"+i, toppingIdList.get(i));
 		}
+		paramMap.put("orderItemId", orderItemId);
 		SqlParameterSource param=new MapSqlParameterSource().addValues(paramMap);
 		System.out.println(sql);
 		template.update(sql, param);		

@@ -80,7 +80,7 @@ public class OrderItemRepository {
 	public int insertOrderItem(OrderItem item) {
 		String sql="insert into order_items (item_id,order_id,quantity,size) values(:itemId,:orderId,:quantity,:size) returning id";
 		SqlParameterSource param=new BeanPropertySqlParameterSource(item);
-		int orderItemId=template.update(sql, param);
+		int orderItemId=template.queryForObject(sql, param,Integer.class);
 		return orderItemId;
 	}
 	
