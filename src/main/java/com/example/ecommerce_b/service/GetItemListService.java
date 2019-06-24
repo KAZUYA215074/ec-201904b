@@ -1,5 +1,6 @@
 package com.example.ecommerce_b.service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -89,26 +90,66 @@ public class GetItemListService {
 	 * @param itemList 絞り込み対象リスト
 	 * @return １ページに表示されるサイズ分の商品一覧情報
 	 */
-	public Page<Item> showListPaging(int page, int size, List<Item> itemList) {
+	public Page<List<Item>> showListPaging(int page, int size, List<Item> itemList) {
 		// 表示させたいページ数を-1しなければうまく動かない
 		page--;
 		// どの商品から表示させるかと言うカウント値
 		int startItemCount = page * size;
-		// 絞り込んだ後の従業員リストが入る変数
-		List<Item> list;
+		// 絞り込んだ後の商品リストが入る変数
+		List<List<Item>> parentList = new ArrayList<>();
 
 		if (itemList.size() < startItemCount) {
-			// (ありえないが)もし表示させたい従業員カウントがサイズよりも大きい場合は空のリストを返す
-			list = Collections.emptyList();
+			// (ありえないが)もし表示させたい商品カウントがサイズよりも大きい場合は空のリストを返す
+			parentList = Collections.emptyList();
 		} else {
-			// 該当ページに表示させる従業員一覧を作成
+			// 該当ページに表示させる商品一覧を作成
 			int toIndex = Math.min(startItemCount + size, itemList.size());
-			list = itemList.subList(startItemCount, toIndex);
+			List<Item> subList = itemList.subList(startItemCount, toIndex);
+			System.out.println("subList:" + subList.size());
+			List<Item> childList = new ArrayList<>();
+			for (int i = 0; i < subList.size(); i++) {
+				childList.add(subList.get(i));
+				if ((i + 1) % 3 == 0) {
+					parentList.add(childList);
+				}
+			}
+			// 商品リストが3で割り切れないときだけ、余りの分を入れる
+			if (subList.size() % 3 != 0) {
+				parentList.add(childList);
+			}
 		}
 
-		// 上記で作成した該当ページに表示させる従業員一覧をページングできる形に変換して返す
-		Page<Item> itemPage = new PageImpl<Item>(list, PageRequest.of(page, size), itemList.size());
+		System.out.println("parentList:" + parentList.size());
+		// 上記で作成した該当ページに表示させる商品一覧をページングできる形に変換して返す
+		Page<List<Item>> itemPage = new PageImpl<List<Item>>(parentList, PageRequest.of(page, size), itemList.size());
+		System.out.println("itemPage:" + itemPage.getSize());
 		return itemPage;
 	}
 
+	
+	
+	
+	public List<Item> showListPaging2(int page, int size, List<Item> itemList) {
+	    // 表示させたいページ数を-1しなければうまく動かない
+	    page--;
+	    // どの従業員から表示させるかと言うカウント値
+	    int startItemCount = page * size;
+	    // 絞り込んだ後の従業員リストが入る変数
+	    List<Item> list;
+
+	    if (itemList.size() < startItemCount) {
+	    	// (ありえないが)もし表示させたい従業員カウントがサイズよりも大きい場合は空のリストを返す
+	        list = Collections.emptyList();
+	    } else {
+	    	// 該当ページに表示させる従業員一覧を作成
+	        int toIndex = Math.min(startItemCount + size, itemList.size());
+	        list = itemList.subList(startItemCount, toIndex);
+	    }
+
+	    // 上記で作成した該当ページに表示させる従業員一覧をページングできる形に変換して返す
+//	    Page<Item> employeePage
+//	      = new PageImpl<Item>(list, PageRequest.of(page, size), itemList.size());
+	    return list;
+	}
+	
 }
