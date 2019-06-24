@@ -34,9 +34,7 @@ public class OrderItem {
 		int toppingSum=0;
 		if(this.size=='M' ||this.size=='m') {
 			itemSum=item.getPriceM()*this.quantity;
-			System.out.println(itemSum);
 			toppingSum=orderToppingList.size()*200;
-			System.out.println(toppingSum);
 		}else if(this.size=='L' ||this.size=='l') {
 			itemSum=item.getPriceL()*this.quantity;			
 			toppingSum=orderToppingList.size()*300;

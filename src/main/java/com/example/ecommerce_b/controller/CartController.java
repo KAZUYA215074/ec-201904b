@@ -42,7 +42,6 @@ public class CartController {
 		 */
 		@RequestMapping("/show-cart")
 		public String showCart(Model model) {
-			session.setAttribute("userId", 2);
 			Integer userId=(Integer)session.getAttribute("userId");
 			if(userId==null) {
 				model.addAttribute("cartStatus",false);
@@ -69,6 +68,7 @@ public class CartController {
 		@RequestMapping("/add-item")
 		public String addItem(OrderItemForm form,Model model) {
 			Integer userId=(Integer)session.getAttribute("userId");
+			System.out.println(userId);
 			if(userId==null) {
 				userId=(int)Math.random()*(-100000000);
 				System.out.println("発行したuserId="+userId);
