@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,11 +66,31 @@ public class ShowItemListController {
 		}
 
 		// １ページに表示させる商品リストを絞り込み
-		Page<Item> itemPage = getItemListService.showListPaging(page, VIEW_SIZE, itemList);
-		model.addAttribute("itemPage", itemPage);
+		//Page<List<Item>> itemPage = getItemListService.showListPaging(page, VIEW_SIZE, itemList);
+		List<Item> itemPageList = getItemListService.showListPaging2(page, VIEW_SIZE, itemList);
+	    Page<Item> itemPage = new PageImpl<Item>(itemPageList, PageRequest.of(page, VIEW_SIZE), itemList.size());
+		
+		// 横に並べる用のリストを作る
+		List<List<Item>> TabeitemParentList = new ArrayList<>();
+		List<Item> TabeitemChildList= new ArrayList<>();
+		for(int i=0;i<itemPageList.size();i++) {
+			TabeitemChildList.add(itemPageList.get(i));
+			if ((i + 1) % 3 == 0) {
+				TabeitemParentList.add(TabeitemChildList);
+				TabeitemChildList = new ArrayList<>();
+			}
+		}
+		// 商品リストが3で割り切れないときだけ、余りの分を入れる
+		if (itemPageList.size() % 3 != 0) {
+			TabeitemParentList.add(TabeitemChildList);
+		}
+
 
 		// ページングのリンクに使うページ数をスコープに格納
 		List<Integer> pageNumbers = calcPageNumbers(model, itemPage);
+
+		model.addAttribute("itemPage", itemPage);
+		model.addAttribute("TabeitemParentList",TabeitemParentList);
 		model.addAttribute("pageNumbers", pageNumbers);
 		model.addAttribute("itemList", itemList);
 		model.addAttribute("status", status);

@@ -64,9 +64,8 @@
 				
 				<table class="table table-striped" id="otameshi">
 					<tbody>
-						<span  th:each="item,status:${itemPage}">
-						<tr>
-							<th>
+						<tr  th:each="tableItemChildList:${TabeitemParentList}">
+							<th  th:each="item:${tableItemChildList}">
 								<a href="item_detail.html"  th:href="@{/show-detail(id =${item.id})}"  th:value="${item.id}" name="id">
 									<img src="img/1.jpg" th:src="@{'/img/'+${item.imagePath}}"
 										class="img-responsive img-rounded" width="200" height="600">
@@ -75,11 +74,7 @@
 								<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;<span  th:text="${item.priceM}">1,380</span>円(税抜)<br>
 								<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;<span  th:text="${item.priceL}">2,380</span>円(税抜)<br>
 							</th>
-						</tr >
-						</span>
-
 						<tr>
-						</tr>
 					</tbody>
 				</table>
 				
@@ -119,7 +114,10 @@
 				minLength : 1
 			});
 	    });
-			
+		
+		// </tr>
+		$('#trStartSpace').html('<tr>');
+		$('#trEndSpace').after('</tr><tr>');
 		
 		
 	});
