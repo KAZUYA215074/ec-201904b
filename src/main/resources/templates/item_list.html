@@ -26,12 +26,11 @@
 						<div class="panel-title">商品を検索する</div>
 					</div>
 					<div class="panel-body">
-						<form method="post" action="#" th:action="@{/search-like-name}" class="form-horizontal">
+						<form method="post" action="#" th:action="@{/}" class="form-horizontal">
 							<div class="form-group">
 								<label for="code" class="control-label col-sm-2">商品名</label>
 								<div class="col-sm-9">
-									<input type="text" name="code" id="code"
-										class="form-control input-sm" />
+									<input type="text" name="code" id="code" class="form-control input-sm" th:value="${code}" />
 								</div>
 							</div>
 							<div class="text-center">
@@ -51,6 +50,7 @@
 				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
 				<label for="sortSelect">並び替え</label>
 				<form action="item_list.html" th:action="@{/}" method="post" id="sortForm" >
+					<input type="hidden" name="code" th:value="${code}">
 					<select id="sortSelect" name="status">
 					
 						<option th:value="id" th:selected="${status == 'id'}">--------</option>
@@ -64,7 +64,7 @@
 				
 				<table class="table table-striped" id="otameshi">
 					<tbody>
-						<span  th:each="item,status:${itemList}">
+						<span  th:each="item,status:${itemPage}">
 						<tr>
 							<th>
 								<a href="item_detail.html"  th:href="@{/show-detail(id =${item.id})}"  th:value="${item.id}" name="id">
@@ -83,7 +83,13 @@
 					</tbody>
 				</table>
 				
-				<span id="nameSort1"></span>
+				<!-- ページング機能 -->
+				<div th:if="${itemPage.totalPages > 0}" class="pagination"
+				    th:each="pageNumber : ${pageNumbers}">
+				    <a th:href="@{/(size=${itemPage.size}, page=${pageNumber}, code=${code}, status=${status})}"
+				        th:text=${pageNumber}
+				        th:class="${pageNumber==itemPage.number + 1} ? active"></a>
+				</div>
 
 			</div>
 		</div>
@@ -108,26 +114,12 @@
 		$.getJSON("/getAutoComplete", function(data) {
 			$('#code').autocomplete({
 				source : data,
-				autoFocus : true,
+				autoFocus : false,
 				delay : 0,
 				minLength : 1
 			});
 	    });
 			
-
-		   $("#code").change(function(){
-		        charactersChange($(this));
-		    });
-
-
-		    charactersChange = function(ele){
-		        var val = ele.val();
-		        var han = val.replace(/[Ａ-Ｚａ-ｚ０-９]/g,function(s){return String.fromCharCode(s.charCodeAt(0)-0xFEE0)});
-
-		        if(val.match(/[Ａ-Ｚａ-ｚ０-９]/g)){
-		            $(ele).val(han);
-		        }
-		    };
 		
 		
 	});
