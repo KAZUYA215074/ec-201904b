@@ -66,16 +66,22 @@ public class CartService {
 	 * @param orderItemId 追加する注文商品のid
 	 * @param toppingIdList 注文商品につけるトッピングidのリスト
 	 */
-	public void addOrderItem(Integer userId,OrderItem orderItem, Integer[] toppingIdList) {
+	public void addOrderItem(Integer userId,OrderItem orderItem, List<Integer> toppingIdList) {
 		Order order=orderRepository.findByUserIdAndStatus(userId, 0);
 		if(order==null) {
-			order=new Order(null, userId, 0, orderItem.getSubTotal(), null, null, null, null, null, null, null, null, null, null);
-			orderRepository.insertOrder(order);
+			order=new Order(null, userId, 0,0, null, null, null, null, null, null, null, null, null, null);
+			System.out.println("koko");
+			order.setId(orderRepository.insertOrder(order));
 		}
 		orderItem.setOrderId(order.getId());
 		int orderItemId=orderItemRepository.insertOrderItem(orderItem);
-		orderToppingRepository.insertOrderTopping(orderItemId, toppingIdList);
-				
+		if(toppingIdList!=null) {
+			orderToppingRepository.insertOrderTopping(orderItemId, toppingIdList);
+		}
+		orderItem=orderItemRepository.load(orderItemId);
+		orderItem.setOrderToppingList(orderToppingRepository.findByOrderItemId(orderItem.getId()));
+		order.setTotalPrice(orderItem.getSubTotal());
+		orderRepository.updateOrder(order);
 	}
 	
 	/**
