@@ -90,7 +90,10 @@ public class OrderToppingRepository {
 	 * 
 	 * @param id 削除する注文商品のid
 	 */
-	public void deleteOrderItem(Integer id) {
+	public void deleteOrderItem(Integer orderItemId) {
+		String sql="delete from order_toppings where order_item_id=:id";
+		SqlParameterSource param=new MapSqlParameterSource().addValue("id", orderItemId);		
+		template.update(sql, param);
 		
 	}
 

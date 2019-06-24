@@ -101,7 +101,9 @@ public class OrderItemRepository {
 	 * 
 	 * @param id 削除する注文商品のid
 	 */
-	public void deleteOrderItem(Integer id) {
-		
+	public void deleteOrderItem(Integer id,Integer subTotal) {
+		String sql="with delete_order_item as(delete from order_items where id=:id returning order_id) update orders set total_price= (total_price-:subTotal) where id=(select order_id from delete_order_item)";
+		SqlParameterSource param=new MapSqlParameterSource().addValue("id", id).addValue("subTotal", subTotal);		
+		template.update(sql, param);
 	}
 }

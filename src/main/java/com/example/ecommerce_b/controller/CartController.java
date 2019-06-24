@@ -82,4 +82,16 @@ public class CartController {
 			cartService.addOrderItem(userId, orderItem, form.getOrderToppingIdList());
 			return "redirect:/show-cart";
 		}
+		
+		/**
+		 * ショッピングカートから注文商品を削除する.
+		 * 
+		 * @param orderItemId 削除する注文商品のid
+		 * @return ショッピングカート画面
+		 */
+		@RequestMapping("/delete-item")
+		public String deleteItem(String orderItemId,Integer subTotal) {
+			cartService.deleteOrderItem(Integer.parseInt(orderItemId),subTotal);
+			return "redirect:/show-cart";
+		}
 }
