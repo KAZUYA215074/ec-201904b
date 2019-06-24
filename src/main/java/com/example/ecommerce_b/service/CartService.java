@@ -85,11 +85,11 @@ public class CartService {
 	/**
 	 * 注文商品をショッピングカートから削除する.
 	 * 
-	 * @param userId ログインしている(または一時的に発行されている)ユーザid
 	 * @param orderItemId 削除する注文商品のid
 	 */
-	public void deleteOrderItem(Integer userId,Integer orderItemId) {
-		
+	public void deleteOrderItem(Integer orderItemId,Integer subTotal) {
+		orderItemRepository.deleteOrderItem(orderItemId,subTotal);
+		orderToppingRepository.deleteOrderItem(orderItemId);
 	}
 	
 	/**

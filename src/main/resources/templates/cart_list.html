@@ -80,7 +80,11 @@
 							</td>
 							<td>
 								<div class="text-center">
-									<button type="submit" class="btn btn-primary">削除</button>
+									<form action="cart_list.html" th:action="@{/delete-item}" method="post">
+										<input type="hidden" name="orderItemId" th:value="${orderItem.id}" value="1">
+										<input type="hidden" name="subTotal" th:value="${orderItem.subTotal}" value="1">
+										<button type="submit" class="btn btn-primary">削除</button>
+									</form>
 								</div>
 							</td>
 						</tr>
