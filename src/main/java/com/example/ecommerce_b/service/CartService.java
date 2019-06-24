@@ -70,7 +70,6 @@ public class CartService {
 		Order order=orderRepository.findByUserIdAndStatus(userId, 0);
 		if(order==null) {
 			order=new Order(null, userId, 0,0, null, null, null, null, null, null, null, null, null, null);
-			System.out.println("koko");
 			order.setId(orderRepository.insertOrder(order));
 		}
 		orderItem.setOrderId(order.getId());
@@ -80,8 +79,7 @@ public class CartService {
 		}
 		orderItem=orderItemRepository.load(orderItemId);
 		orderItem.setOrderToppingList(orderToppingRepository.findByOrderItemId(orderItem.getId()));
-		order.setTotalPrice(orderItem.getSubTotal());
-		orderRepository.updateOrder(order);
+		orderRepository.addTotalPrice(order.getId(), orderItem.getSubTotal());;
 	}
 	
 	/**
@@ -91,6 +89,30 @@ public class CartService {
 	 * @param orderItemId 削除する注文商品のid
 	 */
 	public void deleteOrderItem(Integer userId,Integer orderItemId) {
+		
+	}
+	
+	/**
+	 * ログインしたユーザIDで仮のユーザIDを上書きする.
+	 * 
+	 * @param userId 元のユーザid
+	 * @param loginUserId ログインしたユーザid
+	 */
+	public void userIdUpdate(Integer userId,Integer loginUserId) {
+		Order order=orderRepository.findByUserIdAndStatus(loginUserId, 0);
+		if(order==null) {
+			orderRepository.updateUserId(userId, loginUserId);
+		}else {
+			orderItemRepository.updateOrderId(userId,order.getId());
+			Order newOrder=loadOrder(loginUserId);
+			int newTotalPrice=0;
+			for(OrderItem item :newOrder.getOrderItemList()) {
+				newTotalPrice+=item.getSubTotal();
+			}
+			newOrder.setTotalPrice(newTotalPrice);
+			orderRepository.updateOrder(newOrder);
+			//orderRepository.delete(orderId);
+		}
 		
 	}
 	

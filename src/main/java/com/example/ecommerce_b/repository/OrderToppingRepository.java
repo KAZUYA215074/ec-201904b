@@ -82,7 +82,6 @@ public class OrderToppingRepository {
 		}
 		paramMap.put("orderItemId", orderItemId);
 		SqlParameterSource param=new MapSqlParameterSource().addValues(paramMap);
-		System.out.println(sql);
 		template.update(sql, param);		
 	}
 	

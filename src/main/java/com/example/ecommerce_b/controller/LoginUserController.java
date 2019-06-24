@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.ecommerce_b.domain.LoginUser;
+import com.example.ecommerce_b.service.CartService;
 
 /**
  * ユーザのログイン処理をさせるコントローラ.
@@ -22,7 +23,10 @@ public class LoginUserController {
 	
 	@Autowired
 	HttpSession session;
-	
+
+	@Autowired
+	private CartService cartService;
+
 	/**
 	 * ログイン画面を表示する.
 	 * 
@@ -44,7 +48,11 @@ public class LoginUserController {
 	 */
 	@RequestMapping("/login")
 	public String login(@AuthenticationPrincipal LoginUser loginUser) {
-		
+		Integer userId=(Integer) session.getAttribute("userId");
+		if(userId!=null) {
+			cartService.userIdUpdate(userId,loginUser.getUser().getId());
+			System.out.println("kotti");
+		}
 		session.setAttribute("userId", loginUser.getUser().getId());
 		return "redirect:/";
 	}
