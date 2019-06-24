@@ -27,6 +27,7 @@ public class ShowItemDetailController {
 	 */
 	@RequestMapping("")
 	public String showDetali(int id, Model model) {
+		System.out.println("showDetali******");
 
 		model.addAttribute("item", getItemDetailService.getDetail(id));
 
