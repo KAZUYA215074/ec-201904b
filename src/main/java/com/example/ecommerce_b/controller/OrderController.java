@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.ecommerce_b.domain.Order;
 import com.example.ecommerce_b.form.OrderForm;
 import com.example.ecommerce_b.service.OrderService;
+import com.example.ecommerce_b.service.SendMailService;
 
 /**
  * 注文をするためのコントローラー
@@ -33,6 +34,9 @@ public class OrderController {
 	
 	@Autowired
 	private HttpSession session;
+	
+	@Autowired
+	private SendMailService sendMailService;
 	
 	
 	/**
@@ -94,7 +98,7 @@ public class OrderController {
 		}
 		
 		orderService.order(order);
-//		sendMailService.mail(order);
+		sendMailService.sendMail(order);
 		
 		return "order_finished";
 	}
