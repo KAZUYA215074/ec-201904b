@@ -28,7 +28,8 @@
 					<tbody>
 					<tr>
 					    <th colspan="2">
-								<div class="text-center" th:text="${#dates.format(order.orderDate,'yyyy年MM月dd日')}+'の注文'"></div>
+								<div class="text-center" th:if="${order.orderDate}" th:text="${#dates.format(order.orderDate,'yyyy年MM月dd日')}+'の注文'"></div>
+								<div class="text-center" th:if="!${order.orderDate}" th:text="まだ注文が完了していません"></div>
 					    </th>
 					    <th colspan="2">
 								<div class="text-center" th:text="'合計金額：'+${order.calcTotalPrice}+'円'"></div>
