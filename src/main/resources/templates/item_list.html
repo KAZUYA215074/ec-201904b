@@ -59,7 +59,7 @@
 					</select>
 				</form><br>
 				
-				<span id="searchWord" th:if="${code}!=null">「<span th:text="${code}">code</span>」：検索結果<br></span>
+				<span id="searchWord" th:if="${code!=null && code!=''}">「<span th:text="${code}">code</span>」：検索結果<br></span>
 				<span th:text="${notMatchMessage}">該当なしのメッセージ</span>
 				
 				<table class="table table-striped" id="otameshi">
@@ -79,11 +79,10 @@
 				</table>
 				
 				<!-- ページング機能 -->
-				<div th:if="${itemPage.totalPages > 0}" class="pagination"
-				    th:each="pageNumber : ${pageNumbers}">
-				    <a th:href="@{/(size=${itemPage.size}, page=${pageNumber}, code=${code}, status=${status})}"
-				        th:text=${pageNumber}
-				        th:class="${pageNumber==itemPage.number + 1} ? active"></a>
+				<div th:if="${pageTotalNumbers > 0}" class="pagination"
+				    th:each="pageNumber : ${pageNuberList}">
+				    <a th:href="@{/(page=${pageNumber}, code=${code}, status=${status})}"
+				        th:text=${pageNumber}></a>
 				</div>
 
 			</div>

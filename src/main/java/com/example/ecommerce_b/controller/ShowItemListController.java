@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,19 +58,24 @@ public class ShowItemListController {
 		}
 
 		// リストが空の場合はエラーメッセージ
-		if (itemList.size() == 0) {
+		int totalSize = itemList.size();
+		System.out.println("total size : " + totalSize);
+		if (totalSize == 0) {
 			model.addAttribute("notMatchMessage", "該当する商品がありません");
 		}
 
 		// １ページに表示させる商品リストを絞り込み
-		//Page<List<Item>> itemPage = getItemListService.showListPaging(page, VIEW_SIZE, itemList);
+		// Page<List<Item>> itemPage = getItemListService.showListPaging(page,
+		// VIEW_SIZE, itemList);
 		List<Item> itemPageList = getItemListService.showListPaging2(page, VIEW_SIZE, itemList);
-	    Page<Item> itemPage = new PageImpl<Item>(itemPageList, PageRequest.of(page, VIEW_SIZE), itemList.size());
-		
+		// Page<Item> itemPage = new PageImpl<Item>(itemPageList, PageRequest.of(page,
+		// VIEW_SIZE), totalSize);
+		// System.out.println(".getTotalPages():" + itemPage.getTotalPages());
+
 		// 横に並べる用のリストを作る
 		List<List<Item>> TabeitemParentList = new ArrayList<>();
-		List<Item> TabeitemChildList= new ArrayList<>();
-		for(int i=0;i<itemPageList.size();i++) {
+		List<Item> TabeitemChildList = new ArrayList<>();
+		for (int i = 0; i < itemPageList.size(); i++) {
 			TabeitemChildList.add(itemPageList.get(i));
 			if ((i + 1) % 3 == 0) {
 				TabeitemParentList.add(TabeitemChildList);
@@ -85,13 +87,19 @@ public class ShowItemListController {
 			TabeitemParentList.add(TabeitemChildList);
 		}
 
-
 		// ページングのリンクに使うページ数をスコープに格納
-		List<Integer> pageNumbers = calcPageNumbers(model, itemPage);
+		// List<Integer> pageNumbers = calcPageNumbers(model, itemPage);
+		int pageTotalNumbers = itemList.size() / VIEW_SIZE;
+		if (itemList.size() % VIEW_SIZE != 0) {
+			pageTotalNumbers++;
+		}
 
-		model.addAttribute("itemPage", itemPage);
-		model.addAttribute("TabeitemParentList",TabeitemParentList);
-		model.addAttribute("pageNumbers", pageNumbers);
+		List<Integer> pageNuberList = calcPageNumbers(model, itemPageList, pageTotalNumbers);
+
+		// model.addAttribute("itemPage", itemPage);
+		model.addAttribute("TabeitemParentList", TabeitemParentList);
+		model.addAttribute("pageTotalNumbers", pageTotalNumbers);
+		model.addAttribute("pageNuberList", pageNuberList);
 		model.addAttribute("itemList", itemList);
 		model.addAttribute("status", status);
 
@@ -105,12 +113,11 @@ public class ShowItemListController {
 	 * @param model        モデル
 	 * @param employeePage ページング情報
 	 */
-	private List<Integer> calcPageNumbers(Model model, Page<Item> itemPage) {
-		int totalPages = itemPage.getTotalPages();
+	private List<Integer> calcPageNumbers(Model model, List<Item> itemPageList, int pageTotalNumbers) {
 		List<Integer> pageNumbers = null;
-		if (totalPages > 0) {
+		if (pageTotalNumbers > 0) {
 			pageNumbers = new ArrayList<Integer>();
-			for (int i = 1; i <= totalPages; i++) {
+			for (int i = 1; i <= pageTotalNumbers; i++) {
 				pageNumbers.add(i);
 			}
 		}
