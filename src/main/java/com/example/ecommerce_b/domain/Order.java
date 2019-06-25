@@ -17,6 +17,16 @@ public class Order {
 	private Integer userId;
 	/** 状態 */
 	private Integer status;
+	/** 状態 */
+	private String strStatus;
+	public String getStrStatus() {
+		return strStatus;
+	}
+
+	public void setStrStatus(String strStatus) {
+		this.strStatus = strStatus;
+	}
+
 	/** 合計金額 */
 	private Integer totalPrice;
 	/** 注文日 */
@@ -89,6 +99,49 @@ public class Order {
 		this.paymentMethod = paymentMethod;
 		this.user = user;
 		this.orderItemList = orderItemList;
+	}
+
+	public enum StatusEnum {
+		BEFOREORDER(0, "注文前"), 
+		BEFOREDEPOSIT(1, "未入金"),
+		AFTERDEPOSIT(2, "入金済"), 
+		AFTERSHOPING(3, "発送済"),
+		CANCEL(9, "キャンセル");
+
+		private int num;
+		private String status;
+
+		private StatusEnum(int num, String status) {
+			this.num = num;
+			this.status = status;
+		}
+
+		public static StatusEnum Of(int num) {
+			for(StatusEnum statusEnum : StatusEnum.values()) {
+				if(statusEnum.num == num) {
+				return statusEnum;
+			}
+		}
+		throw new IndexOutOfBoundsException(
+				"The value of number doesn't exist.");
+		}
+
+		public int getNum() {
+			return num;
+		}
+
+		public void setNum(int num) {
+			this.num = num;
+		}
+
+		public String getStatus() {
+			return status;
+		}
+
+		public void setStatus(String status) {
+			this.status = status;
+		}
+		
 	}
 
 	/** getter/setter */
