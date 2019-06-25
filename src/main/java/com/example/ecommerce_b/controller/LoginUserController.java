@@ -34,16 +34,15 @@ public class LoginUserController {
 	 */
 	@RequestMapping("/to-login")
 	public String toLogin(Model model, @RequestParam(required = false) String error, HttpServletRequest request) {
-		System.out.println("to-login*********");
-		System.out.println(request.getRequestURI());
 		if (error != null) {
 			System.err.println("login failed");
 			model.addAttribute("errorMessage", "メールアドレスまたはパスワードが不正です。");
 		}
 		//ログイン画面を更新した際にセッションを更新しない
-		String url = getPath(request)+"/to-login";
-		if (!url.equals(request.getHeader("REFERER"))
-				|| "http://localhost:8080/to-login?error=true".equals(request.getHeader("REFERER"))) {
+		String url1 = getPath(request)+"/to-login";
+		String url2 = url1+"?error=true";
+		if (!(url1.equals(request.getHeader("REFERER"))
+				|| url2.equals(request.getHeader("REFERER")))) {
 			String beforePage = request.getHeader("REFERER");
 			session.setAttribute("beforePage", beforePage);
 		}
@@ -68,8 +67,9 @@ public class LoginUserController {
 		}
 		session.setAttribute("userId", loginUser.getUser().getId());
 		String refer = (String) session.getAttribute("beforePage");
-		String url = getPath(request);
+		String url = getPath(request)+"/show-cart";
 		if (url.equals(refer)) {
+			session.removeAttribute("beforePage");
 			return "redirect:/to-order";
 		}
 
@@ -82,7 +82,7 @@ public class LoginUserController {
         String serverName = request.getServerName();
         int serverPort = request.getServerPort();
         String contextPath = request.getContextPath();
-        String url = schema+"://"+serverName+":"+serverPort+contextPath+"/show-cart";
+        String url = schema+"://"+serverName+":"+serverPort+contextPath;
 		return url;
 	}
 }
