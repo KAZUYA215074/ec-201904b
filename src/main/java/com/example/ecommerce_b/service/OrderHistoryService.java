@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.ecommerce_b.domain.Order;
+import com.example.ecommerce_b.domain.Order.StatusEnum;
 import com.example.ecommerce_b.domain.OrderItem;
 import com.example.ecommerce_b.repository.OrderItemRepository;
 import com.example.ecommerce_b.repository.OrderRepository;
@@ -36,7 +37,7 @@ public class OrderHistoryService {
 	 * @return 指定したユーザーIDの注文情報
 	 */
 	public List<Order> showOrderHistory(int userId) {
-		List<Order> orderList = repository.findByUserId(userId);
+		List<Order> orderList = repository.findByUserIdDesc(userId);
 		if (orderList.size() == 0) {
 			return null;
 		}
@@ -49,6 +50,9 @@ public class OrderHistoryService {
 				item.setOrderToppingList(orderToppingRepository.findByOrderItemId(item.getId()));
 				orderItemList.set(i, item);
 			}
+			StatusEnum statusEnum = StatusEnum.Of(order.getStatus());
+			String strStatus = statusEnum.getStatus();
+			order.setStrStatus(strStatus);
 			order.setOrderItemList(orderItemList);
 		}
 		return orderList;
