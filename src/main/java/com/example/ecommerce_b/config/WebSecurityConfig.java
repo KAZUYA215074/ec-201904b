@@ -27,7 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/css/**", "/img/**", "/js/**","/favicon.ico","/delete-item");
+		web.ignoring().antMatchers("/css/**", "/img/**", "/js/**","/favicon.ico","/getAutoComplete");
 		//原因特定 http://localhost:8080/favicon.icoにアクセスしようとするときに許可されていないのでtoLoignが実行されていた
 	}
 	

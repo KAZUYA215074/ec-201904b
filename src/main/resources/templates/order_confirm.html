@@ -151,7 +151,7 @@
 									</div>
 								</td>
 								<td>
-									<input type="text" id="destinationAddress" name="destinationAddress" th:value="${order.user.address}"　th:field="*{destinationAddress}">
+									<input type="text" id="destinationAddress" name="destinationAddress" th:value="${order.user.address}" th:field="*{destinationAddress}">
 									<span th:if="${#fields.hasErrors('destinationAddress')}" th:errors="*{destinationAddress}" style="color: red">エラーメッセージ</span>
 								</td>
 							</tr>
