@@ -22,10 +22,10 @@
 				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
 				<h3 class="text-center">ショッピングカート</h3>
 				<div th:if=${!cartStatus}>
-					<h1 class="text-center">カートに商品がありません</h1>
-					<a href="item_list.html" th:href="@{/}" class="col-xs-offset-2 col-xs-8">
+					<div><h1 class="text-center">カートに商品がありません</h1></div>
+					<div><a href="item_list.html" th:href="@{/}" class="col-xs-offset-5 col-xs-5">
 						<button type="button" class="btn btn-primary" id="itemlist-btn">商品一覧へ戻る</button>
-					</a>
+					</a></div>
 					
 				</div>
 				<table class="table table-striped" th:if=${cartStatus}>
@@ -63,7 +63,7 @@
 								</div>
 							</td>
 							<td>
-								<span class="price" th:text="${'&nbsp;'+orderItem.size}">&nbsp;Ｌ</span>
+								<span class="price" th:text="${'&nbsp;'+orderItem.size+'&nbsp;'}">&nbsp;Ｌ</span>
 								<span th:if="${orderItem.size}=='M'" th:text="${'&nbsp;&nbsp;'+#numbers.formatInteger(orderItem.item.priceM,1,'COMMA')+'円'}">&nbsp;&nbsp;2,380円</span>
 								<span th:if="${orderItem.size}=='L'" th:text="${'&nbsp;&nbsp;'+#numbers.formatInteger(orderItem.item.priceL,1,'COMMA')+'円'}">&nbsp;&nbsp;2,380円</span>
 								<span th:text="${'&nbsp;&nbsp;'+orderItem.quantity}+'個'"> &nbsp;&nbsp;1個</span>
