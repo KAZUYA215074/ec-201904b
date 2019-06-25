@@ -116,7 +116,8 @@
 									</div>
 								</td>
 								<td>
-									<input type="text" name="destinationName" th:value="${order.user.name}" th:field="*{destinationName}" >
+									<input type="text" name="destinationName" th:if="!${#fields.hasErrors('destinationName')}" th:value="${order.user.name}" >
+									<input type="text" name="destinationName" th:if="${#fields.hasErrors('destinationName')}" th:field="*{destinationName}" ><br>
 									<span th:if="${#fields.hasErrors('destinationName')}" th:errors="*{destinationName}" style="color: red">エラーメッセージ</span>
 								</td>
 							</tr>
@@ -127,7 +128,8 @@
 									</div>
 								</td>
 								<td>
-									<input type="text" name="destinationEmail" th:value="${order.user.mailAddress}" th:field="*{destinationEmail}">
+									<input type="text" name="destinationEmail" th:if="!${#fields.hasErrors('destinationEmail')}" th:value="${order.user.mailAddress}">
+									<input type="text" name="destinationEmail" th:if="${#fields.hasErrors('destinationEmail')}" th:field="*{destinationEmail}"><br>
 									<span th:if="${#fields.hasErrors('destinationEmail')}" th:errors="*{destinationEmail}" style="color: red">エラーメッセージ</span>
 								</td>
 							</tr>
@@ -139,9 +141,13 @@
 									
 								</td>
 								<td>
+								    (例)123-4567<br>
 								    <input type="text" id="inputZipcode" name="destinationZipcode" size="20"
-								    th:field="*{destinationZipcode}" class="form-control" th:value="${order.user.zipcode}"
+								    class="form-control" th:value="${order.user.zipcode}" th:if="!${#fields.hasErrors('destinationZipcode')}"
 									onKeyUp="AjaxZip3.zip2addr(this,'','destinationAddress','destinationAddress');">
+								    <input type="text" id="inputZipcode" name="destinationZipcode" size="20"
+								    th:field="*{destinationZipcode}" class="form-control" th:if="${#fields.hasErrors('destinationZipcode')}"
+									onKeyUp="AjaxZip3.zip2addr(this,'','destinationAddress','destinationAddress');"><br>
 									<span th:if="${#fields.hasErrors('destinationZipcode')}" th:errors="*{destinationZipcode}" style="color: red">エラーメッセージ</span>
 								</td>
 							</tr>
@@ -152,12 +158,10 @@
 									</div>
 								</td>
 								<td>
-<<<<<<< HEAD
-									<input type="text" id="destinationAddress" name="destinationAddress" th:value="${order.user.address}" th:field="*{destinationAddress}">
-=======
 									<input type="text" id="destinationAddress" name="destinationAddress" size="60"
-									  th:value="${order.user.address}" th:field="*{destinationAddress}"><br>
->>>>>>> feature/order-confirm
+									  th:if="!${#fields.hasErrors('destinationAddress')}" th:value="${order.user.address}"><br>
+									<input type="text" id="destinationAddress" name="destinationAddress" size="60"
+									  th:if="${#fields.hasErrors('destinationAddress')}" th:field="*{destinationAddress}"><br>
 									<span th:if="${#fields.hasErrors('destinationAddress')}" th:errors="*{destinationAddress}" style="color: red">エラーメッセージ</span>
 								</td>
 							</tr>
@@ -168,7 +172,9 @@
 									</div>
 								</td>
 								<td>
-									<input type="text"name="destinationTel" th:value="${order.user.telephone}" th:field="*{destinationTel}">
+								     (例)01-2345-6789<br>
+									<input type="text"name="destinationTel" th:if="!${#fields.hasErrors('destinationTel')}" th:value="${order.user.telephone}">
+									<input type="text"name="destinationTel" th:if="${#fields.hasErrors('destinationTel')}" th:field="*{destinationTel}"><br>
 									<span th:if="${#fields.hasErrors('destinationTel')}" th:errors="*{destinationTel}" style="color: red">エラーメッセージ</span>
 								</td>
 							</tr>
