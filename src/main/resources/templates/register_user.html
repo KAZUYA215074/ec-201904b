@@ -39,7 +39,6 @@
 								<label for="inputZipcode">郵便番号:</label>
 								<label th:if="${#fields.hasErrors('zipcode')}" th:errors="*{zipcode}"
 									class="control-label" style="color: red" for="inputError">郵便番号を入力してください</label>
-									<input type="button" value="住所検索">
 								<input type="text" id="inputZipcode" name="zipcode" th:field="*{zipcode}" class="form-control"
 									placeholder="Zipcode" onKeyUp="AjaxZip3.zip2addr(this,'','address','address');">
 
