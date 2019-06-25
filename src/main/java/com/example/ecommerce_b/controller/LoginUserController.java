@@ -34,11 +34,14 @@ public class LoginUserController {
 	 */
 	@RequestMapping("/to-login")
 	public String toLogin(Model model, @RequestParam(required = false) String error, HttpServletRequest request) {
+		System.out.println("to-login*********");
 		if (error != null) {
 			System.err.println("login failed");
 			model.addAttribute("errorMessage", "メールアドレスまたはパスワードが不正です。");
 		}
-		if (!"http://localhost:8080/to-login".equals(request.getHeader("REFERER"))
+		//ログイン画面を更新した際にセッションを更新しない
+		String url = getPath(request)+"/to-login";
+		if (!url.equals(request.getHeader("REFERER"))
 				|| "http://localhost:8080/to-login?error=true".equals(request.getHeader("REFERER"))) {
 			String beforePage = request.getHeader("REFERER");
 			session.setAttribute("beforePage", beforePage);
@@ -62,11 +65,10 @@ public class LoginUserController {
 			cartService.userIdUpdate(userId, loginUser.getUser().getId());
 			System.out.println("kotti");
 		}
-
 		session.setAttribute("userId", loginUser.getUser().getId());
-		String beforePage = (String) session.getAttribute("beforePage");
+		String refer = (String) session.getAttribute("beforePage");
 		String url = getPath(request);
-		if (url.equals(beforePage)) {
+		if (url.equals(refer)) {
 			return "redirect:/to-order";
 		}
 

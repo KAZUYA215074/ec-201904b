@@ -27,14 +27,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/css/**", "/img/**", "/js/**","/favicon.ico");
+		web.ignoring().antMatchers("/css/**", "/img/**", "/js/**","/favicon.ico","/delete-item");
 		//原因特定 http://localhost:8080/favicon.icoにアクセスしようとするときに許可されていないのでtoLoignが実行されていた
 	}
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests() // 認可に関する設定
-		.antMatchers("/","/to-login","/header-to-login","/to-regist","/regist","/show-cart","/show-detail","/add-item","/history","/search-like-name","/getAutoComplete").permitAll() //「/」などのパスは全てのユーザに許可
+		.antMatchers("/","/to-login","/header-to-login","/to-regist","/regist","/show-cart","/show-detail","/add-item","/search-like-name","/getAutoComplete","/delete-item").permitAll() //「/」などのパスは全てのユーザに許可
 		.anyRequest().authenticated(); // それ以外のパスは認証が必要
 		http.formLogin() // ログインに関する設定
 		.loginPage("/to-login") // ログイン画面に遷移させるパス(ログイン認証が必要なパスを指定してかつログインされていないとこのパスに遷移される)
