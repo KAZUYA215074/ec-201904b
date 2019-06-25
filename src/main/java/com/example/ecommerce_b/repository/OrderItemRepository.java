@@ -103,8 +103,11 @@ public class OrderItemRepository {
 	 * @param id 削除する注文商品のid
 	 */
 	public void deleteOrderItem(Integer id,Integer subTotal) {
-		String sql="with delete_order_item as(delete from order_items where id=:id returning order_id) update orders set total_price= (total_price-:subTotal) where id=(select order_id from delete_order_item)";
+		String sql="delete from order_items where id=:id returning order_id;";
 		SqlParameterSource param=new MapSqlParameterSource().addValue("id", id).addValue("subTotal", subTotal);		
-		template.update(sql, param);
+		int orderId=template.queryForObject(sql, param,Integer.class);
+		String sql2="update orders set total_price= (total_price-:subTotal) where id=:orderId";
+		SqlParameterSource param2=new MapSqlParameterSource().addValue("orderId", orderId).addValue("subTotal", subTotal);		
+		template.update(sql2, param2);
 	}
 }

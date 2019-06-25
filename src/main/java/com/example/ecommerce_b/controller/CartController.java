@@ -48,7 +48,7 @@ public class CartController {
 				return "cart_list";
 			}
 			Order cart=cartService.loadOrder(userId);
-			if(cart==null) {
+			if(cart==null || cart.getOrderItemList().size()==0) {
 				model.addAttribute("cartStatus",false);
 				return "cart_list";
 			}
