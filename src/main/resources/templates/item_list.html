@@ -35,8 +35,8 @@
 							</div>
 							<div class="text-center">
 							<input type="hidden" name="status" th:value="${status}">
-								<button type="submit" value="検索" class="btn btn-primary">検索</button>
-								<button type="reset" value="クリア" class="btn btn-default">クリア</button>
+								<button type="submit" value="検索" class="btn btn-primary" id="searchButton">検索</button>
+								<button type="button" value="クリア" class="btn btn-default" id="resetButton">クリア</button>
 							</div>
 						</form>
 					</div>
@@ -59,7 +59,7 @@
 					</select>
 				</form><br>
 				
-				「<span th:text="${code}">code</span>」：検索結果<br>
+				<span id="searchWord" th:if="${code}!=null">「<span th:text="${code}">code</span>」：検索結果<br></span>
 				<span th:text="${notMatchMessage}">該当なしのメッセージ</span>
 				
 				<table class="table table-striped" id="otameshi">
@@ -114,11 +114,12 @@
 				minLength : 1
 			});
 	    });
+
 		
-		// </tr>
-		$('#trStartSpace').html('<tr>');
-		$('#trEndSpace').after('</tr><tr>');
-		
+		// 検索条件クリア
+		$("#resetButton").click(function(){
+			$("#code").val("");
+		});	
 		
 	});
 	
