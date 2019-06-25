@@ -140,8 +140,8 @@
 								<td>
 								    <input type="text" id="inputZipcode" name="destinationZipcode" 
 								    th:field="*{destinationZipcode}" class="form-control" th:value="${order.user.zipcode}"
-									onKeyUp="AjaxZip3.zip2addr(this,'','destinationAddress','destinationAddress');">&nbsp;&nbsp;<button>住所検索</button>
-									<span th:if="${#fields.hasErrors('destinationEmail')}" th:errors="*{destinationEmail}" style="color: red">エラーメッセージ</span>
+									onKeyUp="AjaxZip3.zip2addr(this,'','destinationAddress','destinationAddress');">
+									<span th:if="${#fields.hasErrors('destinationZipcode')}" th:errors="*{destinationZipcode}" style="color: red">エラーメッセージ</span>
 								</td>
 							</tr>
 							<tr>
@@ -176,8 +176,6 @@
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-12">
-												<label
-													class="control-label" style="color: red" for="inputPeriod">配達日時を入力してください</label>
 											</div>
 											<div class="col-sm-5">
 												<input type="date" id="name" name="deliveryDate" th:field="*{deliveryDate}"
