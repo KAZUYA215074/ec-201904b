@@ -43,8 +43,6 @@ public class OrderHistoryController {
 			return "order_history";
 		}
 		model.addAttribute("orderList", orderList);
-
-		System.out.println(orderList);
 		return "order_history";
 	}
 
