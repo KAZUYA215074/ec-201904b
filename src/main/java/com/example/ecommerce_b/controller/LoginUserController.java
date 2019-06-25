@@ -35,6 +35,7 @@ public class LoginUserController {
 	@RequestMapping("/to-login")
 	public String toLogin(Model model, @RequestParam(required = false) String error, HttpServletRequest request) {
 		System.out.println("to-login*********");
+		System.out.println(request.getRequestURI());
 		if (error != null) {
 			System.err.println("login failed");
 			model.addAttribute("errorMessage", "メールアドレスまたはパスワードが不正です。");
