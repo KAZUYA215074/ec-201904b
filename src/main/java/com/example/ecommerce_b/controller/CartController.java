@@ -71,7 +71,7 @@ public class CartController {
 			List<OrderItem> orderItemList = new ArrayList<OrderItem>();
 			Item item = getItemDetailService.getDetail(10);
 	        List<OrderTopping> orderToppingList =null;
-			OrderItem orderItem = new OrderItem(5, 10, 5, 3, 'L', item, orderToppingList);
+			OrderItem orderItem = new OrderItem(3, 10, 5, null, 2, 'L', item, orderToppingList);
 			orderItemList.set(0, orderItem);
 			
 			List<OrderSet> orderSetList = new ArrayList<>();
