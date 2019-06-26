@@ -17,16 +17,8 @@ public class Order {
 	private Integer userId;
 	/** 状態 */
 	private Integer status;
-	/** 状態 */
+	/** 状態(String型) */
 	private String strStatus;
-	public String getStrStatus() {
-		return strStatus;
-	}
-
-	public void setStrStatus(String strStatus) {
-		this.strStatus = strStatus;
-	}
-
 	/** 合計金額 */
 	private Integer totalPrice;
 	/** 注文日 */
@@ -170,6 +162,14 @@ public class Order {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+	
+	public String getStrStatus() {
+		return strStatus;
+	}
+	
+	public void setStrStatus(String strStatus) {
+		this.strStatus = strStatus;
 	}
 
 	public Integer getTotalPrice() {

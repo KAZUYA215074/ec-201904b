@@ -1,5 +1,8 @@
 package com.example.ecommerce_b.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.BeanUtils;
@@ -9,10 +12,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.ecommerce_b.domain.Item;
 import com.example.ecommerce_b.domain.Order;
 import com.example.ecommerce_b.domain.OrderItem;
+import com.example.ecommerce_b.domain.OrderSet;
+import com.example.ecommerce_b.domain.OrderTopping;
+import com.example.ecommerce_b.domain.Set;
+import com.example.ecommerce_b.domain.User;
 import com.example.ecommerce_b.form.OrderItemForm;
 import com.example.ecommerce_b.service.CartService;
+import com.example.ecommerce_b.service.GetItemDetailService;
 
 @Controller
 @RequestMapping("/")
@@ -20,6 +29,9 @@ public class CartController {
 
 		@Autowired
 		private CartService cartService;
+		
+		@Autowired//(仮)
+		private GetItemDetailService getItemDetailService;
 		
 		@Autowired
 		private HttpSession session;
@@ -42,18 +54,32 @@ public class CartController {
 		 */
 		@RequestMapping("/show-cart")
 		public String showCart(Model model) {
-			Integer userId=(Integer)session.getAttribute("userId");
-			if(userId==null) {
-				model.addAttribute("cartStatus",false);
-				return "cart_list";
-			}
-			Order cart=cartService.loadOrder(userId);
-			if(cart==null || (cart.getOrderItemList().size()==0 && cart.getOrderSetList().size()==0)) {
-				model.addAttribute("cartStatus",false);
-				return "cart_list";
-			}
-			System.out.println(cart);
+//			Integer userId=(Integer)session.getAttribute("userId");
+//			if(userId==null) {
+//				model.addAttribute("cartStatus",false);
+//				return "cart_list";
+//			}
+////			Order cart=cartService.loadOrder(userId);	
+//			if(cart==null || (cart.getOrderItemList().size()==0 && cart.getOrderSetList().size()==0)) {
+//				model.addAttribute("cartStatus",false);
+//				return "cart_list";
+//			}
+//			System.out.println(cart);
 			model.addAttribute("cartStatus", true);
+			User user = new User(5, "sugita", "sugita@ryuhei", "helloworld", "狛江市", "0334300535", "2010005");
+			
+			List<OrderItem> orderItemList = new ArrayList<OrderItem>();
+			Item item = getItemDetailService.getDetail(10);
+	        List<OrderTopping> orderToppingList =null;
+			OrderItem orderItem = new OrderItem(5, 10, 5, 3, 'L', item, orderToppingList);
+			orderItemList.set(0, orderItem);
+			
+			List<OrderSet> orderSetList = new ArrayList<>();
+			Set set = new Set(1, "name", "description", 300, "img", true);
+			OrderSet orderSet = new OrderSet(1, 3, 5, 1, set, null);
+			orderSetList.set(0, orderSet);
+			
+			Order cart = new Order(5, 5, 0, 300, null, null, null, null, null, null, null, null, user, orderItemList, orderSetList);
 			model.addAttribute("cart", cart);
 
 			return "cart_list";
