@@ -59,7 +59,6 @@ public class ShowItemListController {
 
 		// リストが空の場合はエラーメッセージ
 		int totalSize = itemList.size();
-		System.out.println("total size : " + totalSize);
 		if (totalSize == 0) {
 			model.addAttribute("notMatchMessage", "該当する商品がありません");
 		}
