@@ -23,11 +23,9 @@ public class CommentController {
 	}
 	@RequestMapping("/send")
 	public String send(@Validated CommentForm form,BindingResult result) {
-		if(result.hasErrors()) {
-			return "redirect:/error";
+		if(!result.hasErrors()) {
+			commentService.insert(form);			
 		}
-		
-		commentService.insert(form);
 		return "redirect:/";
 	}
 	

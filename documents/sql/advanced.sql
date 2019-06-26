@@ -9,7 +9,7 @@ create table users (
  , zipcode varchar(7) not null
  , address varchar(200) not null
  , telephone varchar(15) not null
- , birthday date 
+ , birthday date
 ) ;
 
 
@@ -158,7 +158,7 @@ create table sets(
 
 insert into sets values(1,'松','4050円Lピザ＋サイド１＋ドリンク２',4500,'set_1.png',false,4050);
 insert into sets values(2,'竹','3380円Lピザ＋サイド１＋ドリンク２',3800,'set_1.png',false,3380);
-insert into sets values(3,'松','2570円Lピザ＋サイド１＋ドリンク２',3000,'set_1.png',false,2570);
+insert into sets values(3,'梅','2570円Lピザ＋サイド１＋ドリンク２',3000,'set_1.png',false,2570);
 insert into sets values(4,'パーティ','3380円Lピザ＋サイド3＋ドリンク5',10000,'set_2.jpg',false,3380);
 
 drop table if exists order_sets cascade;
