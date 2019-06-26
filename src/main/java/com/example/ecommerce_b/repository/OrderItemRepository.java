@@ -89,6 +89,7 @@ public class OrderItemRepository {
 	public int insertOrderItem(OrderItem item) {
 		String sql="insert into order_items (item_id,order_id,set_id,quantity,size) values(:itemId,:orderId,:setId,:quantity,:size) returning id";
 		SqlParameterSource param=new BeanPropertySqlParameterSource(item);
+		System.out.println(item);
 		int orderItemId=template.queryForObject(sql, param,Integer.class);
 		return orderItemId;
 	}
@@ -114,12 +115,15 @@ public class OrderItemRepository {
 		String searchWord;
 		if(setOrder){
 			searchWord="set_id";
+			System.out.println("kokodayo");
 		}else {
 			searchWord="id";
+			System.out.println("kottidayo");
 		}
 		String sql="delete from order_items where "+searchWord+"=:id returning order_id;";
 		SqlParameterSource param=new MapSqlParameterSource().addValue("id", id).addValue("subTotal", subTotal);		
 		int orderId=template.queryForObject(sql, param,Integer.class);
+		System.out.println("kokonano");
 		String sql2="update orders set total_price= (total_price-:subTotal) where id=:orderId";
 		SqlParameterSource param2=new MapSqlParameterSource().addValue("orderId", orderId).addValue("subTotal", subTotal);		
 		template.update(sql2, param2);

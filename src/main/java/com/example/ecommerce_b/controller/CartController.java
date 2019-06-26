@@ -12,18 +12,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.ecommerce_b.domain.Item;
 import com.example.ecommerce_b.domain.Order;
 import com.example.ecommerce_b.domain.OrderItem;
 import com.example.ecommerce_b.domain.OrderSet;
-import com.example.ecommerce_b.domain.OrderTopping;
-import com.example.ecommerce_b.domain.Set;
-import com.example.ecommerce_b.domain.Topping;
-import com.example.ecommerce_b.domain.User;
 import com.example.ecommerce_b.form.OrderItemForm;
 import com.example.ecommerce_b.form.OrderSetForm;
 import com.example.ecommerce_b.service.CartService;
-import com.example.ecommerce_b.service.GetItemDetailService;
 
 @Controller
 @RequestMapping("/")
@@ -32,8 +26,6 @@ public class CartController {
 		@Autowired
 		private CartService cartService;
 		
-		@Autowired
-		private GetItemDetailService getItemDetailService;
 		
 		@Autowired
 		private HttpSession session;
@@ -76,116 +68,82 @@ public class CartController {
 			}
 			System.out.println(cart);
 			model.addAttribute("cartStatus", true);
-//			User user = new User(5, "sugita", "sugita@ryuhei", "helloworld", "狛江市", "0334300535", "2010005");
-//			
-//			List<OrderItem> orderItemList = new ArrayList<OrderItem>();
-//			Item item = new Item(2, "name", "description", 100, 200, "image", true, null);
-//			item.setItemCategory(1);
-////			Item item = new Item(id, name, description, priceM, priceL, imagePath, deleted, toppingList);
-//			Topping topping = new Topping(1, "オニオン", 200, 300);
-//			OrderTopping orderTopping = new OrderTopping(1, 1, 3, topping);
-//	        List<OrderTopping> orderToppingList =new ArrayList<OrderTopping>() ;
-//	        orderToppingList.add(0, orderTopping);
-//			OrderItem orderItem = new OrderItem(3, 10, 5, null, 2, 'L', item, orderToppingList);
-//			orderItemList.add(0, orderItem);
-//			
-//			List<OrderSet> orderSetList = new ArrayList<>();
-//			Set set = new Set(1, "nameset", "description", 300, "img", true,1000);
-////			Set set = new Set(id, name, description, price, imagePath, deleted);
-//			OrderItem orderItemPiza = new OrderItem(3, 10, 5, null, 2, 'L', item, orderToppingList);
-////			OrderItem item = new OrderItem(id, itemId, orderId, setId, quantity, size, item, orderToppingList);
-//			Item drink = getItemDetailService.getDetail(21);
-//			Item drink2 = getItemDetailService.getDetail(21);
-//			drink.setItemCategory(2);
-//			drink2.setItemCategory(2);
-//			OrderItem orderItemDrink = new OrderItem(3, 10, 5, null, 2, 'L', drink, orderToppingList);
-//			OrderItem orderItemDrink2 = new OrderItem(3, 10, 5, null, 2, 'L', drink2, orderToppingList);
-//			List<OrderItem> orderItemList2 = new ArrayList<>();
-//			orderItemList2.add(0, orderItemPiza);
-//			orderItemList2.add(0, orderItemDrink);
-//			orderItemList2.add(0, orderItemDrink2);
-//			OrderSet orderSet = new OrderSet(1, 1, 5, 1, set,orderItemList2);
-////			OrderSet set = new OrderSet(id, setId, orderId, quantity, set, orderItemList)
-//			orderSetList.add(0, orderSet);
-			
-//			Order cart = new Order(5, 5, 0, 300, null, null, null, null, null, null, null, null, user, orderItemList, orderSetList);
 			model.addAttribute("cart", cart);
-
 			return "cart_list";
 		}
-		
-		/**
-		 * ショッピングカートに注文単品商品を追加する.
-		 * 
-		 * @param form
-		 * @param model
-		 * @return
-		 */
-		@RequestMapping("/add-item")
-		public String addItem(OrderItemForm form,Model model) {
-			Integer userId=(Integer)session.getAttribute("userId");
-			System.out.println(userId);
-			if(userId==null) {
-				userId=(int) (Math.random()*(100000)*(-1));
-				System.out.println("発行したuserId="+userId);
-				session.setAttribute("userId",userId);
-			}
-			
-			OrderItem orderItem=new OrderItem();
-			BeanUtils.copyProperties(form, orderItem);
-			orderItem.setSize(form.getSize().charAt(0));
-			orderItem.setSetId(0);
-			cartService.addOrderItem(userId, orderItem, form.getOrderToppingIdList());
-			return "redirect:/show-cart";
+
+	/**
+	 * ショッピングカートに注文単品商品を追加する.
+	 * 
+	 * @param form
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/add-item")
+	public String addItem(OrderItemForm form, Model model) {
+		Integer userId = (Integer) session.getAttribute("userId");
+		System.out.println(userId);
+		if (userId == null) {
+			userId = (int) (Math.random() * (100000) * (-1));
+			System.out.println("発行したuserId=" + userId);
+			session.setAttribute("userId", userId);
 		}
-		
-		/**
-		 * ショッピングカートから注文商品を削除する.
-		 * 
-		 * @param orderItemId 削除する注文商品のid
-		 * @return ショッピングカート画面
-		 */
-		@RequestMapping("/delete-item")
-		public String deleteItem(String orderItemId,Integer subTotal,Boolean setOrder) {
-			cartService.deleteOrderItem(Integer.parseInt(orderItemId),subTotal,false);
-			return "redirect:/show-cart";
+
+		OrderItem orderItem = new OrderItem();
+		BeanUtils.copyProperties(form, orderItem);
+		orderItem.setSize(form.getSize().charAt(0));
+		orderItem.setSetId(0);
+		cartService.addOrderItem(userId, orderItem, form.getOrderToppingIdList());
+		return "redirect:/show-cart";
+	}
+
+	/**
+	 * ショッピングカートから注文商品を削除する.
+	 * 
+	 * @param orderItemId 削除する注文商品のid
+	 * @return ショッピングカート画面
+	 */
+	@RequestMapping("/delete-item")
+	public String deleteItem(String orderItemId, Integer subTotal, Boolean setOrder) {
+		cartService.deleteOrderItem(Integer.parseInt(orderItemId), subTotal, setOrder);
+		return "redirect:/show-cart";
+	}
+
+	/**
+	 * ショッピングカートに注文セットを追加する.
+	 * 
+	 * @param form
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/add-set")
+	public String addItem(OrderSetForm form, Model model) {
+		// 仮
+		form.setSetId(1);
+		form.setQuantity(1);
+		form.setItemId1(1);
+		form.setItemId2(2);
+		form.setItemId3(3);
+		List<Integer> toppingList = new ArrayList<>();
+		toppingList.add(1);
+		form.setToppingIdList1(toppingList);
+		form.setToppingIdList2(null);
+		form.setToppingIdList3(null);
+		form.setSideMenuId(23);
+		form.setDrinkId(24);
+
+		Integer userId = (Integer) session.getAttribute("userId");
+		System.out.println(userId);
+		if (userId == null) {
+			userId = (int) (Math.random() * (100000) * (-1));
+			System.out.println("発行したuserId=" + userId);
+			session.setAttribute("userId", userId);
 		}
-		
-		/**
-		 * ショッピングカートに注文セットを追加する.
-		 * 
-		 * @param form
-		 * @param model
-		 * @return
-		 */
-		@RequestMapping("/add-set")
-		public String addItem(OrderSetForm form,Model model) {
-			//仮
-			form.setSetId(1);
-			form.setQuantity(1);
-			form.setItemId1(1);
-			form.setItemId2(2);
-			form.setItemId3(3);
-			List<Integer> toppingList=new ArrayList<>();
-			toppingList.add(1);
-			form.setToppingIdList1(toppingList);
-			form.setToppingIdList2(null);
-			form.setToppingIdList3(null);
-			form.setSideMenuId(1);
-			form.setDrinkId(1);
-			
-			Integer userId=(Integer)session.getAttribute("userId");
-			System.out.println(userId);
-			if(userId==null) {
-				userId=(int) (Math.random()*(100000)*(-1));
-				System.out.println("発行したuserId="+userId);
-				session.setAttribute("userId",userId);
-			}
-			
-			OrderSet orderSet=new OrderSet();
-			BeanUtils.copyProperties(form, orderSet);
-			cartService.addOrderSet(userId, orderSet, form);
-			return "redirect:/show-cart";
-		}
+
+		OrderSet orderSet = new OrderSet();
+		BeanUtils.copyProperties(form, orderSet);
+		cartService.addOrderSet(userId, orderSet, form);
+		return "redirect:/show-cart";
+	}
 
 }

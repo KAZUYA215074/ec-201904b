@@ -68,7 +68,6 @@ public class CartService {
 				orderItemList2.set(i, item);				
 			}
 			orderSetList.get(j).setOrderItemList(orderItemList2);
-			System.out.println(orderItemList2);
 		}
 		
 		order.setOrderItemList(orderItemList);
@@ -109,6 +108,7 @@ public class CartService {
 			orderSetRepository.deleteOrderSet(orderItemId);
 		}
 		orderItemRepository.deleteOrderItem(orderItemId,subTotal,setOrder);
+		System.out.println("kotti");
 		orderToppingRepository.deleteOrderItem(orderItemId);			
 	}
 	
@@ -171,6 +171,10 @@ public class CartService {
 				orderToppingRepository.insertOrderTopping(orderItemId, form.getToppingIdList3());
 			}
 		}
+		OrderItem orderDrink=new OrderItem(null, form.getDrinkId(), 0, orderSetId, 1, 'L', null,null);
+		orderItemRepository.insertOrderItem(orderDrink);
+		OrderItem orderSideMenu=new OrderItem(null, form.getSideMenuId(), 0, orderSetId, 1, 'M', null,null);
+		orderItemRepository.insertOrderItem(orderSideMenu);
 		orderSet=orderSetRepository.load(orderSetId);
 		orderRepository.addTotalPrice(order.getId(), orderSet.getSet().getPrice());
 		

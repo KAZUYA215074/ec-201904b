@@ -34,6 +34,7 @@ public class SetRepository {
 		set.setImagePath(rs.getString("image_path"));
 		set.setDeleted(rs.getBoolean("deleted"));
 		set.setPizzaLPrice(rs.getInt("pizza_l_price"));
+		
 		return set;
 	};
 	

@@ -30,7 +30,7 @@
 				</div>
 				<table class="table table-striped" th:if=${cartStatus}>
 					<tbody>
-						<tr　th:if="${cartSetStatus}">
+						<tr th:if="${cartSetStatus}">
 							<th>
 								<div class="text-center">
 									セット名
@@ -72,7 +72,7 @@
 								</div>
 							</td>
 							<td>
-							    <div th:each="orderItem : ${orderSet.orderItemList}"
+							    <div th:each="orderItem : ${orderSet.orderItemList}">
 								    <span th:if="${orderItem.item.itemCategory} == 1">
 								        <span  th:text="${orderItem.item.name}">test</span> <br>
 								    <span th:each="orderTopping : ${orderItem.orderToppingList}">
@@ -106,6 +106,7 @@
 									<form action="cart_list.html" th:action="@{/delete-item}" method="post">
 										<input type="hidden" name="orderItemId" th:value="${orderSet.id}" value="1">
 										<input type="hidden" name="subTotal" th:value="${orderSet.set.price}" value="1">
+										<input type="hidden" name="setOrder" th:value="true" value="true">
 										<button type="submit" class="btn btn-primary">削除</button>
 									</form>
 								</div>
@@ -116,7 +117,7 @@
 						
 					<table class="table table-striped" th:if=${cartStatus}>
 					<tbody>
-						<tr　th:if="${cartItemStatus}">
+						<tr th:if="${cartItemStatus}">
 							<th>
 								<div class="text-center">
 									商品名
@@ -174,6 +175,7 @@
 									<form action="cart_list.html" th:action="@{/delete-item}" method="post">
 										<input type="hidden" name="orderItemId" th:value="${orderItem.id}" value="1">
 										<input type="hidden" name="subTotal" th:value="${orderItem.subTotal}" value="1">
+										<input type="hidden" name="setOrder" th:value="false" value="false">
 										<button type="submit" class="btn btn-primary">削除</button>
 									</form>
 								</div>
