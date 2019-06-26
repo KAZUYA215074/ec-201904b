@@ -97,11 +97,14 @@ public class CartService {
 	/**
 	 * 注文商品をショッピングカートから削除する.
 	 * 
-	 * @param orderItemId 削除する注文商品のid
+	 * @param orderItemId 削除する注文商品またはセットのid
 	 */
-	public void deleteOrderItem(Integer orderItemId,Integer subTotal) {
-		orderItemRepository.deleteOrderItem(orderItemId,subTotal);
-		orderToppingRepository.deleteOrderItem(orderItemId);
+	public void deleteOrderItem(Integer orderItemId,Integer subTotal,Boolean setOrder) {
+		if(setOrder) {
+			orderSetRepository.deleteOrderSet(orderItemId);
+		}
+		orderItemRepository.deleteOrderItem(orderItemId,subTotal,setOrder);
+		orderToppingRepository.deleteOrderItem(orderItemId);			
 	}
 	
 	/**
