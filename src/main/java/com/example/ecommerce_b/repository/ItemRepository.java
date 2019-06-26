@@ -31,6 +31,7 @@ public class ItemRepository {
 		item.setPriceL(rs.getInt("price_l"));
 		item.setImagePath(rs.getString("image_path"));
 		item.setDeleted(rs.getBoolean("deleted"));
+		item.setItemCategory(rs.getInt("item_category"));
 
 		return item;
 	};
@@ -40,6 +41,7 @@ public class ItemRepository {
 
 	/**
 	 * 全件検索を行う.<br>
+	 * 
 	 * 引数のパラメータで並び替えを行う。
 	 * 
 	 * @param status 並び替えをするパラメータ
