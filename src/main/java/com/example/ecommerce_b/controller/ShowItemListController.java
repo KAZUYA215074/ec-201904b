@@ -162,7 +162,8 @@ public class ShowItemListController {
 	}
 
 	/**
-	 * セット商品以外の商品一覧を取得する.
+	 * セット商品以外の商品一覧を取得する.<br>
+	 * 曖昧検索も行う。
 	 * 
 	 * @param status   並び替えを行う値
 	 * @param category カテゴリ(ピザ=1,サイドメニュー=2,ドリンク=3)
@@ -188,7 +189,8 @@ public class ShowItemListController {
 	}
 
 	/**
-	 * セット商品一覧を取得する.
+	 * セット商品一覧を取得する.<br>
+	 * 曖昧検索も行う。
 	 * 
 	 * @param status   並び替えを行う値
 	 * @param category カテゴリ(ピザ=1,サイドメニュー=2,ドリンク=3)
@@ -201,8 +203,8 @@ public class ShowItemListController {
 		if (code == null || "".equals(code)) {
 			setList = getSetListService.getAll(status);
 		} else {
-			// setList = getSetListService.searchLikeName(code, status);
-			// model.addAttribute("code", code);
+			setList = getSetListService.searchLikeName(code, status);
+			model.addAttribute("code", code);
 		}
 
 		// リストが空の場合はエラーメッセージ
