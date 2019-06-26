@@ -130,5 +130,21 @@ public class CartService {
 		}
 		
 	}
+
+	/**
+	 * 注文セットをカートに追加する.
+	 * 
+	 * @param userId ユーザid
+	 * @param orderSet 注文されたセット内容
+	 * @param orderToppingIdListList トッピングリストのリスト
+	 */
+	public void addOrderSet(Integer userId, OrderSet orderSet, List<List<Integer>> orderToppingIdListList) {
+		Order order=orderRepository.findByUserIdAndStatus(userId, 0);
+		if(order==null) {
+			order=new Order(null, userId, 0,0, null, null, null, null, null, null, null, null, null, null,null);
+			order.setId(orderRepository.insertOrder(order));
+		}
+
+	}
 	
 }

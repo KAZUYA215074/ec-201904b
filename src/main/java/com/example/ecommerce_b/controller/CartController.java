@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.ecommerce_b.domain.Order;
 import com.example.ecommerce_b.domain.OrderItem;
+import com.example.ecommerce_b.domain.OrderSet;
 import com.example.ecommerce_b.form.OrderItemForm;
+import com.example.ecommerce_b.form.OrderSetForm;
 import com.example.ecommerce_b.service.CartService;
 
 @Controller
@@ -60,7 +62,7 @@ public class CartController {
 		}
 		
 		/**
-		 * ショッピングカートに注文商品を追加する.
+		 * ショッピングカートに注文単品商品を追加する.
 		 * 
 		 * @param form
 		 * @param model
@@ -94,4 +96,28 @@ public class CartController {
 			cartService.deleteOrderItem(Integer.parseInt(orderItemId),subTotal,setOrder);
 			return "redirect:/show-cart";
 		}
+		
+		/**
+		 * ショッピングカートに注文セットを追加する.
+		 * 
+		 * @param form
+		 * @param model
+		 * @return
+		 */
+		@RequestMapping("/add-set")
+		public String addItem(OrderSetForm form,Model model) {
+			Integer userId=(Integer)session.getAttribute("userId");
+			System.out.println(userId);
+			if(userId==null) {
+				userId=(int) (Math.random()*(100000)*(-1));
+				System.out.println("発行したuserId="+userId);
+				session.setAttribute("userId",userId);
+			}
+			
+			OrderSet orderSet=new OrderSet();
+			BeanUtils.copyProperties(form, orderSet);
+			cartService.addOrderSet(userId, orderSet, form.getOrderToppingIdListList());
+			return "redirect:/show-cart";
+		}
+
 }
