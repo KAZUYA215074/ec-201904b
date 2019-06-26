@@ -50,7 +50,8 @@ public class ItemRepository {
 	public List<Item> findAll(int category, String status) {
 		String sql = "SELECT id,name,description , price_m , price_l , image_path , deleted, item_category"
 				+ " FROM items" + " WHERE item_category = :category" + " ORDER BY " + status;
-		List<Item> itemList = template.query(sql, ITEM_ROW_MAPPER);
+		SqlParameterSource param = new MapSqlParameterSource().addValue("category", category);
+		List<Item> itemList = template.query(sql, param,ITEM_ROW_MAPPER);
 		return itemList;
 	}
 

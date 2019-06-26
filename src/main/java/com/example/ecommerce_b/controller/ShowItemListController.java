@@ -47,10 +47,15 @@ public class ShowItemListController {
 		if (status == null) {
 			status = "id";
 		}
+		
+		// categoryが空の場合はピザ一覧を表示する
+		if (category == null) {
+			category = 1;
+		}
 
 		// 商品検索
 		List<Item> itemList = null;
-		if (code == null) {
+		if (code == null || "".equals(code)) {
 			itemList = getItemListService.getAll(category, status);
 		} else {
 			itemList = getItemListService.searchLikeName(code, status);
