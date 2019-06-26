@@ -38,10 +38,28 @@ public class ItemRepository {
 
 	@Autowired
 	private NamedParameterJdbcTemplate template;
+	
+	
+	
+	/**
+	 * カテゴリー抜きの全件検索を行う.<br>
+	 * statusの値で並び替える。
+	 * 
+	 * @param status 並び替えを行う値
+	 * @return 商品情報一覧
+	 */
+	public List<Item> findAll(String status) {
+		String sql = "SELECT id,name,description , price_m , price_l , image_path , deleted, item_category"
+				+ " FROM items"
+				+ " ORDER BY " + status;
+		List<Item> itemList = template.query(sql, ITEM_ROW_MAPPER);
+		return itemList;
+	}
+	
+	
 
 	/**
-	 * 全件検索を行う.<br>
-	 * カテゴリー別に全件検索を行う。
+	 * カテゴリー別の全件検索を行う.<br>
 	 *  引数のパラメータで並び替えを行う。
 	 * 
 	 * @param category カテゴリ(ピザ=1,サイドメニュー=2,ドリンク=3)

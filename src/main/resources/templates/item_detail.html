@@ -35,8 +35,17 @@
 					</div>
 				</div><br>
 				
+				<!-- お酒の場合は注意書き -->
+				<div class="row">
+					<div class="col-xs-offset-2 col-xs-10">
+						<div class="form-group">
+							<span th:if="${item.id == 27}" style="color:red">この商品はアルコールです。20歳未満の方は購入できませんので、ご注意ください。</span>
+						</div>
+					</div>
+				</div>
+				
 				<!-- サイドメニューの場合 サイズに関わらず一定の価格を渡す-->
-				<input type="hidden" name="size" class="size" th:value="${item.priceM}" th:if="${category == 2}">
+				<input type="hidden" name="size" class="size" value="N" th:if="${category == 2}">
 				
 				<!-- サイズはサイドメニューの場合に非表示-->
 				<div class="row" th:unless="${category == 2}">

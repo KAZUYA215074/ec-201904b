@@ -29,7 +29,7 @@
 				<a  th:href="@{/(status=${status}, category=3)}" class="nav-link">ドリンク</a>
 			</li>
 			<li class="nav-item">
-				<a  th:href="@{/}" class="nav-link">セット</a>
+				<a  th:href="@{/(status=${status}, category=4)}" class="nav-link">セット</a>
 			</li>
 		</ul>
 
@@ -67,6 +67,7 @@
 				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
 				<label for="sortSelect">並び替え</label>
 				<form action="item_list.html" th:action="@{/}" method="get" id="sortForm" >
+					<input type="hidden" name="category" th:value="${category}">
 					<input type="hidden" name="code" th:value="${code}">
 					<select id="sortSelect" name="status">
 					
@@ -81,15 +82,28 @@
 				
 				<table class="table table-striped" id="otameshi">
 					<tbody>
-						<tr  th:each="tableItemChildList:${TabeitemParentList}">
-							<th  th:each="item:${tableItemChildList}">
+						<tr  th:each="tableChildList:${TabeParentList}">
+							<th  th:each="item:${tableChildList}">
 								<a href="item_detail.html"  th:href="@{/show-detail(id =${item.id},category=${category})}"  th:value="${item.id}" name="id">
 									<img src="img/1.jpg" th:src="@{'/img/'+${item.imagePath}}"
 										class="img-responsive img-rounded" width="200" height="600">
 								</a><br>
 								<a href="item_detail.html"   th:href="@{/show-detail(id =${item.id}, category=${category})}" th:text="${item.name}">じゃがバターベーコン</a><br>
-								<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;<span  th:text="${#numbers.formatInteger(item.priceM, 1, 'COMMA')}">1,380</span>円(税抜)<br>
-								<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;<span  th:text="${#numbers.formatInteger(item.priceL, 1, 'COMMA')}">2,380</span>円(税抜)<br>
+								<!-- ピザとドリンクの時はML価格表示 -->
+								<div th:if="${category == 1 || category == 3}">
+									<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;<span  th:text="${#numbers.formatInteger(item.priceM, 1, 'COMMA')}">1,380</span>円(税抜)<br>
+									<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;<span  th:text="${#numbers.formatInteger(item.priceL, 1, 'COMMA')}">2,380</span>円(税抜)<br>
+								</div>
+								<!-- サイドメニューの場合 -->
+								<div th:if="${category == 2}">
+									&nbsp;&nbsp;<span  th:text="${#numbers.formatInteger(item.priceM, 1, 'COMMA')}">1,380</span>円(税抜)<br>
+								</div>
+								<!-- セットメニューの場合 -->
+								<div th:if="${category == 4}">
+									&nbsp;&nbsp;<span  th:text="${#numbers.formatInteger(item.price, 1, 'COMMA')}">1,380</span>円(税抜)<br>
+								</div>
+								
+
 							</th>
 						<tr>
 					</tbody>
