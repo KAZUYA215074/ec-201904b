@@ -28,6 +28,8 @@ public class ShowItemDetailController {
 	@RequestMapping("")
 	public String showDetali(int id, int category, Model model) {
 		model.addAttribute("item", getItemDetailService.getDetail(id));
+		model.addAttribute("category", category);
+		System.out.println(category);
 
 		return "item_detail";
 
