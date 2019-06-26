@@ -26,12 +26,17 @@ public class GetItemListService {
 	 * 商品一覧を取得する.<br>
 	 * statusのパラメータで並び替えをする。
 	 * 
-	 * @param status 並び替えをするパラメータ
+	 * @param category 商品カテゴリ /nullの場合はカテゴリー抜きの全件検索
+	 * @param status   並び替えをするパラメータ
 	 * @return 取得した商品情報一覧
 	 */
 	public List<Item> getAll(int category, String status) {
-		List<Item> itemList = itemRepository.findAll(category, returnFieldName(status));
-
+		List<Item> itemList;
+		if (category == 0) {
+			itemList = itemRepository.findAll(status);
+		} else {
+			itemList = itemRepository.findAll(category, returnFieldName(status));
+		}
 		return sortByStatus(status, itemList);
 	}
 
@@ -122,7 +127,15 @@ public class GetItemListService {
 //		return itemPage;
 //	}
 
-	public List<Item> showListPaging2(int page, int size, List<Item> itemList) {
+	/**
+	 * ページング用メソッド.
+	 * 
+	 * @param page     表示させたいページ数
+	 * @param size     １ページに表示させる商品数
+	 * @param itemList 絞り込み対象リスト
+	 * @return １ページに表示されるサイズ分の商品一覧情報
+	 */
+	public List<Item> showListPaging(int page, int size, List<Item> itemList) {
 		// 表示させたいページ数を-1しなければうまく動かない
 		page--;
 		// どの従業員から表示させるかと言うカウント値
@@ -139,9 +152,6 @@ public class GetItemListService {
 			list = itemList.subList(startItemCount, toIndex);
 		}
 
-		// 上記で作成した該当ページに表示させる従業員一覧をページングできる形に変換して返す
-//	    Page<Item> employeePage
-//	      = new PageImpl<Item>(list, PageRequest.of(page, size), itemList.size());
 		return list;
 	}
 
