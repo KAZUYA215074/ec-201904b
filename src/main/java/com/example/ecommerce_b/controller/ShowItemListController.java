@@ -35,7 +35,7 @@ public class ShowItemListController {
 	 * @return 商品一覧表示画面
 	 */
 	@RequestMapping("")
-	public String showList(String status, Integer page, Model model, String code) {
+	public String showList(String status, Integer page, Integer category, String code, Model model) {
 
 		// ページング機能追加
 		if (page == null) {
@@ -47,11 +47,16 @@ public class ShowItemListController {
 		if (status == null) {
 			status = "id";
 		}
+		
+		// categoryが空の場合はピザ一覧を表示する
+		if (category == null) {
+			category = 1;
+		}
 
 		// 商品検索
 		List<Item> itemList = null;
-		if (code == null) {
-			itemList = getItemListService.getAll(status);
+		if (code == null || "".equals(code)) {
+			itemList = getItemListService.getAll(category, status);
 		} else {
 			itemList = getItemListService.searchLikeName(code, status);
 			model.addAttribute("code", code);
@@ -101,6 +106,7 @@ public class ShowItemListController {
 		model.addAttribute("pageNuberList", pageNuberList);
 		model.addAttribute("itemList", itemList);
 		model.addAttribute("status", status);
+		model.addAttribute("category", category);
 
 		return "item_list";
 	}
@@ -135,11 +141,11 @@ public class ShowItemListController {
 
 		List<String> nameList = new ArrayList<String>();
 		String status = "id";
-		List<Item> itemList = getItemListService.getAll(status);
-
-		for (Item item : itemList) {
-			nameList.add(item.getName());
-		}
+		/*
+		 * List<Item> itemList = getItemListService.getAll(status);
+		 * 
+		 * for (Item item : itemList) { nameList.add(item.getName()); }
+		 */
 
 		return nameList;
 	}
