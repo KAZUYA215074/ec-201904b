@@ -33,12 +33,84 @@
 						<tr>
 							<th>
 								<div class="text-center">
+									セット名
+								</div>
+							</th>
+							<th>
+								<div class="text-center">
+									ピザ・トッピング
+								</div>
+							</th>
+							<th>
+								<div class="text-center">
+									サイドメニュー/ドリンク
+								</div>
+							</th>
+							<th>
+								<div class="text-center">
+									小計
+								</div>
+							</th>
+							<th>
+								<div class="text-center">
+								</div>
+							</th>
+						</tr>
+						
+						
+						<tr th:each="orderSet : ${cart.orderSetList}">
+							<td>
+								<div class="center">
+									<img src="img/1.jpg" th:src="@{'/img/'+${orderSet.set.imagePath}}"
+										class="img-responsive img-rounded" width="100" height="300" alt="${orderSet.set.name}"><br>
+									<span th:text="${orderSet.set.name}">じゃがバターベーコン</span>
+								</div>
+							</td>
+							<td>
+							    <div th:each="orderItem : ${orderSet.orderItemList}"
+								    <span th:if="${orderItem.item.itemCategory} == 1">
+								        <span  th:text="${orderItem.item.name}">test</span> <br>
+								    <span th:each="orderTopping : ${orderItem.orderToppingList}">
+								        <span th:text="${orderTopping.topping.name}"></span> 
+								    </span>
+								    </span>
+								</div>
+							</td>
+							<td>
+								<ul th:each="orderItem:${orderSet.orderItemList}">
+									<li th:if="${orderItem.item.itemCategory} == 2">
+										   <span th:text="${orderItem.item.name}"></span>
+									</li>
+									<li th:if="${orderItem.item.itemCategory} == 3">
+										   <span th:text="${orderItem.item.name}"></span>
+									</li>
+								</ul>
+							</td>
+							<td>
+								<div class="text-center" th:text="${#numbers.formatInteger(orderSet.set.price,1,'COMMA')+'円 × '+orderSet.quantity+'個'}">
+									3,280円
+								</div>
+							</td>
+							<td>
+								<div class="text-center">
+									<form action="cart_list.html" th:action="@{/delete-item}" method="post">
+										<input type="hidden" name="orderItemId" th:value="${orderSet.id}" value="1">
+										<input type="hidden" name="subTotal" th:value="${orderSet.set.price}" value="1">
+										<button type="submit" class="btn btn-primary">削除</button>
+									</form>
+								</div>
+							</td>
+						</tr>
+						
+						<tr>
+							<th>
+								<div class="text-center">
 									商品名
 								</div>
 							</th>
 							<th>
 								<div class="text-center">
-									サイズ、価格(税抜)、数量
+									サイズ、価格(税抜)
 								</div>
 							</th>
 							<th>
@@ -54,6 +126,7 @@
 							<th>
 							</th>
 						</tr>
+						
 						<tr th:each="orderItem : ${cart.orderItemList}">
 							<td>
 								<div class="center">
@@ -78,7 +151,7 @@
 								</ul>
 							</td>
 							<td>
-								<div class="text-center" th:text="${#numbers.formatInteger(orderItem.subTotal,1,'COMMA')+'円'}">
+								<div class="text-center" th:text="${#numbers.formatInteger(orderItem.subTotal,1,'COMMA')+'円 × '+orderItem.quantity+'個'}">
 									3,280円
 								</div>
 							</td>
