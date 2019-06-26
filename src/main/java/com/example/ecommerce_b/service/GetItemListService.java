@@ -29,8 +29,8 @@ public class GetItemListService {
 	 * @param status 並び替えをするパラメータ
 	 * @return 取得した商品情報一覧
 	 */
-	public List<Item> getAll(String status) {
-		List<Item> itemList = itemRepository.findAll(returnFieldName(status));
+	public List<Item> getAll(int category, String status) {
+		List<Item> itemList = itemRepository.findAll(category, returnFieldName(status));
 
 		return sortByStatus(status, itemList);
 	}
@@ -43,8 +43,8 @@ public class GetItemListService {
 	 * @param status 並び替えをするパラメータ
 	 * @return 取得した商品情報一覧
 	 */
-	public List<Item> searchLikeName(String name, String status) {
-		List<Item> itemList = itemRepository.findLikeName(name, returnFieldName(status));
+	public List<Item> searchLikeName(int category, String name, String status) {
+		List<Item> itemList = itemRepository.findLikeName(category, name, returnFieldName(status));
 
 		return sortByStatus(status, itemList);
 	}
@@ -122,30 +122,27 @@ public class GetItemListService {
 //		return itemPage;
 //	}
 
-	
-	
-	
 	public List<Item> showListPaging2(int page, int size, List<Item> itemList) {
-	    // 表示させたいページ数を-1しなければうまく動かない
-	    page--;
-	    // どの従業員から表示させるかと言うカウント値
-	    int startItemCount = page * size;
-	    // 絞り込んだ後の従業員リストが入る変数
-	    List<Item> list;
+		// 表示させたいページ数を-1しなければうまく動かない
+		page--;
+		// どの従業員から表示させるかと言うカウント値
+		int startItemCount = page * size;
+		// 絞り込んだ後の従業員リストが入る変数
+		List<Item> list;
 
-	    if (itemList.size() < startItemCount) {
-	    	// (ありえないが)もし表示させたい従業員カウントがサイズよりも大きい場合は空のリストを返す
-	        list = Collections.emptyList();
-	    } else {
-	    	// 該当ページに表示させる従業員一覧を作成
-	        int toIndex = Math.min(startItemCount + size, itemList.size());
-	        list = itemList.subList(startItemCount, toIndex);
-	    }
+		if (itemList.size() < startItemCount) {
+			// (ありえないが)もし表示させたい従業員カウントがサイズよりも大きい場合は空のリストを返す
+			list = Collections.emptyList();
+		} else {
+			// 該当ページに表示させる従業員一覧を作成
+			int toIndex = Math.min(startItemCount + size, itemList.size());
+			list = itemList.subList(startItemCount, toIndex);
+		}
 
-	    // 上記で作成した該当ページに表示させる従業員一覧をページングできる形に変換して返す
+		// 上記で作成した該当ページに表示させる従業員一覧をページングできる形に変換して返す
 //	    Page<Item> employeePage
 //	      = new PageImpl<Item>(list, PageRequest.of(page, size), itemList.size());
-	    return list;
+		return list;
 	}
-	
+
 }
