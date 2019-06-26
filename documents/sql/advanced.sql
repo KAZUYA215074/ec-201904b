@@ -15,6 +15,7 @@ create table users (
 --ユーザー登録(pass:morimori)
 insert into users(name, email, password, zipcode, address, telephone) values('テストユーザ', 'test@test.co.jp', 'a232fe3fd81a175aa15541dc2051fe2cb003cdae810371104fbfc100eb34cd6f','1111111', 'テスト住所', 'テスト電話番号');
 
+drop table if exists categorys cascade;
 create table categorys(
   id integer primary key,
   name varchar(100) not null
@@ -54,16 +55,15 @@ insert into items values(15, 'シーフードミックス', 'シーフードナ�
 insert into items values(16, 'Family4', 'ラクラクピザ自慢「特うまプルコギ」定番「デラックス」お子様に人気「ツナマイルド」女性に好評「チーズ＆チーズ」の４種のおいしさを贅沢に組み合わせました', 2440, 3650, '16.jpg',false,1);
 insert into items values(17, 'アイダホ風ほっくりポテマヨ', 'みんな大好き！ポテトと特製マヨソースの組み合わせ！定番のおいしさを味わえます', 2440, 3650, '17.jpg',false,1);
 insert into items values(18, '贅沢フォルマッジ', '濃厚なカマンベールソース＆カマンベールと香りとコクのパルメザンチーズをトッピング', 2700, 4050, '18.jpg',false,1);
-INSERT INTO items values(19,'サラダ','サラダです',300,300,'side_1.png',false,2);
-INSERT INTO items values(20,'スープ','スープです',400,400,'side_2.png',false,2);
-INSERT INTO items values(21,'チキン','チキンです',500,500,'side_3.png',false,2);
-INSERT INTO items values(22,'ポテト','ポテトです',300,300,'side_4.png',false,2);
-INSERT INTO items values(23,'アイス','アイスです',300,300,'side_5.png',false,2);
-INSERT INTO items values(24,'コーラ','コーラです',200,300,'drink_1.png',false,3);
-INSERT INTO items values(25,'ファンタグレープ','ファンタグレープです',200,300,'drink_1.png',false,3);
-INSERT INTO items values(26,'爽健美茶','爽健美茶です',200,300,'drink_1.png',false,3);
-INSERT INTO items values(27,'オレンジ','コーラです',200,300,'drink_1.png',false,3);
-INSERT INTO items values(28,'ビール','です',300,500,'drink_1.png',false,3);
+INSERT INTO items values(19,'サラダ','サラダです',300,300,'side_1.jpg',false,2);
+INSERT INTO items values(20,'スープ','スープです',400,400,'side_2.jpg',false,2);
+INSERT INTO items values(21,'チキン','チキンです',500,500,'side_3.jpg',false,2);
+INSERT INTO items values(22,'ポテト','ポテトです',300,300,'side_4.jpg',false,2);
+INSERT INTO items values(23,'アイス','アイスです',300,300,'side_5.jpg',false,2);
+INSERT INTO items values(24,'コーラ','コーラです',200,300,'drink_1.jpg',false,3);
+INSERT INTO items values(25,'お茶','お茶です',200,300,'drink_2.jpg',false,3);
+INSERT INTO items values(26,'オレンジ','オレンジです',200,300,'drink_3.jpg',false,3);
+INSERT INTO items values(27,'ビール','ビールです',300,500,'drink_4.jpg',false,3);
 
 -- トッピング
 drop table if exists toppings cascade;
@@ -152,5 +152,10 @@ create table sets(
   , price integer not null
   , image_path text not null
   , deleted boolean default false not null
-  , pizza_price integer not null
+  , pizza_L_price integer not null
 );
+
+insert into sets values(1,'松','4050円Lピザ＋サイド１＋ドリンク２',4500,'set_1.png',false,4050);
+insert into sets values(2,'竹','3380円Lピザ＋サイド１＋ドリンク２',3800,'set_2.jpg',false,3380);
+insert into sets values(3,'松','2570円Lピザ＋サイド１＋ドリンク２',3000,'set_3.jpg',false,2570);
+insert into sets values(4,'パーティ','3380円Lピザ＋サイド3＋ドリンク5',10000,'set_1.png',false,3380);
