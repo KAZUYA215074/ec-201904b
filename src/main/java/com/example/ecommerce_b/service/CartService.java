@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.ecommerce_b.domain.Order;
 import com.example.ecommerce_b.domain.OrderItem;
 import com.example.ecommerce_b.domain.OrderSet;
+import com.example.ecommerce_b.form.OrderSetForm;
 import com.example.ecommerce_b.repository.OrderItemRepository;
 import com.example.ecommerce_b.repository.OrderRepository;
 import com.example.ecommerce_b.repository.OrderToppingRepository;
@@ -60,14 +61,18 @@ public class CartService {
 		}
 		List<OrderSet> orderSetList=orderSetRepository.findByOrderId(orderId);
 		for(int j=0;j<orderSetList.size();j++) {
-			List<OrderItem> orderItemList2=orderItemRepository.findByOrderId(orderSetList.get(j).getOrderId(),true);
+			List<OrderItem> orderItemList2=orderItemRepository.findByOrderId(orderSetList.get(j).getId(),true);
 			for(int i=0;i<orderItemList2.size();i++) {
 				OrderItem item=orderItemList2.get(i);
 				item.setOrderToppingList(orderToppingRepository.findByOrderItemId(item.getId()));
-				orderItemList.set(i, item);				
+				orderItemList2.set(i, item);				
 			}
+			orderSetList.get(j).setOrderItemList(orderItemList2);
+			System.out.println(orderItemList2);
 		}
+		
 		order.setOrderItemList(orderItemList);
+		order.setOrderSetList(orderSetList);
 		return order;		//ここではUserを詰め込んでいない
 	}
 	
@@ -138,13 +143,37 @@ public class CartService {
 	 * @param orderSet 注文されたセット内容
 	 * @param orderToppingIdListList トッピングリストのリスト
 	 */
-	public void addOrderSet(Integer userId, OrderSet orderSet, List<List<Integer>> orderToppingIdListList) {
+	public void addOrderSet(Integer userId, OrderSet orderSet, OrderSetForm form) {
 		Order order=orderRepository.findByUserIdAndStatus(userId, 0);
 		if(order==null) {
 			order=new Order(null, userId, 0,0, null, null, null, null, null, null, null, null, null, null,null);
 			order.setId(orderRepository.insertOrder(order));
 		}
+		orderSet.setOrderId(order.getId());
+		int orderSetId=orderSetRepository.insertOrderItem(orderSet);
+		OrderItem orderItem;
+				
+		orderItem=new OrderItem(null, form.getItemId1(), 0, orderSetId, 1, 'L', null,null);
+		int orderItemId=orderItemRepository.insertOrderItem(orderItem);
+		if(form.getToppingIdList1()!=null) {
+			orderToppingRepository.insertOrderTopping(orderItemId, form.getToppingIdList1());
+		}
 
+		if(orderSetId==4) {
+			orderItem=new OrderItem(null, form.getItemId2(), 0, orderSetId, 1, 'L', null,null);
+			orderItemId=orderItemRepository.insertOrderItem(orderItem);
+			if(form.getToppingIdList2()!=null) {
+				orderToppingRepository.insertOrderTopping(orderItemId, form.getToppingIdList2());
+			}
+			orderItem=new OrderItem(null, form.getItemId3(), 0, orderSetId, 1, 'L', null,null);
+			orderItemId=orderItemRepository.insertOrderItem(orderItem);
+			if(form.getToppingIdList3()!=null) {
+				orderToppingRepository.insertOrderTopping(orderItemId, form.getToppingIdList3());
+			}
+		}
+		orderSet=orderSetRepository.load(orderSetId);
+		orderRepository.addTotalPrice(order.getId(), orderSet.getSet().getPrice());
+		
 	}
 	
 }

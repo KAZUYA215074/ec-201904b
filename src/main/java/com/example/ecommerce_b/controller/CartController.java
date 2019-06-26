@@ -1,5 +1,8 @@
 package com.example.ecommerce_b.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.BeanUtils;
@@ -107,6 +110,20 @@ public class CartController {
 		 */
 		@RequestMapping("/add-set")
 		public String addItem(OrderSetForm form,Model model) {
+			//仮
+			form.setSetId(1);
+			form.setQuantity(1);
+			form.setItemId1(1);
+			form.setItemId2(2);
+			form.setItemId3(3);
+			List<Integer> toppingList=new ArrayList<>();
+			toppingList.add(1);
+			form.setToppingIdList1(toppingList);
+			form.setToppingIdList2(null);
+			form.setToppingIdList3(null);
+			form.setSideMenuId(1);
+			form.setDrinkId(1);
+			
 			Integer userId=(Integer)session.getAttribute("userId");
 			System.out.println(userId);
 			if(userId==null) {
@@ -117,7 +134,7 @@ public class CartController {
 			
 			OrderSet orderSet=new OrderSet();
 			BeanUtils.copyProperties(form, orderSet);
-			cartService.addOrderSet(userId, orderSet, form.getOrderToppingIdListList());
+			cartService.addOrderSet(userId, orderSet, form);
 			return "redirect:/show-cart";
 		}
 
