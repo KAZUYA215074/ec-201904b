@@ -1,5 +1,9 @@
 package com.example.ecommerce_b.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,13 +26,14 @@ public class RegistUserService {
 	private UserRepository userRepository;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	/**
 	 * ユーザ情報をDBに登録する.
 	 * 
 	 * @param form ユーザ登録フォーム
+	 * @throws ParseException 
 	 */
-	public void registUser(RegistUserForm form) {
+	public void registUser(RegistUserForm form) throws ParseException {
 		User user = new User();
 		BeanUtils.copyProperties(form, user);
 		user.setMailAddress(form.getEmail());
@@ -37,10 +42,12 @@ public class RegistUserService {
 		user.setZipcode(zipCode);
 		String telephone = user.getTelephone().replace("-", "");
 		user.setTelephone(telephone);
+		Date birthday = stringToDate(form.getBirthday());
+		user.setBirthday(birthday);
 		System.out.println(user);
 		userRepository.insert(user);
 	}
-	
+
 	/**
 	 * 引数のメールアドレスと一致するユーザが登録されているかを確認する.
 	 * 
@@ -48,13 +55,22 @@ public class RegistUserService {
 	 * @return 登録されていればtrue,登録されていなければfalse
 	 */
 	public boolean isExist(String email) {
-		if(userRepository.findByMailAddress(email)!=null) {
+		if (userRepository.findByMailAddress(email) != null) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	private String encodePassword(String rawPassword) {
 		return passwordEncoder.encode(rawPassword);
 	}
+
+	static Date stringToDate(String dateStr) throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		// Date型変換
+		Date formatDate = sdf.parse(dateStr);
+		return formatDate;
+
+	}
+
 }

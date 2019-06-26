@@ -1,5 +1,7 @@
 package com.example.ecommerce_b.controller;
 
+import java.text.ParseException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -59,7 +61,12 @@ public class RegistUserController {
 			return toRegist();
 		}
 		System.out.println(form);
-		registUserService.registUser(form);
+		try {
+			registUserService.registUser(form);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return "redirect:/common/maintenance";
+		}
 		return "redirect:/to-login";
 	}
 }
