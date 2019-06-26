@@ -81,6 +81,7 @@ public class CartController {
 			OrderItem orderItem=new OrderItem();
 			BeanUtils.copyProperties(form, orderItem);
 			orderItem.setSize(form.getSize().charAt(0));
+			orderItem.setSetId(0);
 			cartService.addOrderItem(userId, orderItem, form.getOrderToppingIdList());
 			return "redirect:/show-cart";
 		}
@@ -93,7 +94,7 @@ public class CartController {
 		 */
 		@RequestMapping("/delete-item")
 		public String deleteItem(String orderItemId,Integer subTotal,Boolean setOrder) {
-			cartService.deleteOrderItem(Integer.parseInt(orderItemId),subTotal,setOrder);
+			cartService.deleteOrderItem(Integer.parseInt(orderItemId),subTotal,false);
 			return "redirect:/show-cart";
 		}
 		

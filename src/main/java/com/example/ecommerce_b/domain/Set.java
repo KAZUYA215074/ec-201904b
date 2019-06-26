@@ -21,7 +21,7 @@ public class Set {
 	private Boolean deleted;
 	
 	/** 選択できるピザの価格*/
-	private Integer pizzaPrice;
+	private Integer pizzaLPrice;
 	
 
 
@@ -32,7 +32,7 @@ public class Set {
 	
 	
 	/** コンストラクタ */
-	public Set(Integer id, String name, String description, Integer price, String imagePath, Boolean deleted) {
+	public Set(Integer id, String name, String description, Integer price, String imagePath, Boolean deleted,Integer pizzaLPrice) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -40,6 +40,7 @@ public class Set {
 		this.price = price;
 		this.imagePath = imagePath;
 		this.deleted = deleted;
+		this.pizzaLPrice=pizzaLPrice;
 	}
 
 
@@ -89,14 +90,14 @@ public class Set {
 		this.deleted = deleted;
 	}
 	
-	public Integer getPizzaPrice() {
-		return pizzaPrice;
+	public Integer getPizzaLPrice() {
+		return pizzaLPrice;
 	}
 
 
 
-	public void setPizzaPrice(Integer pizzaPrice) {
-		this.pizzaPrice = pizzaPrice;
+	public void setPizzaLPrice(Integer pizzaLPrice) {
+		this.pizzaLPrice = pizzaLPrice;
 	}
 
 	

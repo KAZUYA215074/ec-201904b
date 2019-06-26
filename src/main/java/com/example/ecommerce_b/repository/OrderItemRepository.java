@@ -30,6 +30,7 @@ public class OrderItemRepository {
 		orderItem.setId(rs.getInt("order_item_id"));
 		orderItem.setItemId(rs.getInt("item_id"));
 		orderItem.setOrderId(rs.getInt("order_id"));
+		orderItem.setSetId(rs.getInt("set_id"));
 		orderItem.setQuantity(rs.getInt("quantity"));
 		orderItem.setSize(rs.getString("size").charAt(0));
 		Item item=new Item();
@@ -40,6 +41,7 @@ public class OrderItemRepository {
 		item.setPriceL(rs.getInt("price_l"));
 		item.setImagePath(rs.getString("image_path"));
 		item.setDeleted(rs.getBoolean("deleted"));
+		item.setItemCategory(rs.getInt("item_category"));
 		orderItem.setItem(item);
 		return orderItem;
 	};
@@ -51,7 +53,7 @@ public class OrderItemRepository {
 	 * @return 注文商品
 	 */
 	public OrderItem load(Integer orderItemId){
-		String sql="SELECT o.id as order_item_id , o.item_id , o.order_id , o.quantity , o.size,i.name,i.description , i.price_m , i.price_l , image_path , deleted FROM order_items as o left outer join items i on (o.item_id=i.id) where o.id=:id";
+		String sql="SELECT o.id as order_item_id , o.item_id , o.order_id ,o.set_id, o.quantity , o.size, i.name,i.description , i.price_m , i.price_l , i.image_path , i.deleted,i.item_category FROM order_items as o left outer join items i on (o.item_id=i.id) where o.id=:id";
 		SqlParameterSource param=new MapSqlParameterSource().addValue("id", orderItemId);
 		OrderItem item=template.queryForObject(sql, param, ORDERITEM_ROW_MAPPER);
 		return item;
@@ -71,7 +73,7 @@ public class OrderItemRepository {
 		}else {
 			searchWord="o.order_id";
 		}
-		String sql="SELECT o.id as order_item_id, o.item_id , o.order_id ,o.set_id, o.quantity , o.size, o.setOrder, i.name,i.description , i.price_m , i.price_l , image_path , deleted FROM order_items as o left outer join items i on (o.item_id=i.id) where "+searchWord+"=:id order by i.id desc";
+		String sql="SELECT o.id as order_item_id, o.item_id , o.order_id ,o.set_id, o.quantity , o.size, i.name,i.description , i.price_m , i.price_l , i.image_path , i.deleted,i.item_category FROM order_items as o left outer join items i on (o.item_id=i.id) where "+searchWord+"=:id order by o.id desc";
 		SqlParameterSource param=new MapSqlParameterSource().addValue("id", orderId);
 		List<OrderItem> orderItemList=template.query(sql, param, ORDERITEM_ROW_MAPPER);
 		System.out.println(orderItemList);
@@ -86,7 +88,7 @@ public class OrderItemRepository {
 	 * @return 注文商品のid
 	 */
 	public int insertOrderItem(OrderItem item) {
-		String sql="insert into order_items (item_id,order_id,quantity,size) values(:itemId,:orderId,:quantity,:size) returning id";
+		String sql="insert into order_items (item_id,order_id,set_id,quantity,size) values(:itemId,:orderId,:setId,:quantity,:size) returning id";
 		SqlParameterSource param=new BeanPropertySqlParameterSource(item);
 		int orderItemId=template.queryForObject(sql, param,Integer.class);
 		return orderItemId;
