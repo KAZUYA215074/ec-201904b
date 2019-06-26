@@ -47,7 +47,7 @@ public class ShowItemListController {
 		if (status == null) {
 			status = "id";
 		}
-		
+
 		// categoryが空の場合はピザ一覧を表示する
 		if (category == null) {
 			category = 1;
@@ -58,7 +58,7 @@ public class ShowItemListController {
 		if (code == null || "".equals(code)) {
 			itemList = getItemListService.getAll(category, status);
 		} else {
-			itemList = getItemListService.searchLikeName(code, status);
+			itemList = getItemListService.searchLikeName(category, code, status);
 			model.addAttribute("code", code);
 		}
 
@@ -69,12 +69,7 @@ public class ShowItemListController {
 		}
 
 		// １ページに表示させる商品リストを絞り込み
-		// Page<List<Item>> itemPage = getItemListService.showListPaging(page,
-		// VIEW_SIZE, itemList);
 		List<Item> itemPageList = getItemListService.showListPaging2(page, VIEW_SIZE, itemList);
-		// Page<Item> itemPage = new PageImpl<Item>(itemPageList, PageRequest.of(page,
-		// VIEW_SIZE), totalSize);
-		// System.out.println(".getTotalPages():" + itemPage.getTotalPages());
 
 		// 横に並べる用のリストを作る
 		List<List<Item>> TabeitemParentList = new ArrayList<>();

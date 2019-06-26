@@ -43,8 +43,8 @@ public class GetItemListService {
 	 * @param status 並び替えをするパラメータ
 	 * @return 取得した商品情報一覧
 	 */
-	public List<Item> searchLikeName(String name, String status) {
-		List<Item> itemList = itemRepository.findLikeName(name, returnFieldName(status));
+	public List<Item> searchLikeName(int category, String name, String status) {
+		List<Item> itemList = itemRepository.findLikeName(category, name, returnFieldName(status));
 
 		return sortByStatus(status, itemList);
 	}
