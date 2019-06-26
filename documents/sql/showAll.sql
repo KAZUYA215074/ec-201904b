@@ -6,4 +6,3 @@
 -- SELECT id , item_id , order_id , quantity , size FROM order_items;
 -- SELECT id , topping_id , order_item_id FROM order_toppings ;
 -- select id,name, email, password, zipcode, address, telephone from users where email='test2@test.co.jp'
-select * from items i join categorys c on i.item_category = c.id;
