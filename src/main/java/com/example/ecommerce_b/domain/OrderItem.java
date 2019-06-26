@@ -23,7 +23,11 @@ public class OrderItem {
 	private Item item;
 	/** 注文トッピングリスト */
 	private List<OrderTopping> orderToppingList;
+	/**単品=false ,セット=true */
+	private Boolean setOrder;
+
 	
+
 	/**
 	 * 注文商品から、合計金額を計算する.
 	 * 
@@ -108,6 +112,14 @@ public class OrderItem {
 	}
 	public void setOrderToppingList(List<OrderTopping> orderToppingList) {
 		this.orderToppingList = orderToppingList;
+	}
+	
+	public Boolean getSetOrder() {
+		return setOrder;
+	}
+
+	public void setSetOrder(Boolean setOrder) {
+		this.setOrder = setOrder;
 	}
 
 }
