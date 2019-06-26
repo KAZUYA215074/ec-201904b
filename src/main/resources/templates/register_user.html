@@ -36,7 +36,7 @@
 									placeholder="Email">
 							</div>
 							<div class="form-group">
-								<label for="inputZipcode">郵便番号:</label>
+								<label for="inputZipcode">郵便番号:<br>(例)123-4567</label>
 								<label th:if="${#fields.hasErrors('zipcode')}" th:errors="*{zipcode}"
 									class="control-label" style="color: red" for="inputError">郵便番号を入力してください</label>
 								<input type="text" id="inputZipcode" name="zipcode" th:field="*{zipcode}" class="form-control"
@@ -51,14 +51,14 @@
 									placeholder="Address">
 							</div>
 							<div class="form-group">
-								<label for="inputTel">電話番号:</label>
+								<label for="inputTel">電話番号:<br>(例)01-2345-6789</label>
 								<label th:if="${#fields.hasErrors('telephone')}" th:errors="*{telephone}"
 									class="control-label" style="color: red" for="inputError">電話番号を入力してください</label>
 								<input type="tel" id="inputTel" name="telephone" th:field="*{telephone}" class="form-control"
 									placeholder="Tel">
 							</div>
 							<div class="form-group">
-								<label for="inputPassword">パスワード:</label>
+								<label for="inputPassword">パスワード:<br>8~16文字のパスワードを入力してください。<br>英数大文字小文字が使用できます</label>
 								<label th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
 									class="control-label" style="color: red" for="inputError">パスワードを入力してください</label>
 								<input type="password" id="inputPassword" name="password" th:field="*{password}" class="form-control"
@@ -90,6 +90,7 @@
 		  $("#reset").click(function(){
 		  $(this.form).find(":text").val("");
 		  $(this.form).find(":password").val("");
+		  $(this.form).find(":tel").val("");
 		  
 		  });
 		});
