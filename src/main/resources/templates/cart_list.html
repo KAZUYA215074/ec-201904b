@@ -30,7 +30,7 @@
 				</div>
 				<table class="table table-striped" th:if=${cartStatus}>
 					<tbody>
-						<tr>
+						<tr　th:if="${cart.orderSetList}">
 							<th>
 								<div class="text-center">
 									セット名
@@ -44,6 +44,11 @@
 							<th>
 								<div class="text-center">
 									サイドメニュー/ドリンク
+								</div>
+							</th>
+							<th>
+								<div class="text-center">
+									個数
 								</div>
 							</th>
 							<th>
@@ -87,7 +92,12 @@
 								</ul>
 							</td>
 							<td>
-								<div class="text-center" th:text="${#numbers.formatInteger(orderSet.set.price,1,'COMMA')+'円 × '+orderSet.quantity+'個'}">
+								<div class="text-center" th:text="${orderSet.set.price+'円'}">
+									3,280円
+								</div>
+							</td>
+							<td>
+								<div class="text-center" th:text="${#numbers.formatInteger(orderSet.set.price,1,'COMMA')+'円'}">
 									3,280円
 								</div>
 							</td>
@@ -101,7 +111,11 @@
 								</div>
 							</td>
 						</tr>
+				    </tbody>
+				    </table>
 						
+					<table class="table table-striped" th:if=${cartStatus}>
+					<tbody>
 						<tr>
 							<th>
 								<div class="text-center">
@@ -151,7 +165,7 @@
 								</ul>
 							</td>
 							<td>
-								<div class="text-center" th:text="${#numbers.formatInteger(orderItem.subTotal,1,'COMMA')+'円 × '+orderItem.quantity+'個'}">
+								<div class="text-center" th:text="${#numbers.formatInteger(orderItem.subTotal,1,'COMMA')+'円'}">
 									3,280円
 								</div>
 							</td>

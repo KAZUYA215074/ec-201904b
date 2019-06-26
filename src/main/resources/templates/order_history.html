@@ -24,7 +24,139 @@
 				<div th:if=${historyStatus}>
 					<h1 class="text-center">注文履歴がありません</h1>
 				</div>
-				<table class="table table-striped" th:if=${!historyStatus} th:each="order:${orderList}">
+				
+					<table class="table table-striped" th:if="!${historyStatus}" th:each="order:${orderList}">
+					<tbody>
+					
+					<tr>
+					    <th colspan="2">
+								<div class="text-center" th:if="${order.orderDate}" th:text="${#dates.format(order.orderDate,'yyyy年MM月dd日')}+'の注文'"></div>
+								<div class="text-center" th:if="!${order.orderDate}" th:text="まだ注文が完了していません"></div>
+								<div class="text-center" th:if="!${order.orderDate}"><a th:href="@{/to-order}">注文決済画面へ</a></div>
+					    </th>
+					    <th>
+								<div class="text-center" th:text="'合計金額：'+${order.calcTotalPrice}+'円'"></div>
+					    </th>
+					    <th>
+								<div class="text-center" th:text="${order.strStatus}"></div>
+					    </th>
+					</tr>
+					
+						<tr th:if="${order.orderSetList}">
+							<th>
+								<div class="text-center">
+									セット名
+								</div>
+							</th>
+							<th>
+								<div class="text-center">
+									ピザ・トッピング
+								</div>
+							</th>
+							<th>
+								<div class="text-center">
+									サイドメニュー/ドリンク
+								</div>
+							</th>
+							<th>
+								<div class="text-center">
+									値段×個数
+								</div>
+							</th>
+						</tr>
+						
+						
+						<tr th:each="orderSet : ${order.orderSetList}">
+							<td>
+								<div class="center">
+									<img src="img/1.jpg" th:src="@{'/img/'+${orderSet.set.imagePath}}"
+										class="img-responsive img-rounded" width="100" height="300" alt="${orderSet.set.name}"><br>
+									<span th:text="${orderSet.set.name}">じゃがバターベーコン</span>
+								</div>
+							</td>
+							<td>
+							    <div th:each="orderItem : ${orderSet.orderItemList}">
+								    <span th:if="${orderItem.item.itemCategory} == 1">
+								        <span  th:text="${orderItem.item.name}"></span> <br>
+								    <span th:each="orderTopping : ${orderItem.orderToppingList}">
+								        <span th:text="${orderTopping.topping.name}"></span> 
+								    </span>
+								    </span>
+								</div>
+							</td>
+							<td>
+								<ul th:each="orderItem:${orderSet.orderItemList}">
+									<li th:if="${orderItem.item.itemCategory} == 2">
+										   <span th:text="${orderItem.item.name}"></span>
+									</li>
+									<li th:if="${orderItem.item.itemCategory} == 3">
+										   <span th:text="${orderItem.item.name}"></span>
+									</li>
+								</ul>
+							</td>
+							<td>
+								<div class="text-center" th:text="${#numbers.formatInteger(orderSet.set.price,1,'COMMA')+'円 × '+orderSet.quantity+'個'}">
+									3,280円
+								</div>
+							</td>
+						</tr>
+						
+						<tr>
+							<th>
+								<div class="text-center">
+									商品名
+								</div>
+							</th>
+							<th>
+								<div class="text-center">
+									サイズ、価格(税抜)、数量
+								</div>
+							</th>
+							<th>
+								<div class="text-center">
+									トッピング、価格(税抜)
+								</div>
+							</th>
+							<th>
+								<div class="text-center">
+									小計
+								</div>
+							</th>
+						</tr>
+						
+						<tr th:each="orderItem : ${order.orderItemList}">
+							<td>
+								<div class="center">
+									<img src="img/1.jpg" th:src="@{'/img/'+${orderItem.item.imagePath}}"
+										class="img-responsive img-rounded" width="100" height="300" alt="${orderItem.item.name}"><br>
+									<span th:text="${orderItem.item.name}">じゃがバターベーコン</span>
+								</div>
+							</td>
+							<td>
+								<span class="price" th:text="${'&nbsp;'+orderItem.size+'&nbsp;'}">&nbsp;Ｌ</span>
+								<span th:if="${orderItem.size}=='M'" th:text="${'&nbsp;&nbsp;'+#numbers.formatInteger(orderItem.item.priceM,1,'COMMA')+'円'}">&nbsp;&nbsp;2,380円</span>
+								<span th:if="${orderItem.size}=='L'" th:text="${'&nbsp;&nbsp;'+#numbers.formatInteger(orderItem.item.priceL,1,'COMMA')+'円'}">&nbsp;&nbsp;2,380円</span>
+								<span th:text="${'&nbsp;&nbsp;'+orderItem.quantity}+'個'"> &nbsp;&nbsp;1個</span>
+							</td>
+							<td>
+								<ul th:each="orderTopping:${orderItem.orderToppingList}">
+									<li>
+										<span th:text="${orderTopping.topping.name}">ピーマン</span>
+										<span th:if="${orderItem.size}=='m'" th:text="${#numbers.formatInteger(orderTopping.topping.priceM,1,'COMMA')+'円'}">300円</span>
+										<span th:if="${orderItem.size}=='l'" th:text="${#numbers.formatInteger(orderTopping.topping.priceL,1,'COMMA')+'円'}">300円</span>
+									</li>
+								</ul>
+							</td>
+							<td>
+								<div class="text-center" th:text="${#numbers.formatInteger(orderItem.subTotal,1,'COMMA')+'円'}">
+									3,280円
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				
+				<table class="table table-striped" th:if="!${historyStatus}" th:each="order:${orderList}">
 					<tbody>
 					<tr>
 					    <th colspan="2">
