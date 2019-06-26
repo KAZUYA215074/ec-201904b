@@ -156,6 +156,23 @@ create table sets(
 );
 
 insert into sets values(1,'松','4050円Lピザ＋サイド１＋ドリンク２',4500,'set_1.png',false,4050);
-insert into sets values(2,'竹','3380円Lピザ＋サイド１＋ドリンク２',3800,'set_2.jpg',false,3380);
-insert into sets values(3,'松','2570円Lピザ＋サイド１＋ドリンク２',3000,'set_3.jpg',false,2570);
-insert into sets values(4,'パーティ','3380円Lピザ＋サイド3＋ドリンク5',10000,'set_1.png',false,3380);
+insert into sets values(2,'竹','3380円Lピザ＋サイド１＋ドリンク２',3800,'set_1.png',false,3380);
+insert into sets values(3,'松','2570円Lピザ＋サイド１＋ドリンク２',3000,'set_1.png',false,2570);
+insert into sets values(4,'パーティ','3380円Lピザ＋サイド3＋ドリンク5',10000,'set_2.jpg',false,3380);
+
+drop table if exists order_sets cascade;
+create table order_sets(
+  id serial primary key
+  , set_id integer not null
+  , order_id integer not null
+  , quantity integer not null
+);
+drop table if exists comments cascade;
+create table comments(
+  id serial PRIMARY KEY,
+  error_date date not null,
+  error_page varchar(100) NOT NULL,
+  comment varchar(255) NOT NULL
+);
+
+insert into comments(error_page,error_date,comment)values('エラーページ','1999/1/1','エラーコメント');

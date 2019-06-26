@@ -14,3 +14,5 @@ SELECT id ,user_id , status , total_price , order_date , destination_name , dest
 SELECT id , item_id , order_id , quantity , size FROM order_items;
 --オーダートッピング情報
 SELECT id , topping_id , order_item_id FROM order_toppings ;
+--コメント情報
+select id,error_date,error_page,comment from comments;
