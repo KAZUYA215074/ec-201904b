@@ -15,6 +15,8 @@ public class OrderItem {
 	private Integer itemId;
 	/** 注文ID */
 	private Integer orderId;
+	/** 注文ID */
+	private Integer setId;
 	/** 数量 */
 	private Integer quantity;
 	/** サイズ */
@@ -50,7 +52,7 @@ public class OrderItem {
 	
 	@Override
 	public String toString() {
-		return "OrderItem [id=" + id + ", itemId=" + itemId + ", orderId=" + orderId + ", quantity=" + quantity
+		return "OrderItem [id=" + id + ", itemId=" + itemId + ", orderId=" + orderId + ", setId=" + setId +", quantity=" + quantity
 				+ ", size=" + size + ",\n\t item=" + item + ",\n\t\t orderToppingList=" + orderToppingList + "]";
 	}
 
@@ -58,12 +60,13 @@ public class OrderItem {
 	public OrderItem() {}
 	
 	/** コンストラクタ */
-	public OrderItem(Integer id, Integer itemId, Integer orderId, Integer quantity, Character size, Item item,
+	public OrderItem(Integer id, Integer itemId, Integer orderId, Integer setId,Integer quantity, Character size, Item item,
 			List<OrderTopping> orderToppingList) {
 		super();
 		this.id = id;
 		this.itemId = itemId;
 		this.orderId = orderId;
+		this.setId = setId;
 		this.quantity = quantity;
 		this.size = size;
 		this.item = item;
@@ -122,4 +125,13 @@ public class OrderItem {
 		this.setOrder = setOrder;
 	}
 
+	public Integer getSetId() {
+		return setId;
+	}
+
+	public void setSetId(Integer setId) {
+		this.setId = setId;
+	}
+
+	
 }
