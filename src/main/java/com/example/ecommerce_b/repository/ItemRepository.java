@@ -41,17 +41,16 @@ public class ItemRepository {
 
 	/**
 	 * 全件検索を行う.<br>
+	 * カテゴリー別に全件検索を行う。 引数のパラメータで並び替えを行う。
 	 * 
-	 * 引数のパラメータで並び替えを行う。
-	 * 
-	 * @param status 並び替えをするパラメータ
+	 * @param status   並び替えをするパラメータ
+	 * @param category カテゴリ(ピザ=1,サイドメニュー=2,ドリンク=3)
 	 * @return 取得した商品情報一覧
 	 */
-	public List<Item> findAll(String status) {
-		String sql = "SELECT id,name,description , price_m , price_l , image_path , deleted"
-				+ " FROM items"
-				+ " ORDER BY " + status;
-		List<Item> itemList = template.query(sql,  ITEM_ROW_MAPPER);
+	public List<Item> findAll(int category, String status) {
+		String sql = "SELECT id,name,description , price_m , price_l , image_path , deleted, item_category"
+				+ " FROM items" + " WHERE item_category = :category" + " ORDER BY " + status;
+		List<Item> itemList = template.query(sql, ITEM_ROW_MAPPER);
 		return itemList;
 	}
 
@@ -62,8 +61,7 @@ public class ItemRepository {
 	 * @return 取得した商品情報
 	 */
 	public Item load(int id) {
-		String sql = "SELECT id,name,description , price_m , price_l , image_path , deleted"
-				+ " FROM items"
+		String sql = "SELECT id,name,description , price_m , price_l , image_path , deleted" + " FROM items"
 				+ " WHERE id = :id;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
 		Item item = template.queryForObject(sql, param, ITEM_ROW_MAPPER);
@@ -80,8 +78,7 @@ public class ItemRepository {
 	 * @return 取得した商品情報一覧
 	 */
 	public List<Item> findLikeName(String name, String status) {
-		String sql = "SELECT id,name,description , price_m , price_l , image_path , deleted"
-				+ " FROM items"
+		String sql = "SELECT id,name,description , price_m , price_l , image_path , deleted" + " FROM items"
 				+ " WHERE name ILIKE :name" + " ORDER BY " + status;
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
 		List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);

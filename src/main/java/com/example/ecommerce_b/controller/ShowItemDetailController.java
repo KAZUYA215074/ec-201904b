@@ -26,9 +26,7 @@ public class ShowItemDetailController {
 	 * @return 商品詳細ページ
 	 */
 	@RequestMapping("")
-	public String showDetali(int id, Model model) {
-		System.out.println("showDetali******");
-
+	public String showDetali(int id, int category, Model model) {
 		model.addAttribute("item", getItemDetailService.getDetail(id));
 
 		return "item_detail";
