@@ -66,6 +66,14 @@ public class CartController {
 				model.addAttribute("cartStatus",false);
 				return "cart_list";
 			}
+			model.addAttribute("cartItemStatus",true);
+			model.addAttribute("cartSetStatus",true);
+			if(cart.getOrderItemList().size()==0) {
+				model.addAttribute("cartItemStatus",false);
+			}
+			if(cart.getOrderSetList().size()==0) {
+				model.addAttribute("cartSetStatus",false);
+			}
 			System.out.println(cart);
 			model.addAttribute("cartStatus", true);
 //			User user = new User(5, "sugita", "sugita@ryuhei", "helloworld", "狛江市", "0334300535", "2010005");

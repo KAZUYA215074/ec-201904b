@@ -30,7 +30,7 @@
 				</div>
 				<table class="table table-striped" th:if=${cartStatus}>
 					<tbody>
-						<tr　th:if="${cart.orderSetList}">
+						<tr　th:if="${cartSetStatus}">
 							<th>
 								<div class="text-center">
 									セット名
@@ -116,7 +116,7 @@
 						
 					<table class="table table-striped" th:if=${cartStatus}>
 					<tbody>
-						<tr>
+						<tr　th:if="${cartItemStatus}">
 							<th>
 								<div class="text-center">
 									商品名
