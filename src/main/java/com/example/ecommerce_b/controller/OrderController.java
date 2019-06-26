@@ -1,7 +1,8 @@
 package com.example.ecommerce_b.controller;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.servlet.http.HttpSession;
@@ -71,11 +72,31 @@ public class OrderController {
 	 * 
 	 * @param form
 	 * @return 注文確認画面
+	 * @throws ParseException 
 	 */
 	@RequestMapping("/order")
 	public String order(@Validated OrderForm form,
 			                   BindingResult result,
-			                    Model model ){
+			                    Model model ) throws ParseException{
+		
+		SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = sdFormat.parse(form.getDeliveryDate());
+		
+		if (date.getYear() < new Date().getYear()) {
+			result.rejectValue("deliveryDate",null, "その日時には配達できません");
+		} else if (date.getYear() == new Date().getYear()) {
+			if (date.getMonth() < new Date().getMonth()) {
+				result.rejectValue("deliveryDate",null, "その日時には配達できません");
+			} else if (date.getMonth() == new Date().getMonth()) {
+				if (date.getDay() < new Date().getDay()) {
+					result.rejectValue("deliveryDate",null, "その日時には配達できません");
+				} else if (date.getDay() == new Date().getDay()) {
+					if(Integer.parseInt(form.getDeliveryHour()) < new Date().getHours()){
+						result.rejectValue("deliveryDate",null, "その日時には配達できません");						
+					}
+				}
+			}
+		}
 		if(result.hasErrors()) {
 			return toOrder(model);
 		}
