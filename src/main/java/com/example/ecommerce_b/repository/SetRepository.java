@@ -33,7 +33,7 @@ public class SetRepository {
 		set.setPrice(rs.getInt("price"));
 		set.setImagePath(rs.getString("image_path"));
 		set.setDeleted(rs.getBoolean("deleted"));
-		set.setPizzaPrice(rs.getInt("pizza_l_price"));
+		set.setPizzaLPrice(rs.getInt("pizza_l_price"));
 		
 		return set;
 	};
@@ -74,5 +74,4 @@ public class SetRepository {
 
 		return set;
 	}
-
 }
