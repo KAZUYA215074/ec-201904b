@@ -61,6 +61,14 @@ public class OrderController {
 	public String toOrder(Model model) {
 		Integer userId = (Integer) session.getAttribute("userId");
 		Order order = orderService.serchByUserIdNotOrdered(userId);
+		model.addAttribute("cartItemStatus",true);
+		model.addAttribute("cartSetStatus",true);
+		if(order.getOrderItemList().size()==0) {
+			model.addAttribute("cartItemStatus",false);
+		}
+		if(order.getOrderSetList().size()==0) {
+			model.addAttribute("cartSetStatus",false);
+		}
 		model.addAttribute("order",order);
 		model.addAttribute("tax",order.getTax());
 		model.addAttribute("totalPrice",order.getCalcTotalPrice());
@@ -78,7 +86,8 @@ public class OrderController {
 	public String order(@Validated OrderForm form,
 			                   BindingResult result,
 			                    Model model ) throws ParseException{
-		
+		System.out.println(form.getDeliveryDate());
+		if(form.getDeliveryDate() != "") {
 		SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = sdFormat.parse(form.getDeliveryDate());
 		
@@ -96,6 +105,7 @@ public class OrderController {
 					}
 				}
 			}
+		}
 		}
 		if(result.hasErrors()) {
 			return toOrder(model);

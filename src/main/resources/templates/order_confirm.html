@@ -84,6 +84,11 @@
 								</ul>
 							</td>
 							<td>
+								<div class="text-center" th:text="${orderSet.quantity+'個'}">
+									3,280円
+								</div>
+							</td>
+							<td>
 								<div class="text-center" th:text="${#numbers.formatInteger(orderSet.set.price,1,'COMMA')+'円'}">
 									3,280円
 								</div>

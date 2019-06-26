@@ -42,7 +42,7 @@
 					    </th>
 					</tr>
 					
-						<tr th:if="${order.orderSetList}">
+						<tr th:if="!${historySetStatus}">
 							<th>
 								<div class="text-center">
 									セット名
@@ -101,7 +101,7 @@
 							</td>
 						</tr>
 						
-						<tr>
+						<tr th:if="!${historyItemStatus}">
 							<th>
 								<div class="text-center">
 									商品名
