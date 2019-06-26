@@ -30,9 +30,6 @@ public class CartController {
 		@Autowired
 		private CartService cartService;
 		
-		@Autowired//(仮)
-		private GetItemDetailService getItemDetailService;
-		
 		@Autowired
 		private HttpSession session;
 
@@ -69,15 +66,17 @@ public class CartController {
 			User user = new User(5, "sugita", "sugita@ryuhei", "helloworld", "狛江市", "0334300535", "2010005");
 			
 			List<OrderItem> orderItemList = new ArrayList<OrderItem>();
-			Item item = getItemDetailService.getDetail(10);
-	        List<OrderTopping> orderToppingList =null;
+			Item item = new Item(2, "name", "description", 100, 200, "image", true, null);
+	        List<OrderTopping> orderToppingList =new ArrayList<OrderTopping>() ;
 			OrderItem orderItem = new OrderItem(3, 10, 5, null, 2, 'L', item, orderToppingList);
-			orderItemList.set(0, orderItem);
+			orderItemList.add(0, orderItem);
 			
 			List<OrderSet> orderSetList = new ArrayList<>();
-			Set set = new Set(1, "name", "description", 300, "img", true);
-			OrderSet orderSet = new OrderSet(1, 3, 5, 1, set, null);
-			orderSetList.set(0, orderSet);
+			Set set = new Set(1, "nameset", "description", 300, "img", true);
+//			Set set = new Set(id, name, description, price, imagePath, deleted);
+			OrderSet orderSet = new OrderSet(1, 1, 5, 1, set, null);
+//			OrderSet set = new OrderSet(id, setId, orderId, quantity, set, orderItemList)
+			orderSetList.add(0, orderSet);
 			
 			Order cart = new Order(5, 5, 0, 300, null, null, null, null, null, null, null, null, user, orderItemList, orderSetList);
 			model.addAttribute("cart", cart);

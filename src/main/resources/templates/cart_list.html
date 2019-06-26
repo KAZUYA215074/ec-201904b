@@ -54,6 +54,46 @@
 							<th>
 							</th>
 						</tr>
+						
+						
+						<tr th:each="orderSet : ${cart.orderSetList}">
+							<td>
+								<div class="center">
+									<img src="img/1.jpg" th:src="@{'/img/'+${orderSet.set.imagePath}}"
+										class="img-responsive img-rounded" width="100" height="300" alt="${orderSet.set.name}"><br>
+									<span th:text="${orderSet.set.name}">じゃがバターベーコン</span>
+								</div>
+							</td>
+							<td>
+								<span th:text="${'&nbsp;&nbsp;'+#numbers.formatInteger(orderSet.set.price,1,'COMMA')+'円'}">&nbsp;&nbsp;2,380円</span>
+								<span th:text="${'&nbsp;&nbsp;'+orderSet.quantity}+'個'"> &nbsp;&nbsp;1個</span>
+							</td>
+							<td>
+								<ul th:each="orderItem:${orderSet.orderItemList}">
+									<li>
+										<span th:text="${orderTopping.topping.name}">ピーマン</span>
+										<span th:if="${orderItem.size}=='m'" th:text="${#numbers.formatInteger(orderTopping.topping.priceM,1,'COMMA')+'円'}">300円</span>
+										<span th:if="${orderItem.size}=='l'" th:text="${#numbers.formatInteger(orderTopping.topping.priceL,1,'COMMA')+'円'}">300円</span>
+									</li>
+								</ul>
+							</td>
+							<td>
+								<div class="text-center" th:text="${#numbers.formatInteger(orderSet.set.price,1,'COMMA')+'円'}">
+									3,280円
+								</div>
+							</td>
+							<td>
+								<div class="text-center">
+									<form action="cart_list.html" th:action="@{/delete-item}" method="post">
+										<input type="hidden" name="orderItemId" th:value="${orderSet.id}" value="1">
+										<input type="hidden" name="subTotal" th:value="${orderSet.set.price}" value="1">
+										<button type="submit" class="btn btn-primary">削除</button>
+									</form>
+								</div>
+							</td>
+						</tr>
+						
+						
 						<tr th:each="orderItem : ${cart.orderItemList}">
 							<td>
 								<div class="center">
