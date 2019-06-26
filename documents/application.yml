@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/student
+    username: postgres
+    password: postgres
+  jmx:
+    default-domain: ec-201904b
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: xxxxxxxxx
+    password: xxxxxxxxx
+    properties.mail.smtp.auth: true
+    properties.mail.smtp.starttls.enable: true
+server:
+  servlet:
+    context-path: /ec-201904b
