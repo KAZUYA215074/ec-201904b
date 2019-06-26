@@ -70,7 +70,6 @@ public class RegistUserService {
 		// Date型変換
 		Date formatDate = sdf.parse(dateStr);
 		return formatDate;
-
 	}
 
 }
