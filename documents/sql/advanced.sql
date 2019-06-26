@@ -54,7 +54,7 @@ insert into items values(15, 'シーフードミックス', 'シーフードナ�
 insert into items values(16, 'Family4', 'ラクラクピザ自慢「特うまプルコギ」定番「デラックス」お子様に人気「ツナマイルド」女性に好評「チーズ＆チーズ」の４種のおいしさを贅沢に組み合わせました', 2440, 3650, '16.jpg',false,1);
 insert into items values(17, 'アイダホ風ほっくりポテマヨ', 'みんな大好き！ポテトと特製マヨソースの組み合わせ！定番のおいしさを味わえます', 2440, 3650, '17.jpg',false,1);
 insert into items values(18, '贅沢フォルマッジ', '濃厚なカマンベールソース＆カマンベールと香りとコクのパルメザンチーズをトッピング', 2700, 4050, '18.jpg',false,1);
-INSERT INTO items values(19,'ポテト','ポテトです',300,300,'side_1.png',false,2);
+INSERT INTO items values(19,'サラダ','サラダです',300,300,'side_1.png',false,2);
 INSERT INTO items values(20,'ナゲット','ナゲットです',400,400,'side_2.png',false,2);
 INSERT INTO items values(21,'シーザサラダ','シーザサラダです',500,500,'side_3.png',false,2);
 INSERT INTO items values(22,'コーンスープ','コーンスープです',300,300,'side_4.png',false,2);
@@ -63,7 +63,8 @@ INSERT INTO items values(24,'ファンタグレープ','ファンタグレープ
 INSERT INTO items values(25,'爽健美茶','爽健美茶です',200,300,'drink_1.png',false,3);
 INSERT INTO items values(26,'オレンジ','コーラです',200,300,'drink_1.png',false,3);
 INSERT INTO items values(27,'ビール','です',300,500,'drink_1.png',false,3);
-
+サラダ　スープ　チキン　ポテト　アイス
+お茶　コーら　ビール　オレンジ
 -- トッピング
 drop table if exists toppings cascade;
 
@@ -128,6 +129,7 @@ create table order_items (
   id serial primary key
   , item_id integer not null
   , order_id integer not null
+  , set_id integer not null
   , quantity integer not null
   , size varchar(1)
 ) ;
