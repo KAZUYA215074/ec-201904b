@@ -53,7 +53,7 @@ public class OrderSetRepository {
 		String sql="SELECT o.id as order_set_id , o.set_id , o.order_id , o.quantity , s.name,s.description , s.price , s.image_path , s.deleted,s.pizza_l_price FROM order_sets as o left outer join sets s on (o.set_id=s.id) where o.order_id=:id";
 		SqlParameterSource param=new MapSqlParameterSource().addValue("id", orderId);
 		List<OrderSet> orderSetList=template.query(sql, param, ORDERSET_ROW_MAPPER);
-		System.out.println("a="+orderSetList);
+		System.out.println(orderSetList);
 		return orderSetList;
 	}
 
@@ -65,7 +65,7 @@ public class OrderSetRepository {
 	 * @param subTotal
 	 */
 	public void deleteOrderSet(Integer id) {
-		String sql="delete from order_sets where id=:id returning price;";
+		String sql="delete from order_sets where id=:id;";
 		SqlParameterSource param=new MapSqlParameterSource().addValue("id", id);		
 		template.update(sql, param);
 		
