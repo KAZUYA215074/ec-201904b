@@ -61,10 +61,17 @@ public class OrderItemRepository {
 	 * ショッピングカートのidからカート内の注文商品を全件検索する.
 	 * 
 	 * @param orderItemId 取得したいショッピングカートのid
+	 * @param setOrder アイテムを検索するときはfalse,セット内容を検索するときはtrue
 	 * @return 注文商品のリスト
 	 */
 	public List<OrderItem> findByOrderId(Integer orderId,Boolean setOrder){
-		String sql="SELECT o.id as order_item_id, o.item_id , o.order_id , o.quantity , o.size,i.name,i.description , i.price_m , i.price_l , image_path , deleted FROM order_items as o left outer join items i on (o.item_id=i.id) where o.order_id=:id order by i.id desc";
+		String searchWord;
+		if(setOrder) {
+			searchWord="o.set_id";
+		}else {
+			searchWord="o.order_id";
+		}
+		String sql="SELECT o.id as order_item_id, o.item_id , o.order_id ,o.set_id, o.quantity , o.size, o.setOrder, i.name,i.description , i.price_m , i.price_l , image_path , deleted FROM order_items as o left outer join items i on (o.item_id=i.id) where "+searchWord+"=:id order by i.id desc";
 		SqlParameterSource param=new MapSqlParameterSource().addValue("id", orderId);
 		List<OrderItem> orderItemList=template.query(sql, param, ORDERITEM_ROW_MAPPER);
 		System.out.println(orderItemList);

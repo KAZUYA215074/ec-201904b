@@ -59,7 +59,14 @@ public class CartService {
 			orderItemList.set(i, item);
 		}
 		List<OrderSet> orderSetList=orderSetRepository.findByOrderId(orderId);
-
+		for(int j=0;j<orderSetList.size();j++) {
+			List<OrderItem> orderItemList2=orderItemRepository.findByOrderId(orderSetList.get(j).getOrderId(),true);
+			for(int i=0;i<orderItemList2.size();i++) {
+				OrderItem item=orderItemList2.get(i);
+				item.setOrderToppingList(orderToppingRepository.findByOrderItemId(item.getId()));
+				orderItemList.set(i, item);				
+			}
+		}
 		order.setOrderItemList(orderItemList);
 		return order;		//ここではUserを詰め込んでいない
 	}
