@@ -1,5 +1,7 @@
 package com.example.ecommerce_b.domain;
 
+import java.util.Date;
+
 /**
  * ユーザーのためのドメイン.
  * 
@@ -21,7 +23,17 @@ public class User {
 	private String telephone;
 	/**　郵便番号　*/
 	private String zipcode;
+	/** 誕生日*/
+	private Date birthday;
 	
+	public Date getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+
 	public String getZipcode() {
 		return zipcode;
 	}
@@ -33,7 +45,8 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", mailAddress=" + mailAddress + ", password=" + password
-				+ ", address=" + address + ", telephone=" + telephone + "zipcode="+zipcode+"]";
+				+ ", address=" + address + ", telephone=" + telephone + ", zipcode=" + zipcode + ", birthday="
+				+ birthday + "]";
 	}
 		
 	/** 引数なしのコンストラクタ */
