@@ -25,8 +25,6 @@ public class OrderItem {
 	private Item item;
 	/** 注文トッピングリスト */
 	private List<OrderTopping> orderToppingList;
-	/**単品=false ,セット=true */
-	private Boolean setOrder;
 
 	
 
@@ -117,13 +115,6 @@ public class OrderItem {
 		this.orderToppingList = orderToppingList;
 	}
 	
-	public Boolean getSetOrder() {
-		return setOrder;
-	}
-
-	public void setSetOrder(Boolean setOrder) {
-		this.setOrder = setOrder;
-	}
 
 	public Integer getSetId() {
 		return setId;

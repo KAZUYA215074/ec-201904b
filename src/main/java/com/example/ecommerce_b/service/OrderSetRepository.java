@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import com.example.ecommerce_b.domain.OrderSet;
+import com.example.ecommerce_b.domain.Set;
 
 /**
  * 注文されたセットテーブルを管理するリポジトリ.
@@ -23,12 +24,21 @@ public class OrderSetRepository {
 	private NamedParameterJdbcTemplate template;
 		
 	private static final RowMapper<OrderSet> ORDERSET_ROW_MAPPER=(rs,i) ->{
-		OrderSet ordeSet=new OrderSet();
-		ordeSet.setId(rs.getInt("id"));			//名称はデータベースに合わせる
-		ordeSet.setSetId(rs.getInt("set_id"));
-		ordeSet.setOrderId(rs.getInt("order_id"));
-		ordeSet.setQuantity(rs.getInt("quantity"));
-		return ordeSet;
+		OrderSet orderSet=new OrderSet();
+		orderSet.setId(rs.getInt("order_set_id"));			//名称はデータベースに合わせる
+		orderSet.setSetId(rs.getInt("set_id"));
+		orderSet.setOrderId(rs.getInt("order_id"));
+		orderSet.setQuantity(rs.getInt("quantity"));
+		Set set=new Set();
+		set.setId(rs.getInt("order_set_id"));
+		set.setName(rs.getString("name"));
+		set.setDescription(rs.getString("description"));
+		set.setPrice(rs.getInt("price"));
+		set.setImagePath(rs.getString("image_path"));
+		set.setDeleted(rs.getBoolean("deleted"));
+		set.setPizzaPrice(rs.getInt("pizza_price"));
+		orderSet.setSet(set);
+		return orderSet;
 	};
 
 	
@@ -39,7 +49,7 @@ public class OrderSetRepository {
 	 * @return セットのリスト
 	 */
 	public List<OrderSet> findByOrderId(Integer orderId){
-		String sql="SELECT id, set_id , order_id ,quantity , FROM order_sets where order_id=:id order by order_id desc";
+		String sql="SELECT o.id as order_set_id , o.set_id , o.order_id , o.quantity , s.name,s.description , s.price , s.image_path , s.deleted,s.pizza_price FROM order_sets as o left outer join sets s on (o.set_id=s.id) where o.id=:id";
 		SqlParameterSource param=new MapSqlParameterSource().addValue("id", orderId);
 		List<OrderSet> orderSetList=template.query(sql, param, ORDERSET_ROW_MAPPER);
 		System.out.println(orderSetList);
