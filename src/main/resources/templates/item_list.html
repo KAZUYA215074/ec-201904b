@@ -112,7 +112,7 @@
 				<!-- ページング機能 -->
 				<div th:if="${pageTotalNumbers > 0}" class="pagination"
 				    th:each="pageNumber : ${pageNuberList}">
-				    <a th:href="@{/(page=${pageNumber}, code=${code}, status=${status})}"
+				    <a th:href="@{/(page=${pageNumber}, code=${code}, status=${status}, category=${category})}"
 				        th:text=${pageNumber}></a>
 				</div>
 

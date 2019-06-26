@@ -36,6 +36,20 @@ public class GetSetListService {
 	}
 
 	/**
+	 * 名前のあいまい検索を行う.<br>
+	 * statusのパラメータで並び替えをする。
+	 * 
+	 * @param name   検索を行う文字列
+	 * @param status 並び替えをするパラメータ
+	 * @return 取得した商品情報一覧
+	 */
+	public List<Set> searchLikeName(String name, String status) {
+		List<Set> setList = setRepository.findLikeName(name, returnFieldName(status));
+
+		return sortByStatus(status, setList);
+	}
+
+	/**
 	 * ステータスから、並べ替える値の名前を返す. <br>
 	 * "id"なら"id", "安い"または"高い" なら "price_m"
 	 * 
