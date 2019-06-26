@@ -1,6 +1,7 @@
 package com.example.ecommerce_b.controller;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.servlet.http.HttpSession;
@@ -62,8 +63,6 @@ public class OrderController {
 		model.addAttribute("order",order);
 		model.addAttribute("tax",order.getTax());
 		model.addAttribute("totalPrice",order.getCalcTotalPrice());
-		
-		System.out.println(order);
 		return "order_confirm";
 	}
 	
@@ -81,12 +80,13 @@ public class OrderController {
 			return toOrder(model);
 		}
 		
+		String strDeliveryTime = form.getDeliveryDate() + " " + form.getDeliveryHour() +":00:00";
+		
 		Integer userId = (Integer) session.getAttribute("userId");
+		
 		Order order = orderService.serchByUserIdNotOrdered(userId);
 		BeanUtils.copyProperties(form, order);
 		
-		String strDeliveryTime = form.getDeliveryDate() + " " + form.getDeliveryHour() +":00:00";
-		System.out.println(strDeliveryTime);
 		order.setDeliveryTime(Timestamp.valueOf(strDeliveryTime));
 		
 		order.setOrderDate(new Date());
@@ -100,6 +100,16 @@ public class OrderController {
 		orderService.order(order);
 		sendMailService.sendMail(order);
 		
+		return "redirect:/finish";
+	}
+	
+	/**
+	 * 決済画面を表示する.
+	 * 
+	 * @return 決済画面
+	 */
+	@RequestMapping("/finish")
+	public String finish() {
 		return "order_finished";
 	}
 
