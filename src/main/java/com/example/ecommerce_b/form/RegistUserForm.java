@@ -40,6 +40,7 @@ public class RegistUserForm {
 	@NotBlank(message = "確認用パスワードを入力して下さい")
 	private String confirmationPassword;
 	/** 誕生日*/
+	@NotBlank(message = "誕生日を入力してください")
 	private String birthday;
 
 	public String getBirthday() {
