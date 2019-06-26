@@ -59,7 +59,14 @@ public class CartService {
 			orderItemList.set(i, item);
 		}
 		List<OrderSet> orderSetList=orderSetRepository.findByOrderId(orderId);
-
+		for(int j=0;j<orderSetList.size();j++) {
+			List<OrderItem> orderItemList2=orderItemRepository.findByOrderId(orderSetList.get(j).getOrderId(),true);
+			for(int i=0;i<orderItemList2.size();i++) {
+				OrderItem item=orderItemList2.get(i);
+				item.setOrderToppingList(orderToppingRepository.findByOrderItemId(item.getId()));
+				orderItemList.set(i, item);				
+			}
+		}
 		order.setOrderItemList(orderItemList);
 		return order;		//ここではUserを詰め込んでいない
 	}
@@ -90,11 +97,14 @@ public class CartService {
 	/**
 	 * 注文商品をショッピングカートから削除する.
 	 * 
-	 * @param orderItemId 削除する注文商品のid
+	 * @param orderItemId 削除する注文商品またはセットのid
 	 */
-	public void deleteOrderItem(Integer orderItemId,Integer subTotal) {
-		orderItemRepository.deleteOrderItem(orderItemId,subTotal);
-		orderToppingRepository.deleteOrderItem(orderItemId);
+	public void deleteOrderItem(Integer orderItemId,Integer subTotal,Boolean setOrder) {
+		if(setOrder) {
+			orderSetRepository.deleteOrderSet(orderItemId);
+		}
+		orderItemRepository.deleteOrderItem(orderItemId,subTotal,setOrder);
+		orderToppingRepository.deleteOrderItem(orderItemId);			
 	}
 	
 	/**

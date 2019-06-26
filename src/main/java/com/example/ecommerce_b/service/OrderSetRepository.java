@@ -9,7 +9,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
-import com.example.ecommerce_b.domain.OrderItem;
 import com.example.ecommerce_b.domain.OrderSet;
 
 /**
@@ -45,5 +44,19 @@ public class OrderSetRepository {
 		List<OrderSet> orderSetList=template.query(sql, param, ORDERSET_ROW_MAPPER);
 		System.out.println(orderSetList);
 		return orderSetList;
+	}
+
+
+	/**
+	 *注文セットを削除する.
+	 *
+	 * @param id
+	 * @param subTotal
+	 */
+	public void deleteOrderSet(Integer id) {
+		String sql="delete from order_sets where id=:id returning price;";
+		SqlParameterSource param=new MapSqlParameterSource().addValue("id", id);		
+		template.update(sql, param);
+		
 	}
 }
