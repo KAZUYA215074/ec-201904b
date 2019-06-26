@@ -1,24 +1,45 @@
 <!DOCTYPE html>
-<html lang="ja" xmlns:th="http://www.thymeleleaf.org">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
-<link rel=“stylesheet” href=“style.css”>
-<title>システムの操作を中断しました</title>
-</head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ネットでピザ注文</title>
+  <link th:href="@{/css/bootstrap.css}" rel="stylesheet">
+
+  <head>
+    <meta charset="UTF-8">
+    <link rel=“stylesheet” href=“style.css”>
+    <title>システムの操作を中断しました</title>
+  </head>
+
 <body>
-
-<pre>
-以下のいずれかの理由でシステムの操作を中断しました。
-
-・不正な操作が行われた
-・長い時間操作を行わなかった
-・現在システムメンテナンス中
-
-しばらく経ってからもう一度操作してください。
-
-</pre>
-
-<a th:href="@{/}" class="navbar-link">商品一覧へ</a>
-
+  <div class="container">
+    <div th:replace="parts::header()"></div>
+    <div class="row">
+      <div>
+        <h3 class="text-center">以下のいずれかの理由でシステムの操作を中断しました。</h1>
+      </div>
+      <ul class="col-md-4 col-md-offset-4">
+        <li>
+          不正な操作が行われた
+        </li>
+        <li>
+          長い時間操作を行わなかった
+        </li>
+        <li>
+          現在システムメンテナンス中
+        </li>
+      </ul>
+      <div>
+        <p class="text-center">しばらく経ってからもう一度操作してください。</p>
+        <a href="item_list.html" th:href="@{/}" class="col-xs-offset-5 col-xs-5">
+          <button type="button" class="btn btn-primary" id="itemlist-btn">商品一覧へ戻る</button>
+        </a>
+      </div>
+    </div>
+  </div>
 </body>
+
 </html>
