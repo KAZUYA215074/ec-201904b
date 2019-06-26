@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.ecommerce_b.domain.Order;
 import com.example.ecommerce_b.domain.OrderItem;
+import com.example.ecommerce_b.domain.OrderSet;
 import com.example.ecommerce_b.repository.OrderItemRepository;
 import com.example.ecommerce_b.repository.OrderRepository;
 import com.example.ecommerce_b.repository.OrderToppingRepository;
@@ -28,6 +29,8 @@ public class CartService {
 		private OrderItemRepository orderItemRepository; 
 	@Autowired 
 		private OrderToppingRepository orderToppingRepository; 
+	@Autowired 
+	private OrderSetRepository orderSetRepository; 
 //	@Autowired 
 //		private UserRepository userRepository; 
 
@@ -49,12 +52,14 @@ public class CartService {
 		}
 		int orderId=order.getId();
 		System.out.println(orderId);
-		List<OrderItem> orderItemList=orderItemRepository.findByOrderId(orderId);
+		List<OrderItem> orderItemList=orderItemRepository.findByOrderId(orderId,false);
 		for(int i=0;i<orderItemList.size();i++) {
 			OrderItem item=orderItemList.get(i);
 			item.setOrderToppingList(orderToppingRepository.findByOrderItemId(item.getId()));
 			orderItemList.set(i, item);
 		}
+		List<OrderSet> orderSetList=orderSetRepository.findByOrderId(orderId);
+
 		order.setOrderItemList(orderItemList);
 		return order;		//ここではUserを詰め込んでいない
 	}
@@ -69,7 +74,7 @@ public class CartService {
 	public void addOrderItem(Integer userId,OrderItem orderItem, List<Integer> toppingIdList) {
 		Order order=orderRepository.findByUserIdAndStatus(userId, 0);
 		if(order==null) {
-			order=new Order(null, userId, 0,0, null, null, null, null, null, null, null, null, null, null);
+			order=new Order(null, userId, 0,0, null, null, null, null, null, null, null, null, null, null,null);
 			order.setId(orderRepository.insertOrder(order));
 		}
 		orderItem.setOrderId(order.getId());

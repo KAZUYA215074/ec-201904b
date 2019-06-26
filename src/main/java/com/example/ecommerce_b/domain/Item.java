@@ -25,11 +25,15 @@ public class Item {
 	private Boolean deleted;
 	/** トッピングリスト */
 	private List<Topping> toppingList;
-	
+	/**
+	 * カテゴリ(ピザ=1,サイドメニュー=2,ドリンク=3)
+	 */
+	private Integer itemCategory;
+
 	@Override
 	public String toString() {
 		return "Item [id=" + id + ", name=" + name + ", description=" + description + ", priceM=" + priceM + ", priceL="
-				+ priceL + ", imagePath=" + imagePath + ", deleted=" + deleted + ", toppingList=" + toppingList + "]";
+				+ priceL + ", imagePath=" + imagePath + ", deleted=" + deleted + ", toppingList=" + toppingList + ",itemCategory="+itemCategory+"]";
 	}
 
 	/** 引数なしのコンストラクタ */
@@ -99,4 +103,12 @@ public class Item {
 		this.toppingList = toppingList;
 	}
 	
+	public Integer getItemCategory() {
+		return itemCategory;
+	}
+
+	public void setItemCategory(Integer itemCategory) {
+		this.itemCategory = itemCategory;
+	}
+
 }

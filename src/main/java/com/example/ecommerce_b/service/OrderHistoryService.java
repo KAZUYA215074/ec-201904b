@@ -44,7 +44,7 @@ public class OrderHistoryService {
 		for (Order order : orderList) {
 			int orderId = order.getId();
 			System.out.println(orderId);
-			List<OrderItem> orderItemList = orderItemRepository.findByOrderId(orderId);
+			List<OrderItem> orderItemList = orderItemRepository.findByOrderId(orderId,false);
 			for (int i = 0; i < orderItemList.size(); i++) {
 				OrderItem item = orderItemList.get(i);
 				item.setOrderToppingList(orderToppingRepository.findByOrderItemId(item.getId()));
