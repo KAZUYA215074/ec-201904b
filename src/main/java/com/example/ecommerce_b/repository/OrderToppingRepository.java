@@ -29,8 +29,8 @@ public class OrderToppingRepository {
 	private static final RowMapper<OrderTopping> ORDERTOPPING_ROW_MAPPER=(rs,i) ->{
 		OrderTopping orderTopping=new OrderTopping();   //orderTopping
 		orderTopping.setId(rs.getInt("order_topping_id"));
-		orderTopping.setId(rs.getInt("topping_id"));
-		orderTopping.setId(rs.getInt("order_item_id"));
+		orderTopping.setToppingId(rs.getInt("topping_id"));
+		orderTopping.setOrderItemId(rs.getInt("order_item_id"));
 		Topping topping=new Topping();					//Topping
 		topping.setId(rs.getInt("topping_id"));
 		topping.setName(rs.getString("name"));

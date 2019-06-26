@@ -76,7 +76,6 @@ public class OrderItemRepository {
 		String sql="SELECT o.id as order_item_id, o.item_id , o.order_id ,o.set_id, o.quantity , o.size, i.name,i.description , i.price_m , i.price_l , i.image_path , i.deleted,i.item_category FROM order_items as o left outer join items i on (o.item_id=i.id) where "+searchWord+"=:id order by o.id desc";
 		SqlParameterSource param=new MapSqlParameterSource().addValue("id", orderId);
 		List<OrderItem> orderItemList=template.query(sql, param, ORDERITEM_ROW_MAPPER);
-		System.out.println(orderItemList);
 		return orderItemList;
 	}
 	
