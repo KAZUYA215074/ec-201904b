@@ -20,13 +20,13 @@
 		<!-- タブボタン部分 -->
 		<ul class="nav nav-tabs">
 			<li class="nav-item">
-				<a th:href="@{/(code=${code}, status=${status}, category=1)}" class="nav-link">ピザ</a>
+				<a th:href="@{/(status=${status}, category=1)}" class="nav-link">ピザ</a>
 			</li>
 			<li class="nav-item">
-				<a  th:href="@{/(code=${code}, status=${status}, category=2)}" class="nav-link">サイドメニュー</a>
+				<a  th:href="@{/(status=${status}, category=2)}" class="nav-link">サイドメニュー</a>
 			</li>
 			<li class="nav-item">
-				<a  th:href="@{/(code=${code}, status=${status}, category=3)}" class="nav-link">ドリンク</a>
+				<a  th:href="@{/(status=${status}, category=3)}" class="nav-link">ドリンク</a>
 			</li>
 			<li class="nav-item">
 				<a  th:href="@{/}" class="nav-link">セット</a>
@@ -51,6 +51,7 @@
 							</div>
 							<div class="text-center">
 							<input type="hidden" name="status" th:value="${status}">
+							<input type="hidden" name="category" th:value="${category}">
 								<button type="submit" value="検索" class="btn btn-primary" id="searchButton">検索</button>
 								<button type="button" value="クリア" class="btn btn-default" id="resetButton">クリア</button>
 							</div>
