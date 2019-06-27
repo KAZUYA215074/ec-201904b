@@ -103,11 +103,11 @@ public class CartService {
 	 * 
 	 * @param orderItemId 削除する注文商品またはセットのid
 	 */
-	public void deleteOrderItem(Integer orderItemId,Integer subTotal,Boolean setOrder) {
+	public void deleteOrderItem(Integer orderItemId,Integer subTotal,Boolean setOrder,Integer orderId) {
 		if(setOrder) {
 			orderSetRepository.deleteOrderSet(orderItemId);
 		}
-		orderItemRepository.deleteOrderItem(orderItemId,subTotal,setOrder);
+		orderItemRepository.deleteOrderItem(orderItemId,subTotal,setOrder,orderId);
 		System.out.println("kotti");
 		orderToppingRepository.deleteOrderItem(orderItemId);			
 	}

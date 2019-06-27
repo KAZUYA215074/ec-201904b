@@ -104,8 +104,8 @@ public class CartController {
 	 * @return ショッピングカート画面
 	 */
 	@RequestMapping("/delete-item")
-	public String deleteItem(String orderItemId, Integer subTotal, Boolean setOrder) {
-		cartService.deleteOrderItem(Integer.parseInt(orderItemId), subTotal, setOrder);
+	public String deleteItem(String orderItemId, Integer subTotal, Boolean setOrder,Integer orderId) {
+		cartService.deleteOrderItem(Integer.parseInt(orderItemId), subTotal, setOrder,orderId);
 		return "redirect:/show-cart";
 	}
 

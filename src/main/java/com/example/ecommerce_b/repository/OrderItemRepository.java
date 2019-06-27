@@ -111,19 +111,16 @@ public class OrderItemRepository {
 	 * 
 	 * @param id 削除する注文商品またはセットのid
 	 */
-	public void deleteOrderItem(Integer id,Integer subTotal,Boolean setOrder) {
+	public void deleteOrderItem(Integer id,Integer subTotal,Boolean setOrder,Integer orderId) {
 		String searchWord;
 		if(setOrder){
 			searchWord="set_id";
-			System.out.println("kokodayo");
 		}else {
 			searchWord="id";
-			System.out.println("kottidayo");
 		}
-		String sql="delete from order_items where "+searchWord+"=:id returning order_id;";
+		String sql="delete from order_items where "+searchWord+"=:id;";
 		SqlParameterSource param=new MapSqlParameterSource().addValue("id", id).addValue("subTotal", subTotal);		
-		int orderId=template.queryForObject(sql, param,Integer.class);
-		System.out.println("kokonano");
+		template.update(sql, param);
 		String sql2="update orders set total_price= (total_price-:subTotal) where id=:orderId";
 		SqlParameterSource param2=new MapSqlParameterSource().addValue("orderId", orderId).addValue("subTotal", subTotal);		
 		template.update(sql2, param2);

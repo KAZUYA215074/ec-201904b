@@ -107,6 +107,7 @@
 										<input type="hidden" name="orderItemId" th:value="${orderSet.id}" value="1">
 										<input type="hidden" name="subTotal" th:value="${orderSet.set.price}" value="1">
 										<input type="hidden" name="setOrder" th:value="true" value="true">
+										<input type="hidden" name="orderId" th:value="${orderSet.orderId}" value="1">
 										<button type="submit" class="btn btn-primary">削除</button>
 									</form>
 								</div>
@@ -176,6 +177,7 @@
 										<input type="hidden" name="orderItemId" th:value="${orderItem.id}" value="1">
 										<input type="hidden" name="subTotal" th:value="${orderItem.subTotal}" value="1">
 										<input type="hidden" name="setOrder" th:value="false" value="false">
+										<input type="hidden" name="orderId" th:value="${orderItem.orderId}" value="1">
 										<button type="submit" class="btn btn-primary">削除</button>
 									</form>
 								</div>

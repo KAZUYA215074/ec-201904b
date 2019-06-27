@@ -46,7 +46,7 @@
 							<div class="form-group">
 								<label for="code" class="control-label col-sm-2">商品名</label>
 								<div class="col-sm-9">
-									<input type="text" name="code" id="code" class="form-control input-sm" th:value="${code}" />
+									<input type="text" name="code" th:id="'code'+${category}" class="form-control input-sm" th:value="${code}" />
 								</div>
 							</div>
 							<div class="text-center">
@@ -136,8 +136,32 @@
 		});
 
 		// オートコンプリートの情報を取得する
-		$.getJSON(/*[[ @{/getAutoComplete} ]]*/, function(data) {
-			$('#code').autocomplete({
+		$.getJSON(/*[[ @{/getAutoComplete1} ]]*/, function(data) {
+			$('#code1').autocomplete({
+				source : data,
+				autoFocus : false,
+				delay : 0,
+				minLength : 1
+			});
+	    });
+		$.getJSON(/*[[ @{/getAutoComplete2} ]]*/, function(data) {
+			$('#code2').autocomplete({
+				source : data,
+				autoFocus : false,
+				delay : 0,
+				minLength : 1
+			});
+	    });
+		$.getJSON(/*[[ @{/getAutoComplete3} ]]*/, function(data) {
+			$('#code3').autocomplete({
+				source : data,
+				autoFocus : false,
+				delay : 0,
+				minLength : 1
+			});
+	    });
+		$.getJSON(/*[[ @{/getAutoComplete4} ]]*/, function(data) {
+			$('#code4').autocomplete({
 				source : data,
 				autoFocus : false,
 				delay : 0,
@@ -148,7 +172,10 @@
 
 		// 検索条件クリア
 		$("#resetButton").click(function(){
-			$("#code").val("");
+			$("#code1").val("");
+			$("#code2").val("");
+			$("#code3").val("");
+			$("#code4").val("");
 		});
 
 	});
