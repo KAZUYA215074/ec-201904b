@@ -97,7 +97,7 @@
 								</div>
 							</td>
 							<td>
-								<div class="text-center" th:text="${#numbers.formatInteger(orderSet.set.price,1,'COMMA')+'円'}">
+								<div class="text-center" th:text="${#numbers.formatInteger(orderSet.subTotal,1,'COMMA')+'円'}">
 									3,280円
 								</div>
 							</td>
@@ -105,7 +105,7 @@
 								<div class="text-center">
 									<form action="cart_list.html" th:action="@{/delete-item}" method="post">
 										<input type="hidden" name="orderItemId" th:value="${orderSet.id}" value="1">
-										<input type="hidden" name="subTotal" th:value="${orderSet.set.price}" value="1">
+										<input type="hidden" name="subTotal" th:value="${orderSet.subTotal}" value="1">
 										<input type="hidden" name="setOrder" th:value="true" value="true">
 										<input type="hidden" name="orderId" th:value="${orderSet.orderId}" value="1">
 										<button type="submit" class="btn btn-primary">削除</button>

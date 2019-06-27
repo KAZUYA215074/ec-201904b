@@ -108,7 +108,6 @@ public class CartService {
 			orderSetRepository.deleteOrderSet(orderItemId);
 		}
 		orderItemRepository.deleteOrderItem(orderItemId,subTotal,setOrder,orderId);
-		System.out.println("kotti");
 		orderToppingRepository.deleteOrderItem(orderItemId);			
 	}
 	
@@ -124,14 +123,13 @@ public class CartService {
 			orderRepository.updateUserId(userId, loginUserId);
 		}else {
 			orderItemRepository.updateOrderId(userId,order.getId());
-			List<Integer> setPriceList=orderSetRepository.updateOrderId(userId,order.getId());
 			Order newOrder=loadOrder(loginUserId);
 			int newTotalPrice=0;
 			for(OrderItem item :newOrder.getOrderItemList()) {
 				newTotalPrice+=item.getSubTotal();
 			}
-			for(Integer setPrice :setPriceList) {
-				newTotalPrice+=setPrice;
+			for(OrderSet set :newOrder.getOrderSetList()) {
+				newTotalPrice+=set.getSubTotal();
 			}
 			newOrder.setTotalPrice(newTotalPrice);
 			orderRepository.updateOrder(newOrder);
@@ -184,7 +182,7 @@ public class CartService {
 			orderItemRepository.insertOrderItem(orderSideMenu);
 		}
 		orderSet=orderSetRepository.load(orderSetId);
-		orderRepository.addTotalPrice(order.getId(), orderSet.getSet().getPrice());
+		orderRepository.addTotalPrice(order.getId(), orderSet.getSubTotal());
 		
 	}
 	
