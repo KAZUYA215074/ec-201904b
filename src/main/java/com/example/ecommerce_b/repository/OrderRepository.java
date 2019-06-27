@@ -48,10 +48,8 @@ public class OrderRepository {
 	
 	private final static ResultSetExtractor<Map<Date,Integer>> SALES_RESULT_SET = rs -> {
 		Map<Date,Integer> salesMap = new LinkedHashMap<>();
-		while (rs.next()) {
-			while(rs.next()) {
+		while (rs.next()) {	
 				salesMap.put(rs.getDate("sales_date"),rs.getInt("sales"));
-			}
 		}
 		return salesMap;
 	};
