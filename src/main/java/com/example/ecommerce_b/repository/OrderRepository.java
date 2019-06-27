@@ -1,10 +1,14 @@
 package com.example.ecommerce_b.repository;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -41,6 +45,18 @@ public class OrderRepository {
 		order.setPaymentMethod(rs.getInt("payment_method"));
 		return order;
 	};
+	
+	private final static ResultSetExtractor<Map<Date,Integer>> SALES_RESULT_SET = rs -> {
+		Map<Date,Integer> salesMap = new HashMap<>();
+		while (rs.next()) {
+			while(rs.next()) {
+				salesMap.put(rs.getDate("sales_date"),rs.getInt("sales"));
+			}
+		}
+		return salesMap;
+	};
+	
+	
 
 	/**
 	 * ユーザーIDと状態から注文情報を取得.
@@ -153,4 +169,11 @@ public class OrderRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", orderId).addValue("totalPrice", totalPrice);
 		template.update(sql, param);
 	}
+	
+	public Map<Date,Integer> findSaleHistory(){
+		String sql = "select order_date as sales_date,sum(total_price) as sales from orders where status=2 or status=3 group by order_date order by order_date desc; ";
+		Map<Date,Integer> salesMap = template.query(sql,SALES_RESULT_SET);
+		return salesMap;
+	}
+	
 }
