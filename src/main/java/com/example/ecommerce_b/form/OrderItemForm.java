@@ -2,6 +2,8 @@ package com.example.ecommerce_b.form;
 
 import java.util.List;
 
+import com.example.ecommerce_b.domain.OrderTopping;
+
 /**
  * 注文商品を追加するフォーム.
  * 
@@ -17,8 +19,7 @@ public class OrderItemForm {
 	/** サイズ */
 	private String size;
 	/** トッピングのidのリスト */
-	private List<Integer> orderToppingIdList;
-	
+	private List<Integer> orderToppingIdList;	
 	
 	@Override
 	public String toString() {
@@ -27,6 +28,7 @@ public class OrderItemForm {
 	}
 	
 	//get&set
+	
 	public Integer getItemId() {
 		return itemId;
 	}

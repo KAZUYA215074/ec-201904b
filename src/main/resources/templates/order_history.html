@@ -34,7 +34,7 @@
 								<div class="text-center" th:if="!${order.orderDate}" th:text="まだ注文が完了していません"></div>
 								<div class="text-center" th:if="!${order.orderDate}"><a th:href="@{/to-order}">注文決済画面へ</a></div>
 					    </th>
-					    <th>
+					    <th colspan="2">
 								<div class="text-center" th:text="'合計金額：'+${order.calcTotalPrice}+'円'"></div>
 					    </th>
 					    <th>
@@ -61,6 +61,10 @@
 							<th>
 								<div class="text-center">
 									値段×個数
+								</div>
+							</th>
+							<th>
+								<div class="text-center">
 								</div>
 							</th>
 						</tr>
@@ -99,6 +103,15 @@
 									3,280円
 								</div>
 							</td>
+							<td>
+							     <form class="text-center" th:action="@{/buy-again}" method="post">
+							     <input type="hidden" name="" value=""></input>
+							     <input type="hidden" name="" value=""></input>
+							     <input type="hidden" name="" value=""></input>
+							     <input type="hidden" name="" value=""></input>
+							     <button>同じものを<br>カートに入れる</button>
+							     </form>
+							</td>
 						</tr>
 						
 						<tr th:if="!${historyItemStatus}">
@@ -120,6 +133,10 @@
 							<th>
 								<div class="text-center">
 									小計
+								</div>
+							</th>
+							<th>
+								<div class="text-center">
 								</div>
 							</th>
 						</tr>
@@ -151,6 +168,18 @@
 								<div class="text-center" th:text="${#numbers.formatInteger(orderItem.subTotal,1,'COMMA')+'円'}">
 									3,280円
 								</div>
+							</td>
+							<td>
+							     <form th:object="${orderItemForm}" 
+							     class="text-center" th:action="@{/buy-again-item}" method="post">
+							     <input type="hidden" name="itemId" th:value="${orderItem.itemId}"></input>
+							     <input type="hidden" name="quantity" th:value="${orderItem.quantity}"></input>
+							     <input type="hidden" name="size" th:value="${orderItem.size}"></input>
+							     <div th:each=" orderTopping,status : ${orderItem.orderToppingList}">
+							     <input type="hidden" name="orderToppingIdList" th:value="${orderTopping.id}"></input>
+							     </div>
+							     <button>同じものを<br>カートに入れる</button>
+							     </form>
 							</td>
 						</tr>
 					</tbody>
