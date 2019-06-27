@@ -83,5 +83,10 @@ public class OrderSet {
 		this.orderItemList = orderItemList;
 	}
 	
-	
+	public Integer getSubTotal() {
+		return set.getPrice()*quantity;
+	}
+	public void setSubTotal(Integer subTotal) {
+		
+	}
 }
