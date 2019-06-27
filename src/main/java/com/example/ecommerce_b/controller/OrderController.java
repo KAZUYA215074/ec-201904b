@@ -93,17 +93,28 @@ public class OrderController {
 			}
 		}
 		LocalDate localDate = LocalDate.now();
-		String strDate;
-		if(localDate.getDayOfMonth() < 10) {
-		strDate = localDate.getYear() + "-0" +
+		String minDate;
+		String maxDate;
+		if(localDate.getMonthValue() < 10) {
+		minDate = localDate.getYear() + "-0" +
 				               localDate.getMonthValue()+"-"+
 				               localDate.getDayOfMonth();
+		localDate=localDate.plusMonths(1);
+		maxDate = localDate.getYear() + "-0" +
+	               localDate.getMonthValue()+"-"+
+	               localDate.getDayOfMonth();
 		}else {
-		strDate = localDate.getYear() + "-" +
+		minDate = localDate.getYear() + "-" +
 					localDate.getMonthValue()+"-"+
-					localDate.getDayOfMonth();			
+					localDate.getDayOfMonth();
+		localDate=localDate.plusMonths(1);
+		maxDate = localDate.getYear() + "-0" +
+	               localDate.getMonthValue()+"-"+
+	               localDate.getDayOfMonth();
 		}
-		model.addAttribute("date", strDate);
+		
+		model.addAttribute("minDate", minDate);
+		model.addAttribute("maxDate",maxDate);
 		return "order_confirm";
 	}
 	
