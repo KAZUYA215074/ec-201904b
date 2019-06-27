@@ -18,3 +18,5 @@ SELECT id , topping_id , order_item_id FROM order_toppings;
 select id,error_date,error_page,comment from comments;
 
 select item_id , sum(quantity) as quantity  from order_items GROUP BY item_id order by quantity desc;
+
+select order_date as sales_date,sum(total_price) as sales from orders where status=2 or status=3 group by order_date order by order_date desc; 
