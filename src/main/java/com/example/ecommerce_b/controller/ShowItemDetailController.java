@@ -48,14 +48,23 @@ public class ShowItemDetailController {
 			model.addAttribute("set", set);
 			model.addAttribute("setPizzaList", setPizzaList);
 
-			// 選択できるピザの数
+			// 選択できるピザ、サイドメニュー、ドリンクの数
 			int maxPizasize;
+			int maxSidesize;
+			int maxDrinksize;
+			
 			if (set.getId() == 4) {
 				maxPizasize = 3;
+				maxSidesize = 3;
+				maxDrinksize = 5;
 			} else {
 				maxPizasize = 1;
+				maxSidesize = 1;
+				maxDrinksize = 2;
 			}
 			model.addAttribute("maxPizasize", maxPizasize);
+			model.addAttribute("maxSidesize", maxSidesize);
+			model.addAttribute("maxDrinksize", maxDrinksize);
 
 			// トッピング一覧の取得
 			model.addAttribute("setToppingList", getSetDetailService.getToppingList());
