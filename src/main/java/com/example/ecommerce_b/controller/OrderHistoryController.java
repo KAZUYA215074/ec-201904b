@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.ecommerce_b.domain.Order;
 import com.example.ecommerce_b.domain.OrderItem;
+import com.example.ecommerce_b.domain.OrderSet;
+import com.example.ecommerce_b.domain.OrderTopping;
 import com.example.ecommerce_b.form.OrderItemForm;
+import com.example.ecommerce_b.form.OrderSetForm;
 import com.example.ecommerce_b.service.CartService;
 import com.example.ecommerce_b.service.OrderHistoryService;
 
@@ -51,33 +54,6 @@ public class OrderHistoryController {
 			return "order_history";
 		}
 		
-		List<Boolean> historyItemStatusList = new ArrayList<Boolean>();
-		List<Boolean> historySetStatusList = new ArrayList<Boolean>();
-		
-		for(int i = 0 ; i < orderList.size() ; i++) {
-			historyItemStatusList.add(i, false);
-			historySetStatusList.add(i, false);
-			if( orderList.get(i).getOrderItemList().size() == 0) {
-				historyItemStatusList.add(i, true);
-			}
-			if( orderList.get(i).getOrderSetList().size() == 0) {
-				historySetStatusList.add(i, true);
-			}
-		}
-		model.addAttribute("historyItemStatusList", historyItemStatusList);				
-		model.addAttribute("historySetStatusList", historySetStatusList);				
-		
-		for(int i = 0 ; i < orderList.size() ; i++ ) {
-			model.addAttribute("historyItemStatus"+i, false);				
-			model.addAttribute("historySetStatus"+i, false);				
-			if( orderList.get(i).getOrderItemList().size() == 0) {
-				model.addAttribute("historyItemStatus"+i, true);				
-			}
-			if( orderList.get(i).getOrderSetList().size() == 0) {
-				model.addAttribute("historySetStatus"+i, true);				
-			}
-		}
-		
 		model.addAttribute("orderList", orderList);
 		return "order_history";
 	}
@@ -99,6 +75,52 @@ public class OrderHistoryController {
 		orderItem.setSize(form.getSize().charAt(0));
 		orderItem.setSetId(0);
 		cartService.addOrderItem(userId, orderItem, form.getOrderToppingIdList());
+		return "redirect:/show-cart";
+	}
+	
+	/**
+	 * ショッピングカートに注文セットを追加する.
+	 * 
+	 * @param form
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/buy-again-set")
+	public String buyAgainSet(OrderSetForm form,Integer orderSetId, Model model) {
+		System.out.println(form);
+
+		Integer userId = (Integer) session.getAttribute("userId");
+
+		OrderSet orderSet = new OrderSet();
+		BeanUtils.copyProperties(form, orderSet);
+		
+//		Integer userIdSet = (Integer) session.getAttribute("userId");
+//		List<Order> orderList = orderHistoryService.showOrderHistory(userIdSet);
+//		for(Order order : orderList) {
+//			for(OrderSet orderSet1 : order.getOrderSetList())
+//			if(orderSet1.getId() == orderSetId) {
+//				form.setItemId1(orderSet1.getOrderItemList().get(0).getItemId());
+//				form.setItemId2(orderSet1.getOrderItemList().get(1).getItemId());
+//				form.setItemId3(orderSet1.getOrderItemList().get(2).getItemId());
+//				List<Integer> toppingIdList1 =new ArrayList<>();
+//				for(OrderTopping orderTopping : orderSet1.getOrderItemList().get(0).getOrderToppingList()) {
+//					toppingIdList1.add(orderTopping.getToppingId());
+//				}
+//				form.setToppingIdList1(toppingIdList1);
+//				List<Integer> toppingIdList2 =new ArrayList<>();
+//				for(OrderTopping orderTopping : orderSet1.getOrderItemList().get(1).getOrderToppingList()) {
+//					toppingIdList1.add(orderTopping.getToppingId());
+//				}
+//				form.setToppingIdList2(toppingIdList2);
+//				List<Integer> toppingIdList3 =new ArrayList<>();
+//				for(OrderTopping orderTopping : orderSet1.getOrderItemList().get(2).getOrderToppingList()) {
+//					toppingIdList1.add(orderTopping.getToppingId());
+//				}
+//				form.setToppingIdList3(toppingIdList3);
+//			}
+//		}
+		System.out.println(form);
+		cartService.addOrderSet(userId, orderSet, form);
 		return "redirect:/show-cart";
 	}
 }
