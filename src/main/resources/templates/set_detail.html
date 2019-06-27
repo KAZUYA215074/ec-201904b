@@ -15,7 +15,7 @@
 <body>
 	<div class="container">
 	<div th:replace="parts::header()"></div>
-		<form action="cart_list.html" th:action=@{/add-item} th:object="${orderItemForm}" method="post">
+		<form action="cart_list.html" th:action=@{/add-set} th:object="${orderSetForm}" method="post">
 		<div class="row">
 			<div class="col-xs-offset-2 col-xs-8">
 
@@ -47,7 +47,7 @@
 								<span  th:each="pizza : ${setPizzaList}">
 									<label class="radio-inline">
 										<input type="radio"
-											name="pizza" checked="checked" id="pizza" class="pizza" value="M">
+											name="pizza" th:name="${'itemId'+i}" checked="checked" id="pizza" class="pizza" value="1" th:value="${pizza.id}">
 										<span th:text="${pizza.name}">&nbsp;xxxピザ&nbsp;</span>
 									</label><br>
 								</span>
@@ -69,7 +69,7 @@
 								</div>
 								<div class="col-sm-12" th:id="'topping'+ ${i}">
 									<label class="checkbox-inline" th:each="topping:${setToppingList}">
-										<input type="checkbox" th:value="${topping.id}" th:text="${topping.name}" th:class="'topping'+ ${i}" name="orderToppingIdList">
+										<input type="checkbox" th:value="${topping.id}" th:text="${topping.name}" th:class="'topping'+ ${i}" name="toppingIdList1" th:name="${'toppingIdLIst'+i}">
 									</label>	 
 								</div>
 							</div>
@@ -88,7 +88,7 @@
 								<div class="col-sm-12">
 									<label class="radio-inline" th:each="side : ${setSideList}">
 										<input type="radio"
-											name="side" checked="checked" id="side" class="side" value="">
+											name="sideMenuId" checked="checked" id="side" class="side" value="19" th:value="${side.id}">
 											<span th:text="${side.name}">&nbsp;サラダ&nbsp;</span><br>
 											</label>
 								</div>
@@ -107,7 +107,7 @@
 								<div class="col-sm-12">
 									<label class="radio-inline"  th:each="drink : ${setDrinkList}">
 										<input type="radio"
-											name="drink" checked="checked" id="drink" class="drink" value="">
+											name="drinkId" checked="checked" id="drink" class="drink" value="24" th:value="${drink.id}">
 											<span th:text="${drink.name}">&nbsp;コーラ&nbsp;</span><br>
 									</label>
 								</div>
