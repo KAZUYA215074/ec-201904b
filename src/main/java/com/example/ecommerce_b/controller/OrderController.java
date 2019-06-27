@@ -72,6 +72,25 @@ public class OrderController {
 		model.addAttribute("order",order);
 		model.addAttribute("tax",order.getTax());
 		model.addAttribute("totalPrice",order.getCalcTotalPrice());
+		// 年齢確認
+		Date date = order.getUser().getBirthday();
+		System.out.println("date"+date);
+		if (date.getYear() + 20 > new Date().getYear()) {
+			model.addAttribute("age", "配達時に年齢を確認させていただきます。");
+		} else if (date.getYear() == new Date().getYear()) {
+			if (date.getMonth() > new Date().getMonth()) {
+				model.addAttribute("age", "配達時に年齢を確認させていただきます。");
+			} else if (date.getMonth() == new Date().getMonth()) {
+				if (date.getDay() > new Date().getDay()) {
+					model.addAttribute("age", "配達時に年齢を確認させていただきます。");
+				}
+			}
+		}
+		for (int i = 0; i < order.getOrderItemList().size(); i++) {
+			if (order.getOrderItemList().get(i).getItem().getId() == 27) {
+				model.addAttribute("alcohol", true);
+			}
+		}
 		return "order_confirm";
 	}
 	
@@ -131,23 +150,6 @@ public class OrderController {
 		orderService.order(order);
 		sendMailService.sendMail(order);
 		
-		// 年齢確認
-		Date date = order.getUser().getBirthday();
-		if (date.getYear() + 20 < new Date().getYear()) {
-			model.addAttribute("age", "配達時に年齢を確認させていただきます。");
-		} else if (date.getYear() == new Date().getYear()) {
-			if (date.getMonth() < new Date().getMonth()) {
-				model.addAttribute("age", "配達時に年齢を確認させていただきます。");
-			} else if (date.getMonth() == new Date().getMonth()) {
-				if (date.getDay() < new Date().getDay()) {
-					model.addAttribute("age", "配達時に年齢を確認させていただきます。");
-				} else if (date.getDay() == new Date().getDay()) {
-					if (Integer.parseInt(form.getDeliveryHour()) < new Date().getHours()) {
-						model.addAttribute("age", "配達時に年齢を確認させていただきます。");
-					}
-				}
-			}
-		}
 		return "redirect:/finish";
 	}
 	
