@@ -57,19 +57,19 @@
 					</div>
 				</div>
 				
+				<!-- トッピングの選択 -->
 				<div class="row">
 					<div class="col-xs-offset-2 col-xs-8">
 						<div class="form-group">
 							<div class="row">
 								<div class="col-sm-12">
 									<label for="inputResponsibleCompany">
-										トッピング：&nbsp;1つにつき
-										<span>&nbsp;Ｌ</span>&nbsp;&nbsp;300円(税抜)
+										トッピング
 									</label>
 								</div>
 								<div class="col-sm-12" th:id="'topping'+ ${i}">
 									<label class="checkbox-inline" th:each="topping:${setToppingList}">
-										<input type="checkbox" th:value="${topping.id}" th:text="${topping.name}" class="topping" name="orderToppingIdList">
+										<input type="checkbox" th:value="${topping.id}" th:text="${topping.name}" th:class="'topping'+ ${i}" name="orderToppingIdList">
 									</label>	 
 								</div>
 							</div>
@@ -193,12 +193,38 @@
 
 				var price = piaza_price * piza_num;
 				$("#total-price-num").text(price.toLocaleString());
-			}
-			;
-		});
+			};
 
-		
-
+		// トッピングのチェックボックス制限
+		const topping_limit = 3;
+		// 1枚目 
+		$('.topping1').click(function() {
+    		var checked_length = $('.topping1:checked').length;
+    		if (checked_length >= topping_limit ) {
+      			$('.topping1:not(:checked)').prop('disabled', true);
+    		} else {
+      			$('.topping1:not(:checked)').prop('disabled', false);
+    		}
+		 });
+		// 2枚目
+		 $('.topping2').click(function() {
+    		var checked_length = $('.topping2:checked').length;
+    		if (checked_length >= topping_limit ) {
+      			$('.topping2:not(:checked)').prop('disabled', true);
+    		} else {
+      			$('.topping2:not(:checked)').prop('disabled', false);
+    		}
+		 });
+		// 3枚目
+		 $('.topping3').click(function() {
+    		var checked_length = $('.topping3:checked').length;
+    		if (checked_length >= topping_limit) {
+      			$('.topping3:not(:checked)').prop('disabled', true);
+    		} else {
+      			$('.topping3:not(:checked)').prop('disabled', false);
+    		}
+		 });
+  });
 	
 		/*]]>*/
 	</script>
