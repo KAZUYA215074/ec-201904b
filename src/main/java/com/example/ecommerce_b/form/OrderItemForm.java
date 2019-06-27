@@ -2,8 +2,6 @@ package com.example.ecommerce_b.form;
 
 import java.util.List;
 
-import com.example.ecommerce_b.domain.OrderTopping;
-
 /**
  * 注文商品を追加するフォーム.
  * 
