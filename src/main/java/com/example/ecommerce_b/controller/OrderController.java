@@ -86,27 +86,27 @@ public class OrderController {
 	public String order(@Validated OrderForm form,
 			                   BindingResult result,
 			                    Model model ) throws ParseException{
-		System.out.println(form.getDeliveryDate());
-		if(form.getDeliveryDate() != "") {
-		SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = sdFormat.parse(form.getDeliveryDate());
-		
-		if (date.getYear() < new Date().getYear()) {
-			result.rejectValue("deliveryDate",null, "その日時には配達できません");
-		} else if (date.getYear() == new Date().getYear()) {
-			if (date.getMonth() < new Date().getMonth()) {
-				result.rejectValue("deliveryDate",null, "その日時には配達できません");
-			} else if (date.getMonth() == new Date().getMonth()) {
-				if (date.getDay() < new Date().getDay()) {
-					result.rejectValue("deliveryDate",null, "その日時には配達できません");
-				} else if (date.getDay() == new Date().getDay()) {
-					if(Integer.parseInt(form.getDeliveryHour()) < new Date().getHours()){
-						result.rejectValue("deliveryDate",null, "その日時には配達できません");						
+        //過去の日付を選択出来ない
+		if (form.getDeliveryDate() != "") {
+			SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date date = sdFormat.parse(form.getDeliveryDate());
+			if (date.getYear() < new Date().getYear()) {
+				result.rejectValue("deliveryDate", null, "その日時には配達できません");
+			} else if (date.getYear() == new Date().getYear()) {
+				if (date.getMonth() < new Date().getMonth()) {
+					result.rejectValue("deliveryDate", null, "その日時には配達できません");
+				} else if (date.getMonth() == new Date().getMonth()) {
+					if (date.getDay() < new Date().getDay()) {
+						result.rejectValue("deliveryDate", null, "その日時には配達できません");
+					} else if (date.getDay() == new Date().getDay()) {
+						if (Integer.parseInt(form.getDeliveryHour()) < new Date().getHours()) {
+							result.rejectValue("deliveryDate", null, "その日時には配達できません");
+						}
 					}
 				}
 			}
 		}
-		}
+
 		if(result.hasErrors()) {
 			return toOrder(model);
 		}
@@ -131,6 +131,23 @@ public class OrderController {
 		orderService.order(order);
 		sendMailService.sendMail(order);
 		
+		// 年齢確認
+		Date date = order.getUser().getBirthday();
+		if (date.getYear() + 20 < new Date().getYear()) {
+			model.addAttribute("age", "配達時に年齢を確認させていただきます。");
+		} else if (date.getYear() == new Date().getYear()) {
+			if (date.getMonth() < new Date().getMonth()) {
+				model.addAttribute("age", "配達時に年齢を確認させていただきます。");
+			} else if (date.getMonth() == new Date().getMonth()) {
+				if (date.getDay() < new Date().getDay()) {
+					model.addAttribute("age", "配達時に年齢を確認させていただきます。");
+				} else if (date.getDay() == new Date().getDay()) {
+					if (Integer.parseInt(form.getDeliveryHour()) < new Date().getHours()) {
+						model.addAttribute("age", "配達時に年齢を確認させていただきます。");
+					}
+				}
+			}
+		}
 		return "redirect:/finish";
 	}
 	
