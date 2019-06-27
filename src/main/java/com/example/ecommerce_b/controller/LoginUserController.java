@@ -63,7 +63,6 @@ public class LoginUserController {
 		Integer userId = (Integer) session.getAttribute("userId");
 		if (userId != null) {
 			cartService.userIdUpdate(userId, loginUser.getUser().getId());
-			System.out.println("kotti");
 		}
 		session.setAttribute("userId", loginUser.getUser().getId());
 		String refer = (String) session.getAttribute("beforePage");

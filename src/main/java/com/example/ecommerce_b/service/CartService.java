@@ -124,10 +124,14 @@ public class CartService {
 			orderRepository.updateUserId(userId, loginUserId);
 		}else {
 			orderItemRepository.updateOrderId(userId,order.getId());
+			List<Integer> setPriceList=orderSetRepository.updateOrderId(userId,order.getId());
 			Order newOrder=loadOrder(loginUserId);
 			int newTotalPrice=0;
 			for(OrderItem item :newOrder.getOrderItemList()) {
 				newTotalPrice+=item.getSubTotal();
+			}
+			for(Integer setPrice :setPriceList) {
+				newTotalPrice+=setPrice;
 			}
 			newOrder.setTotalPrice(newTotalPrice);
 			orderRepository.updateOrder(newOrder);
@@ -159,7 +163,7 @@ public class CartService {
 			orderToppingRepository.insertOrderTopping(orderItemId, form.getToppingIdList1());
 		}
 
-		if(orderSetId==4) {
+		if(form.getSetId()==4) {
 			orderItem=new OrderItem(null, form.getItemId2(), 0, orderSetId, 1, 'L', null,null);
 			orderItemId=orderItemRepository.insertOrderItem(orderItem);
 			if(form.getToppingIdList2()!=null) {

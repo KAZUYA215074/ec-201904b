@@ -1,5 +1,6 @@
 package com.example.ecommerce_b.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,9 @@ public class OrderSetRepository {
 		return orderSet;
 	};
 
+	private static final RowMapper<Integer> LIST_ROW_MAPPER=(rs,i) ->{
+		return rs.getInt("id");
+	};
 	
 	/**
 	 * 注文idから検索.
@@ -98,4 +102,27 @@ public class OrderSetRepository {
 		OrderSet set=template.queryForObject(sql, param, ORDERSET_ROW_MAPPER);
 		return set;
 	}
+	
+	
+	/**
+	 * 注文セットとそのトッピングorderIdを書き換える
+	 * @param userId　もとのorderのUserId
+	 * @param loginOrderId　書き換えたいorderId
+	 * @return
+	 */
+	public List<Integer> updateOrderId(Integer userId,Integer loginOrderId) {
+		String sql="update order_sets set order_id=:loginOrderId where order_id=(select id from orders where user_id=:userId) returning id; ";
+		SqlParameterSource param=new MapSqlParameterSource().addValue("loginOrderId", loginOrderId).addValue("userId", userId);
+		List<Integer> orderSetIdList= template.query(sql, param, LIST_ROW_MAPPER);
+		String sql2="select s.price from sets s left outer join order_sets o on (s.id=o.set_id) where o.id=:id;";
+		List<Integer> priceList=new ArrayList<Integer>();
+		for(int i=0;i<orderSetIdList.size();i++) {
+			SqlParameterSource param2=new MapSqlParameterSource().addValue("id", orderSetIdList.get(i));
+			priceList.add(template.queryForObject(sql2, param2, Integer.class));
+		}
+		return priceList;
+		
+	}
+
 }
+

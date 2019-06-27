@@ -69,7 +69,7 @@
 								</div>
 								<div class="col-sm-12" th:id="'topping'+ ${i}">
 									<label class="checkbox-inline" th:each="topping:${setToppingList}">
-										<input type="checkbox" th:value="${topping.id}" th:text="${topping.name}" th:class="'topping'+ ${i}" name="toppingIdList1" th:name="${'toppingIdLIst'+i}">
+										<input type="checkbox" th:value="${topping.id}" th:text="${topping.name}" th:class="'topping'+ ${i}" name="toppingIdList1" th:name="${'toppingIdList'+i}">
 									</label>	 
 								</div>
 							</div>
