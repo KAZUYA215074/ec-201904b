@@ -39,10 +39,13 @@ public class LoginUserController {
 			model.addAttribute("errorMessage", "メールアドレスまたはパスワードが不正です。");
 		}
 		//ログイン画面を更新した際にセッションを更新しない
-		String url1 = getPath(request)+"/to-login";
+		String url = getPath(request);
+		String url1 = url+"/to-login";
 		String url2 = url1+"?error=true";
+		String url3 = url+"/to-regist";
+		String url4 = url3+"/regist";
 		if (!(url1.equals(request.getHeader("REFERER"))
-				|| url2.equals(request.getHeader("REFERER")))) {
+				|| url2.equals(request.getHeader("REFERER"))||url3.equals(request.getHeader("REFERER"))||url4.equals(request.getHeader("REFERER")) )) {
 			String beforePage = request.getHeader("REFERER");
 			session.setAttribute("beforePage", beforePage);
 		}
