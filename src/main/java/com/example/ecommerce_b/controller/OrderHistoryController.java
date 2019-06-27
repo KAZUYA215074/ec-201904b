@@ -55,6 +55,8 @@ public class OrderHistoryController {
 		List<Boolean> historySetStatusList = new ArrayList<Boolean>();
 		
 		for(int i = 0 ; i < orderList.size() ; i++) {
+			historyItemStatusList.add(i, false);
+			historySetStatusList.add(i, false);
 			if( orderList.get(i).getOrderItemList().size() == 0) {
 				historyItemStatusList.add(i, true);
 			}

@@ -25,7 +25,7 @@
 					<h1 class="text-center">注文履歴がありません</h1>
 				</div>
 				
-					<table class="table table-striped" th:if="!${historyStatus}" th:each="order:${orderList}" th:each="historySetStatus : ${historySetStatusList}">
+					<table class="table table-striped" th:if="!${historyStatus}" th:each="order:${orderList}" >
 					<tbody>
 					
 					<tr>
@@ -41,29 +41,28 @@
 								<div class="text-center" th:text="${order.strStatus}"></div>
 					    </th>
 					</tr>
-					
-						<tr th:if="!${historySetStatus}">
-							<th>
+						<tr th:each="orderSet,status : ${order.orderSetList}" >
+							<th th:if="${status.index}==0">
 								<div class="text-center">
 									セット名
 								</div>
 							</th>
-							<th>
+							<th th:if="${status.index}==0">
 								<div class="text-center">
 									ピザ・トッピング
 								</div>
 							</th>
-							<th>
+							<th th:if="${status.index}==0">
 								<div class="text-center">
 									サイドメニュー/ドリンク
 								</div>
 							</th>
-							<th>
+							<th th:if="${status.index}==0">
 								<div class="text-center">
 									値段×個数
 								</div>
 							</th>
-							<th>
+							<th th:if="${status.index}==0">
 								<div class="text-center">
 								</div>
 							</th>
@@ -114,28 +113,28 @@
 							</td>
 						</tr>
 						
-						<tr th:if="!${historyItemStatus}">
-							<th>
+						<tr th:each="orderItem,status : ${order.orderItemList}" >
+							<th th:if="${status.index}==0">
 								<div class="text-center">
 									商品名
 								</div>
 							</th>
-							<th>
+							<th th:if="${status.index}==0">
 								<div class="text-center">
 									サイズ、価格(税抜)、数量
 								</div>
 							</th>
-							<th>
+							<th th:if="${status.index}==0">
 								<div class="text-center">
 									トッピング、価格(税抜)
 								</div>
 							</th>
-							<th>
+							<th th:if="${status.index}==0">
 								<div class="text-center">
 									小計
 								</div>
 							</th>
-							<th>
+							<th th:if="${status.index}==0">
 								<div class="text-center">
 								</div>
 							</th>
