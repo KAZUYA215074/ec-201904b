@@ -42,6 +42,18 @@ public class OrderHistoryController {
 			model.addAttribute("historyStatus", true);
 			return "order_history";
 		}
+		
+		for(int i = 0 ; i < orderList.size() ; i++ ) {
+			model.addAttribute("historyItemStatus"+i, false);				
+			model.addAttribute("historySetStatus"+i, false);				
+			if( orderList.get(i).getOrderItemList().size() == 0) {
+				model.addAttribute("historyItemStatus"+i, true);				
+			}
+			if( orderList.get(i).getOrderSetList().size() == 0) {
+				model.addAttribute("historySetStatus"+i, true);				
+			}
+		}
+		
 		model.addAttribute("orderList", orderList);
 		return "order_history";
 	}

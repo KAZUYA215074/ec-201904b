@@ -162,7 +162,8 @@ public class ShowItemListController {
 	}
 
 	/**
-	 * セット商品以外の商品一覧を取得する.
+	 * セット商品以外の商品一覧を取得する.<br>
+	 * 曖昧検索も行う。
 	 * 
 	 * @param status   並び替えを行う値
 	 * @param category カテゴリ(ピザ=1,サイドメニュー=2,ドリンク=3)
@@ -188,7 +189,8 @@ public class ShowItemListController {
 	}
 
 	/**
-	 * セット商品一覧を取得する.
+	 * セット商品一覧を取得する.<br>
+	 * 曖昧検索も行う。
 	 * 
 	 * @param status   並び替えを行う値
 	 * @param category カテゴリ(ピザ=1,サイドメニュー=2,ドリンク=3)
@@ -201,8 +203,8 @@ public class ShowItemListController {
 		if (code == null || "".equals(code)) {
 			setList = getSetListService.getAll(status);
 		} else {
-			// setList = getSetListService.searchLikeName(code, status);
-			// model.addAttribute("code", code);
+			setList = getSetListService.searchLikeName(code, status);
+			model.addAttribute("code", code);
 		}
 
 		// リストが空の場合はエラーメッセージ
@@ -233,22 +235,81 @@ public class ShowItemListController {
 	}
 
 	/**
-	 * 曖昧検索のオートコンプリート用の名前リストを取得する.<br>
+	 * ピザ用、曖昧検索のオートコンプリート用の名前リストを取得する.<br>
 	 * id順に取得する。
 	 * 
 	 * @return 全商品の名前リスト
 	 */
 	@ResponseBody
-	@RequestMapping("/getAutoComplete")
-	public List<String> getAutoComplete() {
+	@RequestMapping("/getAutoComplete1")
+	public List<String> getAutoComplete1() {
+
+		List<Item> itemList = getItemListService.getAll(1, "id");
 
 		List<String> nameList = new ArrayList<String>();
-		String status = "id";
-		/*
-		 * List<Item> itemList = getItemListService.getAll(status);
-		 * 
-		 * for (Item item : itemList) { nameList.add(item.getName()); }
-		 */
+		for (Item item : itemList) {
+			nameList.add(item.getName());
+		}
+
+		return nameList;
+	}
+
+	/**
+	 * サイドメニュー用、曖昧検索のオートコンプリート用の名前リストを取得する.<br>
+	 * id順に取得する。
+	 * 
+	 * @return 全商品の名前リスト
+	 */
+	@ResponseBody
+	@RequestMapping("/getAutoComplete2")
+	public List<String> getAutoComplete2() {
+
+		List<Item> itemList = getItemListService.getAll(2, "id");
+
+		List<String> nameList = new ArrayList<String>();
+		for (Item item : itemList) {
+			nameList.add(item.getName());
+		}
+
+		return nameList;
+	}
+
+	/**
+	 * ドリンク用、曖昧検索のオートコンプリート用の名前リストを取得する.<br>
+	 * id順に取得する。
+	 * 
+	 * @return 全商品の名前リスト
+	 */
+	@ResponseBody
+	@RequestMapping("/getAutoComplete3")
+	public List<String> getAutoComplete3() {
+
+		List<Item> itemList = getItemListService.getAll(3, "id");
+
+		List<String> nameList = new ArrayList<String>();
+		for (Item item : itemList) {
+			nameList.add(item.getName());
+		}
+
+		return nameList;
+	}
+
+	/**
+	 * セット商品用、曖昧検索のオートコンプリート用の名前リストを取得する.<br>
+	 * id順に取得する。
+	 * 
+	 * @return 全商品の名前リスト
+	 */
+	@ResponseBody
+	@RequestMapping("/getAutoComplete4")
+	public List<String> getAutoComplete() {
+
+		List<Set> setList = getSetListService.getAll("id");
+
+		List<String> nameList = new ArrayList<String>();
+		for (Set set : setList) {
+			nameList.add(set.getName());
+		}
 
 		return nameList;
 	}

@@ -39,6 +39,17 @@ public class RegistUserForm {
 	/** 確認用パスワード */
 	@NotBlank(message = "確認用パスワードを入力して下さい")
 	private String confirmationPassword;
+	/** 誕生日*/
+	@NotBlank(message = "誕生日を入力してください")
+	private String birthday;
+
+	public String getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
+	}
 
 	public String getName() {
 		return name;
@@ -100,7 +111,7 @@ public class RegistUserForm {
 	public String toString() {
 		return "RegistUserForm [name=" + name + ", email=" + email + ", password=" + password + ", zipcode=" + zipcode
 				+ ", address=" + address + ", telephone=" + telephone + ", confirmationPassword=" + confirmationPassword
-				+ "]";
+				+ ", birthday=" + birthday + "]";
 	}
 
 }

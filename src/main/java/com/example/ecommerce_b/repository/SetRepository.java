@@ -74,5 +74,24 @@ public class SetRepository {
 
 		return set;
 	}
+	
+	
+	/**
+	 * セット商品名の曖昧検索を行う.<br>
+	 * カテゴリー別に全件検索を行う。 statusのパラメータで並び替えを行う。
+	 * 
+	 * @param name     検索を行う文字列
+	 * @param status   並び替えのパラメータ
+	 * @return 取得したセット商品情報一覧
+	 */
+	public List<Set> findLikeName(String name, String status) {
+		String sql = "SELECT id,name,description , price , image_path , deleted, pizza_l_price"
+				+ " FROM sets"
+				+ " WHERE name ILIKE :name"
+				+ " ORDER BY " + status;
+		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
+		List<Set> setList = template.query(sql, param, SET_ROW_MAPPER);
 
+		return setList;
+	}
 }

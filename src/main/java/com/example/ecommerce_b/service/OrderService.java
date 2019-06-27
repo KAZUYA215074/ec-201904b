@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.ecommerce_b.domain.Order;
 import com.example.ecommerce_b.domain.OrderItem;
+import com.example.ecommerce_b.domain.OrderSet;
 import com.example.ecommerce_b.repository.OrderItemRepository;
 import com.example.ecommerce_b.repository.OrderRepository;
 import com.example.ecommerce_b.repository.OrderToppingRepository;
@@ -34,6 +35,9 @@ public class OrderService {
 	@Autowired
 	private OrderToppingRepository orderToppingRepository;
 	
+	@Autowired
+	private OrderSetRepository orderSetRepository;
+	
 	/**
 	 * ユーザーIDから注文前の注文情報を取得する.
 	 * 
@@ -55,6 +59,18 @@ public class OrderService {
 			orderItemList.set(i, item);
 		}
 		order.setOrderItemList(orderItemList);
+		
+		List<OrderSet> orderSetList=orderSetRepository.findByOrderId(orderId);
+		for(int j=0;j<orderSetList.size();j++) {
+			List<OrderItem> orderItemList2=orderItemRepository.findByOrderId(orderSetList.get(j).getId(),true);
+			for(int i=0;i<orderItemList2.size();i++) {
+				OrderItem item=orderItemList2.get(i);
+				item.setOrderToppingList(orderToppingRepository.findByOrderItemId(item.getId()));
+				orderItemList2.set(i, item);				
+			}
+			orderSetList.get(j).setOrderItemList(orderItemList2);
+		}		
+		order.setOrderSetList(orderSetList);
 		
 		order.setUser(userRepository.findById(userId));
 		return order;

@@ -22,36 +22,41 @@
 				<h3 class="text-center">商品詳細</h3>
 				<div class="row">
 					<div class="col-xs-5">
-						<img src="img/1.jpg" class="img-responsive img-rounded" th:src="@{'/img/'+${item.imagePath}}">
+						<img src="img/1.jpg" class="img-responsive img-rounded" th:src="@{'/img/'+${set.imagePath}}">
 					</div>
 
 					<div class="col-xs-5">
 						<div class="bs-component">
-							<h4><span th:text="${item.name}">xxxxセット</span></h4> <br>
+							<h4><span th:text="${set.name}">xxxxセット</span></h4> <br>
 							<br>
-							<input type="hidden" name="itemId" th:value="${item.id}">
-							<p><span th:text="${item.description}">2000円のピザから一枚選べるセットです。・・・</span></p>
+							<input type="hidden" name="setId" th:value="${set.id}">
+							<p><span th:text="${set.description}">2000円のピザから一枚選べるセットです。・・・</span></p>
 						</div>
 					</div>
 				</div><br>
+				
+				<div th:each="i : ${#numbers.sequence(1, maxPizasize)}">
 				<div class="row">
 					<div class="col-xs-offset-2 col-xs-8">
 						<div class="form-group">
 							<div class="row">
 								<div class="col-sm-12">
-									<label for="inputResponsibleCompany">お好きなピザを一枚選択</label>
+									<label for="inputResponsibleCompany">お好きなピザを一枚選択(<span th:text="${i}"></span>枚目)</label>
 								</div>
 								<div class="col-sm-12">
+								<span  th:each="pizza : ${setPizzaList}">
 									<label class="radio-inline">
 										<input type="radio"
 											name="pizza" checked="checked" id="pizza" class="pizza" value="M">
-										<span class="price">&nbsp;xxxピザ&nbsp;</span>&nbsp;&nbsp;<span th:text="${#numbers.formatInteger(item.priceM, 1, 'COMMA')}">1,380</span>円(税抜)
-									</label>
+										<span th:text="${pizza.name}">&nbsp;xxxピザ&nbsp;</span>
+									</label><br>
+								</span>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div><br>
+				</div>
+				
 				<div class="row">
 					<div class="col-xs-offset-2 col-xs-8">
 						<div class="form-group">
@@ -62,14 +67,15 @@
 										<span>&nbsp;Ｌ</span>&nbsp;&nbsp;300円(税抜)
 									</label>
 								</div>
-								<div class="col-sm-12" id="topping">
-									<label class="checkbox-inline" th:each="topping:${item.toppingList}">
+								<div class="col-sm-12" th:id="'topping'+ ${i}">
+									<label class="checkbox-inline" th:each="topping:${setToppingList}">
 										<input type="checkbox" th:value="${topping.id}" th:text="${topping.name}" class="topping" name="orderToppingIdList">
-									</label>
+									</label>	 
 								</div>
 							</div>
 						</div>
 					</div>
+				</div>				
 				</div>
 				
 					<div class="row">
@@ -80,11 +86,11 @@
 									<label for="inputResponsibleCompany">お好きなサイドメニューを一つ選択</label>
 								</div>
 								<div class="col-sm-12">
-									<label class="radio-inline">
+									<label class="radio-inline" th:each="side : ${setSideList}">
 										<input type="radio"
-											name="pizza" checked="checked" id="pizza" class="pizza" value="M">
-										<span class="price">&nbsp;サラダ&nbsp;</span>&nbsp;&nbsp;<span th:text="${#numbers.formatInteger(item.priceM, 1, 'COMMA')}">1,380</span>円(税抜)
-									</label>
+											name="side" checked="checked" id="side" class="side" value="">
+											<span th:text="${side.name}">&nbsp;サラダ&nbsp;</span><br>
+											</label>
 								</div>
 							</div>
 						</div>
@@ -99,10 +105,10 @@
 									<label for="inputResponsibleCompany">お好きなドリンクを一つ選択</label>
 								</div>
 								<div class="col-sm-12">
-									<label class="radio-inline">
+									<label class="radio-inline"  th:each="drink : ${setDrinkList}">
 										<input type="radio"
-											name="pizza" checked="checked" id="pizza" class="pizza" value="M">
-										<span class="price">&nbsp;コーラ&nbsp;</span>&nbsp;&nbsp;<span th:text="${#numbers.formatInteger(item.priceM, 1, 'COMMA')}">1,380</span>円(税抜)
+											name="drink" checked="checked" id="drink" class="drink" value="">
+											<span th:text="${drink.name}">&nbsp;コーラ&nbsp;</span><br>
 									</label>
 								</div>
 							</div>
@@ -175,13 +181,6 @@
 
 		$(function() {
 			calc_price();
-			$(".size").on("change",function() {
-				calc_price();
-			});
-
-			$(".topping").on("change",function() {
-				calc_price();
-			});
 	
 			$("#pizanum").on("change",function() {
 				calc_price();
@@ -189,21 +188,17 @@
 	
 			// 値段の計算をして変更する関数
 			function calc_price() {
-				var size = $(".size:checked").val();
-				var topping_count = $("#topping input:checkbox:checked").length;
 				var piza_num = $("#pizanum option:selected").val();
-				if (size == "M") {
-					var size_price = /*[[${item.priceM}]]*/;
-					var topping_price = 200 * topping_count;
-				} else {
-					var size_price =  /*[[${item.priceL}]]*/;
-					var topping_price = 300 * topping_count;
-				}
-				var price = (size_price + topping_price) * piza_num;
+				var piaza_price =  /*[[${set.price}]]*/;
+
+				var price = piaza_price * piza_num;
 				$("#total-price-num").text(price.toLocaleString());
 			}
 			;
 		});
+
+		
+
 	
 		/*]]>*/
 	</script>

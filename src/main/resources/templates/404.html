@@ -1,56 +1,33 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ネットでピザ注文</title>
-<link  th:href="@{/css/bootstrap.css}" rel="stylesheet">
-<head>
-<meta charset="UTF-8">
-<link rel=“stylesheet” href=“style.css”>
-<title>お探しのページは見つかりませんでした</title>
-</head>
-<body>
-<div class="container">
-  <div th:replace="parts::header()"></div>
-  <div class="row">
-    <h3 class="text-center">何かお探しですか？</h3>
-    <div><h1 class="text-center">404 Not Found</h1></div>
-    <p class="text-center">申し訳ございません。お探しのページは見つかりませんでした。<br>以下のリンクから商品一覧に戻ります。</p>
-    <div><a href="item_list.html" th:href="@{/}" class="col-xs-offset-5 col-xs-5">
-      <button type="button" class="btn btn-primary" id="itemlist-btn">商品一覧へ戻る</button>
-    </a></div>
-  </div>
-  <div class="row">
-    <div class="col-lg-offset-3 col-lg-6 col-md-offset-2 col-md-8 col-sm-10 col-xs-12">
-      <div class="well">
-        <form class="" action="index.html" th:action="@{/comment/send}" th:object="${commentForm}" method="post">
-          <fieldset>
-            <legend>コメントフォーム</legend>
-            <div class="form-group">
-              <input type="checkbox" name="errorPage" value="メニュー画面">
-              <input type="checkbox" name="errorPage" value="メニュー詳細画面">
-              <input type="checkbox" name="errorPage" value="カート画面">
-              <input type="checkbox" name="errorPage" value="ユーザ登録画面">
-              <input type="checkbox" name="errorPage" value="ログイン画面">
-              <input type="checkbox" name="errorPage" value="">
-            </div>
-            <div class="form-group">
-              <label for="inputComment">コメント</label><label th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"
-                class="control-label" style="color: red" for="inputError">コメントを入力してください</label>
-              <textarea id="inputComment" name="comment" th:field="*{comment}" class="form-control"
-                placeholder="コメント" rows="8" cols="80"></textarea>
-            </div>
-            <div class="form-group">
-              <button type="submit" class="btn btn-primary">送信してメニューに戻る</button>
-            </div>
-          </fieldset>
-        </form>
-      </div>
-    </div>
-  </div>
 
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ネットでピザ注文</title>
+  <link th:href="@{/css/bootstrap.css}" rel="stylesheet">
+
+  <head>
+    <meta charset="UTF-8">
+    <link rel=“stylesheet” href=“style.css”>
+    <title>お探しのページは見つかりませんでした</title>
+  </head>
+
+<body>
+  <div class="container">
+    <div th:replace="parts::header()"></div>
+    <div class="row">
+      <h3 class="text-center">何かお探しですか？</h3>
+      <div>
+        <h1 class="text-center">404 Not Found</h1>
+      </div>
+      <p class="text-center">申し訳ございません。お探しのページは見つかりませんでした。<br>以下のリンクから商品一覧に戻ります。</p>
+      <div><a href="item_list.html" th:href="@{/}" class="col-xs-offset-5 col-xs-5">
+          <button type="button" class="btn btn-primary" id="itemlist-btn">商品一覧へ戻る</button>
+        </a></div>
+    </div>
+    <div th:replace="parts::sendComment"></div>
 </div>
 
 </body>

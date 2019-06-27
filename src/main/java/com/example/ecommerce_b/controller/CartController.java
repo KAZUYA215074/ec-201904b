@@ -23,45 +23,54 @@ import com.example.ecommerce_b.service.CartService;
 @RequestMapping("/")
 public class CartController {
 
-	@Autowired
-	private CartService cartService;
+		@Autowired
+		private CartService cartService;
+		
+		
+		@Autowired
+		private HttpSession session;
 
-	@Autowired
-	private HttpSession session;
-
-	/**
-	 * 注文商品を受け取るフォーム.
-	 * 
-	 * @return 注文商品のフォーム
-	 */
-	@ModelAttribute
-	public OrderItemForm setupOrderItemForm() {
-		return new OrderItemForm();
-	}
-
-	/**
-	 * ショッピングカートの中身を表示する.
-	 * 
-	 * @param model リクエストスコープ
-	 * @return ショッピングカート画面
-	 */
-	@RequestMapping("/show-cart")
-	public String showCart(Model model) {
-		Integer userId = (Integer) session.getAttribute("userId");
-		if (userId == null) {
-			model.addAttribute("cartStatus", false);
+		/**
+		 * 注文商品を受け取るフォーム.
+		 * 
+		 * @return 注文商品のフォーム
+		 */
+		@ModelAttribute
+		public OrderItemForm setupOrderItemForm() {
+			return new OrderItemForm();
+		}
+		
+		/**
+		 * ショッピングカートの中身を表示する.
+		 * 
+		 * @param model リクエストスコープ
+		 * @return ショッピングカート画面
+		 */
+		@RequestMapping("/show-cart")
+		public String showCart(Model model) {
+			Integer userId=(Integer)session.getAttribute("userId");
+			if(userId==null) {
+				model.addAttribute("cartStatus",false);
+				return "cart_list";
+			}
+			Order cart=cartService.loadOrder(userId);	
+			if(cart==null || (cart.getOrderItemList().size()==0 && cart.getOrderSetList().size()==0)) {
+				model.addAttribute("cartStatus",false);
+				return "cart_list";
+			}
+			model.addAttribute("cartItemStatus",true);
+			model.addAttribute("cartSetStatus",true);
+			if(cart.getOrderItemList().size()==0) {
+				model.addAttribute("cartItemStatus",false);
+			}
+			if(cart.getOrderSetList().size()==0) {
+				model.addAttribute("cartSetStatus",false);
+			}
+			System.out.println(cart);
+			model.addAttribute("cartStatus", true);
+			model.addAttribute("cart", cart);
 			return "cart_list";
 		}
-		Order cart = cartService.loadOrder(userId);
-		if (cart == null || (cart.getOrderItemList().size() == 0 && cart.getOrderSetList().size() == 0)) {
-			model.addAttribute("cartStatus", false);
-			return "cart_list";
-		}
-		System.out.println(cart);
-		model.addAttribute("cartStatus", true);
-		model.addAttribute("cart", cart);
-		return "cart_list";
-	}
 
 	/**
 	 * ショッピングカートに注文単品商品を追加する.

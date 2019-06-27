@@ -38,9 +38,7 @@ public class ItemRepository {
 
 	@Autowired
 	private NamedParameterJdbcTemplate template;
-	
-	
-	
+
 	/**
 	 * カテゴリー抜きの全件検索を行う.<br>
 	 * statusの値で並び替える。
@@ -50,17 +48,14 @@ public class ItemRepository {
 	 */
 	public List<Item> findAll(String status) {
 		String sql = "SELECT id,name,description , price_m , price_l , image_path , deleted, item_category"
-				+ " FROM items"
-				+ " ORDER BY " + status;
+				+ " FROM items" + " ORDER BY " + status;
 		List<Item> itemList = template.query(sql, ITEM_ROW_MAPPER);
 		return itemList;
 	}
-	
-	
 
 	/**
 	 * カテゴリー別の全件検索を行う.<br>
-	 *  引数のパラメータで並び替えを行う。
+	 * 引数のパラメータで並び替えを行う。
 	 * 
 	 * @param category カテゴリ(ピザ=1,サイドメニュー=2,ドリンク=3)
 	 * @param status   並び替えをするパラメータ
@@ -68,11 +63,39 @@ public class ItemRepository {
 	 */
 	public List<Item> findAll(int category, String status) {
 		String sql = "SELECT id,name,description , price_m , price_l , image_path , deleted, item_category"
-				+ " FROM items"
-				+ " WHERE item_category = :category"
-				+ " ORDER BY " + status;
+				+ " FROM items" + " WHERE item_category = :category" + " ORDER BY " + status;
 		SqlParameterSource param = new MapSqlParameterSource().addValue("category", category);
-		List<Item> itemList = template.query(sql, param,ITEM_ROW_MAPPER);
+		List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
+		return itemList;
+	}
+
+	/**
+	 * 特定の値段（Lサイズ）のピザを検索する.<br>
+	 * 並び替えはidで行う。
+	 * 
+	 * @param pizzaLPrice 検索するピザの値段
+	 * @return 取得した商品情報一覧
+	 */
+	public List<Item> findByLPrice(int pizzaLPrice) {
+		String sql = "SELECT id,name,description , price_m , price_l , image_path , deleted, item_category"
+				+ " FROM items" + " WHERE price_l = :pizzaLPrice AND item_category = '1'" + " ORDER BY id;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("pizzaLPrice", pizzaLPrice);
+		List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
+		return itemList;
+	}
+
+	/**
+	 * 特定の値段（Lサイズ）以下のピザを検索する.<br>
+	 * 並び替えはidで行う。
+	 * 
+	 * @param pizzaLPrice 検索するピザの値段(この値段以下を検索)
+	 * @return 取得した商品情報一覧
+	 */
+	public List<Item> findLessThanLPrice(int pizzaLPrice) {
+		String sql = "SELECT id,name,description , price_m , price_l , image_path , deleted, item_category"
+				+ " FROM items" + " WHERE price_l <= :pizzaLPrice  AND item_category = '1'" + " ORDER BY id;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("pizzaLPrice", pizzaLPrice);
+		List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
 		return itemList;
 	}
 
@@ -83,9 +106,8 @@ public class ItemRepository {
 	 * @return 取得した商品情報
 	 */
 	public Item load(int id) {
-		String sql = "SELECT id,name,description , price_m , price_l , image_path , deleted, item_category" 
-				+ " FROM items"
-				+ " WHERE id = :id;";
+		String sql = "SELECT id,name,description , price_m , price_l , image_path , deleted, item_category"
+				+ " FROM items" + " WHERE id = :id;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
 		Item item = template.queryForObject(sql, param, ITEM_ROW_MAPPER);
 
@@ -94,21 +116,18 @@ public class ItemRepository {
 
 	/**
 	 * 商品名の曖昧検索を行う.<br>
-	 * カテゴリー別に全件検索を行う。
-	 * statusのパラメータで並び替えを行う。
+	 * カテゴリー別に全件検索を行う。 statusのパラメータで並び替えを行う。
 	 * 
 	 * @param category カテゴリ(ピザ=1,サイドメニュー=2,ドリンク=3)
-	 * @param name   検索を行う文字列
-	 * @param status 並び替えのパラメータ
+	 * @param name     検索を行う文字列
+	 * @param status   並び替えのパラメータ
 	 * @return 取得した商品情報一覧
 	 */
 	public List<Item> findLikeName(int category, String name, String status) {
 		String sql = "SELECT id,name,description , price_m , price_l , image_path , deleted, item_category"
-				+ " FROM items"
-				+ " WHERE name ILIKE :name AND  item_category = :category"
-				+ " ORDER BY " + status;
-		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%")
-				.addValue("category", category);
+				+ " FROM items" + " WHERE name ILIKE :name AND  item_category = :category" + " ORDER BY " + status;
+		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%").addValue("category",
+				category);
 		List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
 
 		return itemList;

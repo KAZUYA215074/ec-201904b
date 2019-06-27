@@ -1,9 +1,11 @@
 package com.example.ecommerce_b.form;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 public class CommentForm {
-	@NotBlank
+	@NotBlank(message = "コメントを入力してください")
+	@Size(min=1,max=250,message="コメントは250文字以内で入力してください")
 	private String comment;
 	@NotBlank
 	private String errorPage;
