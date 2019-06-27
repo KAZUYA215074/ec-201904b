@@ -1,6 +1,5 @@
 package com.example.ecommerce_b.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -10,15 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.ecommerce_b.domain.Item;
 import com.example.ecommerce_b.domain.Order;
-import com.example.ecommerce_b.domain.OrderItem;
-import com.example.ecommerce_b.domain.OrderSet;
-import com.example.ecommerce_b.domain.OrderTopping;
-import com.example.ecommerce_b.domain.Set;
-import com.example.ecommerce_b.domain.Topping;
-import com.example.ecommerce_b.domain.User;
-import com.example.ecommerce_b.service.GetItemDetailService;
 import com.example.ecommerce_b.service.OrderHistoryService;
 
 /**
@@ -35,9 +26,6 @@ public class OrderHistoryController {
 
 	@Autowired
 	private HttpSession session;
-	
-	@Autowired
-	private GetItemDetailService getItemDetailService;
 
 	/**
 	 * 注文履歴画面を表示する. test2
