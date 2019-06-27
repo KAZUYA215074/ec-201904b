@@ -25,7 +25,7 @@
 					<h1 class="text-center">注文履歴がありません</h1>
 				</div>
 				
-					<table class="table table-striped" th:if="!${historyStatus}" th:each="order:${orderList}">
+					<table class="table table-striped" th:if="!${historyStatus}" th:each="order:${orderList}" th:each="historySetStatus : ${historySetStatusList}">
 					<tbody>
 					
 					<tr>

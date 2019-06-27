@@ -1,5 +1,6 @@
 package com.example.ecommerce_b.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -49,6 +50,20 @@ public class OrderHistoryController {
 			model.addAttribute("historyStatus", true);
 			return "order_history";
 		}
+		
+		List<Boolean> historyItemStatusList = new ArrayList<Boolean>();
+		List<Boolean> historySetStatusList = new ArrayList<Boolean>();
+		
+		for(int i = 0 ; i < orderList.size() ; i++) {
+			if( orderList.get(i).getOrderItemList().size() == 0) {
+				historyItemStatusList.add(i, true);
+			}
+			if( orderList.get(i).getOrderSetList().size() == 0) {
+				historySetStatusList.add(i, true);
+			}
+		}
+		model.addAttribute("historyItemStatusList", historyItemStatusList);				
+		model.addAttribute("historySetStatusList", historySetStatusList);				
 		
 		for(int i = 0 ; i < orderList.size() ; i++ ) {
 			model.addAttribute("historyItemStatus"+i, false);				
