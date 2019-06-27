@@ -36,7 +36,7 @@ public class OrderItem {
 	public int getSubTotal() {
 		int itemSum=0;
 		int toppingSum=0;
-		if(this.size=='M' ||this.size=='m') {
+		if(this.size=='M' ||this.size=='N') {
 			itemSum=item.getPriceM();
 			toppingSum=orderToppingList.size()*200;
 		}else if(this.size=='L' ||this.size=='l') {
