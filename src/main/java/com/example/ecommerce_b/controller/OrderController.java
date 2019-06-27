@@ -3,6 +3,7 @@ package com.example.ecommerce_b.controller;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.servlet.http.HttpSession;
@@ -57,6 +58,7 @@ public class OrderController {
 	 * @param model
 	 * @return　注文確認画面
 	 */
+	@SuppressWarnings("deprecation")
 	@RequestMapping("/to-order")
 	public String toOrder(Model model) {
 		Integer userId = (Integer) session.getAttribute("userId");
@@ -74,7 +76,6 @@ public class OrderController {
 		model.addAttribute("totalPrice",order.getCalcTotalPrice());
 		// 年齢確認
 		Date date = order.getUser().getBirthday();
-		System.out.println("date"+date);
 		if (date.getYear() + 20 > new Date().getYear()) {
 			model.addAttribute("age", "配達時に年齢を確認させていただきます。");
 		} else if (date.getYear() == new Date().getYear()) {
@@ -91,6 +92,18 @@ public class OrderController {
 				model.addAttribute("alcohol", true);
 			}
 		}
+		LocalDate localDate = LocalDate.now();
+		String strDate;
+		if(localDate.getDayOfMonth() < 10) {
+		strDate = localDate.getYear() + "-0" +
+				               localDate.getMonthValue()+"-"+
+				               localDate.getDayOfMonth();
+		}else {
+		strDate = localDate.getYear() + "-" +
+					localDate.getMonthValue()+"-"+
+					localDate.getDayOfMonth();			
+		}
+		model.addAttribute("date", strDate);
 		return "order_confirm";
 	}
 	
@@ -101,6 +114,7 @@ public class OrderController {
 	 * @return 注文確認画面
 	 * @throws ParseException 
 	 */
+	@SuppressWarnings("deprecation")
 	@RequestMapping("/order")
 	public String order(@Validated OrderForm form,
 			                   BindingResult result,
@@ -118,7 +132,7 @@ public class OrderController {
 					if (date.getDay() < new Date().getDay()) {
 						result.rejectValue("deliveryDate", null, "その日時には配達できません");
 					} else if (date.getDay() == new Date().getDay()) {
-						if (Integer.parseInt(form.getDeliveryHour()) < new Date().getHours()) {
+						if (Integer.parseInt(form.getDeliveryHour()) <= new Date().getHours()) {
 							result.rejectValue("deliveryDate", null, "その日時には配達できません");
 						}
 					}

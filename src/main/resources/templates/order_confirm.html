@@ -262,7 +262,7 @@
 											</div>
 											<div class="col-sm-5">
 												<input type="date" id="name" name="deliveryDate" th:field="*{deliveryDate}"
-													class="form-control input-sm" />
+													class="form-control input-sm" th:min="${date}" />
                									<span th:if="${#fields.hasErrors('deliveryDate')}" th:errors="*{deliveryDate}" style="color: red">エラーメッセージ</span>
 											</div>
 
