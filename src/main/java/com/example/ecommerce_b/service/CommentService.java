@@ -1,6 +1,7 @@
 package com.example.ecommerce_b.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,11 @@ public class CommentService {
 		BeanUtils.copyProperties(form, comment);
 		comment.setErrorDate(new Date());
 		commentRepository.insert(comment);
+	}
+	
+	public List<Comment> findAll(){
+		List<Comment> commentList = commentRepository.findAll();
+		return commentList;
 	}
 	
 }

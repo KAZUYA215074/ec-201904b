@@ -16,3 +16,5 @@ SELECT id , item_id , order_id , quantity , size FROM order_items;
 SELECT id , topping_id , order_item_id FROM order_toppings;
 --コメント情報
 select id,error_date,error_page,comment from comments;
+
+select item_id , sum(quantity) as quantity  from order_items GROUP BY item_id order by quantity desc;

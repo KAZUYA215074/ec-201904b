@@ -19,7 +19,7 @@ public class CommentRepository {
 	private static final RowMapper<Comment> ORDERITEM_ROW_MAPPER=(rs,i) ->{
 		Comment comment = new Comment();
 		comment.setComment(rs.getString("comment"));
-		comment.setErrorPage(rs.getString("error_date"));
+		comment.setErrorDate(rs.getDate("error_date"));
 		comment.setErrorPage(rs.getString("error_page"));
 		comment.setId(rs.getInt("id"));
 		return comment;

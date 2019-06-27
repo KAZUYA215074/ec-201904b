@@ -45,6 +45,9 @@
 						<span sec:authorize="hasRole('ROLE_USER')">
 							<a href="item_list.html" th:href="@{/logout}" class="navbar-link">ログアウト</a>
 						</span>
+						<span sec:authorize="hasRole('ROLE_ADMIN')">
+							<a href="item_list.html" th:href="@{/admin}" class="navbar-link">管理者ページ</a>
+						</span>
 					</p>
 				</div>
 				<!-- /.navbar-collapse -->
@@ -106,10 +109,11 @@
 								<label for="8">その他</label> <br>
 							</div>
 							<div class="form-group">
-								<label for="inputComment">コメント</label><label th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"
+								<label for="inputComment">コメント:250文字以内で入力をお願いします</label><label th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"
 							class="control-label" style="color: red" for="inputError">コメントを入力してください</label>
 								<textarea id="inputComment" name="comment" th:field="*{comment}" class="form-control"
-							placeholder="コメント" rows="8" cols="80"></textarea>
+							placeholder="コメント" rows="7" cols="40" maxlength="250"></textarea>
+							<span class="count">0</span>/250文字
 							</div>
 							<div class="form-group">
 								<button type="submit" class="btn btn-primary">送信してメニューに戻る</button>
@@ -119,12 +123,24 @@
 				</div>
 			</div>
 		</div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script th:src="@{/js/bootstrap.min.js}"></script>
+		<script>
+		/*<![CDATA[*/
+		$(function(){
+			$('#inputComment').bind('keydown keyup keypress change',function(){
+        var thisValueLength = $(this).val().length;
+				console.log(thisValueLength);
+        $('.count').html(thisValueLength);
+    		});
+			});
+		</script>
 	</div>
 
 
 	<!-- end container -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script th:src="@{/js/bootstrap.min.js}"></script>
+
 </body>
 </html>

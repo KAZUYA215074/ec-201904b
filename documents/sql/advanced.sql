@@ -13,8 +13,8 @@ create table users (
 ) ;
 
 
---ユーザー登録(pass:morimori)
-insert into users(name, email, password, zipcode, address, telephone) values('テストユーザ', 'test@test.co.jp', 'a232fe3fd81a175aa15541dc2051fe2cb003cdae810371104fbfc100eb34cd6f','1111111', 'テスト住所', 'テスト電話番号');
+--ユーザー登録(pass:admin.password)
+insert into users(name, email, password, zipcode, address, telephone,birthday) values('admin', 'admin@admin', '$2a$10$XfBvljXiTGqPNd793LuareUOJc1x8/wWHT/PD0vet3OIejbbgpXTG','1111111', 'テスト住所', '0909000090','1996-01-01');
 
 drop table if exists categorys cascade;
 create table categorys(

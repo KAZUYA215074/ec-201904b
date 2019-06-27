@@ -35,7 +35,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		// 権限付与の例
 		Collection<GrantedAuthority> authorityList = new ArrayList<>();
 		authorityList.add(new SimpleGrantedAuthority("ROLE_USER")); // ユーザ権限付与
-
+		if("admin@admin".equals(email)) {
+			authorityList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+		}
 		return new LoginUser(user,authorityList);
 	}
 
