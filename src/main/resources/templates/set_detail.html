@@ -90,7 +90,7 @@
 								</div>
 								<div th:each="i : ${#numbers.sequence(1, maxSidesize)}">
 								<div class="col-sm-12">
-									<select id="pet-select" name="sideMenuId">
+									<select id="pet-select" name="sideMenuIdList">
 									    <option   th:each="side : ${setSideList}" th:value="${side.id}"><label  th:text="${side.name}"></label></option>
 									</select>
 								</div>
@@ -111,7 +111,7 @@
 								</div>
 								<div th:each="i : ${#numbers.sequence(1, maxDrinksize)}">
 								<div class="col-sm-12">
-									<select id="pet-select" name="sideMenuId">
+									<select id="pet-select" name="drinkIdList">
 									    <option   th:each="drink : ${setDrinkList}" th:value="${drink.id}"><label  th:text="${drink.name}"></label></option>
 									</select>
 								</div>

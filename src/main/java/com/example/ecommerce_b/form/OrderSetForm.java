@@ -30,9 +30,9 @@ public class OrderSetForm {
 	private List<Integer> toppingIdList3;
 	
 	/** サイドメニューのidリスト */
-	private Integer sideMenuId;
+	private List<Integer> sideMenuIdList;
 	/** ドリンクのidリスト */
-	private Integer drinkId;
+	private List<Integer> drinkIdList;
 	
 	
 	
@@ -42,8 +42,8 @@ public class OrderSetForm {
 	public String toString() {
 		return "OrderSetForm [setId=" + setId + ", quantity=" + quantity + ", itemId1=" + itemId1 + ", itemId2="
 				+ itemId2 + ", itemId3=" + itemId3 + ", toppingIdList1=" + toppingIdList1 + ", toppingIdList2="
-				+ toppingIdList2 + ", toppingIdList3=" + toppingIdList3 + ", sideMenuId=" + sideMenuId + ", drinkId="
-				+ drinkId + "]";
+				+ toppingIdList2 + ", toppingIdList3=" + toppingIdList3 + ", sideMenuId=" + sideMenuIdList + ", drinkId="
+				+ drinkIdList + "]";
 	}
 	public Integer getSetId() {
 		return setId;
@@ -87,17 +87,17 @@ public class OrderSetForm {
 	public void setToppingIdList3(List<Integer> toppingIdList3) {
 		this.toppingIdList3 = toppingIdList3;
 	}
-	public Integer getSideMenuId() {
-		return sideMenuId;
+	public List<Integer> getSideMenuIdList() {
+		return sideMenuIdList;
 	}
-	public void setSideMenuId(Integer sideMenuId) {
-		this.sideMenuId = sideMenuId;
+	public void setSideMenuIdList(List<Integer> sideMenuId) {
+		this.sideMenuIdList = sideMenuId;
 	}
-	public Integer getDrinkId() {
-		return drinkId;
+	public List<Integer> getDrinkIdList() {
+		return drinkIdList;
 	}
-	public void setDrinkId(Integer drinkId) {
-		this.drinkId = drinkId;
+	public void setDrinkIdList(List<Integer> drinkId) {
+		this.drinkIdList = drinkId;
 	}
 	//get&set
 	public Integer getQuantity() {
