@@ -35,7 +35,7 @@
 								<div class="text-center" th:if="!${order.orderDate}"><a th:href="@{/to-order}">注文決済画面へ</a></div>
 					    </th>
 					    <th colspan="2">
-								<div class="text-center" th:text="'合計金額：'+${order.calcTotalPrice}+'円'"></div>
+								<div class="text-center" th:text="'合計金額：'+${#numbers.formatInteger(order.calcTotalPrice, 1, 'COMMA')}+'円'"></div>
 					    </th>
 					    <th>
 								<div class="text-center" th:text="${order.strStatus}"></div>
@@ -150,7 +150,7 @@
 								</div>
 							</td>
 							<td>
-								<span class="price" th:text="${'&nbsp;'+orderItem.size+'&nbsp;'}">&nbsp;Ｌ</span>
+								<span class="price"  th:unless="${orderItem.size}=='N'" th:text="${'&nbsp;'+orderItem.size+'&nbsp;'}">&nbsp;Ｌ</span>
 								<span th:if="${orderItem.size}=='M'" th:text="${'&nbsp;&nbsp;'+#numbers.formatInteger(orderItem.item.priceM,1,'COMMA')+'円'}">&nbsp;&nbsp;2,380円</span>
 								<span th:if="${orderItem.size}=='L'" th:text="${'&nbsp;&nbsp;'+#numbers.formatInteger(orderItem.item.priceL,1,'COMMA')+'円'}">&nbsp;&nbsp;2,380円</span>
 								<span th:text="${'&nbsp;&nbsp;'+orderItem.quantity}+'個'"> &nbsp;&nbsp;1個</span>
