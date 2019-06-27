@@ -1,8 +1,5 @@
 package com.example.ecommerce_b.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.BeanUtils;

@@ -16,6 +16,7 @@ public class SendMailService {
 	@Autowired
 	private MailSender sender;
 
+	@SuppressWarnings("deprecation")
 	@Async
 	public void sendMail(Order order) {
 
