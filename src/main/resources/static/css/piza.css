@@ -1,5 +1,6 @@
 @CHARSET "UTF-8";
 
+
 /* サイズをオレンジ〇で囲む */
 span.price {
  /* サイズ指定 */
@@ -21,3 +22,5 @@ span#total-price {
 #itemlist-btn{
 	margin: 0 auto;
 }
+
+
