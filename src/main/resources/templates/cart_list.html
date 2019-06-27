@@ -107,6 +107,7 @@
 										<input type="hidden" name="orderItemId" th:value="${orderSet.id}" value="1">
 										<input type="hidden" name="subTotal" th:value="${orderSet.set.price}" value="1">
 										<input type="hidden" name="setOrder" th:value="true" value="true">
+										<input type="hidden" name="orderId" th:value="${orderSet.orderId}" value="1">
 										<button type="submit" class="btn btn-primary">削除</button>
 									</form>
 								</div>
@@ -151,8 +152,9 @@
 								</div>
 							</td>
 							<td>
-								<span class="price" th:text="${'&nbsp;'+orderItem.size+'&nbsp;'}">&nbsp;Ｌ</span>
-								<span th:if="${orderItem.size}=='M'" th:text="${'&nbsp;&nbsp;'+#numbers.formatInteger(orderItem.item.priceM,1,'COMMA')+'円'}">&nbsp;&nbsp;2,380円</span>
+								<span class="price" th:unless="${orderItem.size}=='N'" th:text="${'&nbsp;'+orderItem.size+'&nbsp;'}">&nbsp;Ｌ</span>
+								<span th:if="${orderItem.size}=='N'" >&nbsp;&nbsp;&nbsp;&nbsp;</span>
+								<span th:unless="${orderItem.size}=='L'" th:text="${'&nbsp;&nbsp;'+#numbers.formatInteger(orderItem.item.priceM,1,'COMMA')+'円'}">&nbsp;&nbsp;2,380円</span>
 								<span th:if="${orderItem.size}=='L'" th:text="${'&nbsp;&nbsp;'+#numbers.formatInteger(orderItem.item.priceL,1,'COMMA')+'円'}">&nbsp;&nbsp;2,380円</span>
 								<span th:text="${'&nbsp;&nbsp;'+orderItem.quantity}+'個'"> &nbsp;&nbsp;1個</span>
 							</td>
@@ -176,6 +178,7 @@
 										<input type="hidden" name="orderItemId" th:value="${orderItem.id}" value="1">
 										<input type="hidden" name="subTotal" th:value="${orderItem.subTotal}" value="1">
 										<input type="hidden" name="setOrder" th:value="false" value="false">
+										<input type="hidden" name="orderId" th:value="${orderItem.orderId}" value="1">
 										<button type="submit" class="btn btn-primary">削除</button>
 									</form>
 								</div>
