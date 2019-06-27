@@ -175,10 +175,14 @@ public class CartService {
 				orderToppingRepository.insertOrderTopping(orderItemId, form.getToppingIdList3());
 			}
 		}
-		OrderItem orderDrink=new OrderItem(null, form.getDrinkId(), 0, orderSetId, 1, 'L', null,null);
-		orderItemRepository.insertOrderItem(orderDrink);
-		OrderItem orderSideMenu=new OrderItem(null, form.getSideMenuId(), 0, orderSetId, 1, 'M', null,null);
-		orderItemRepository.insertOrderItem(orderSideMenu);
+		for(Integer drinkId:form.getDrinkIdList()) {
+			OrderItem orderDrink=new OrderItem(null, drinkId, 0, orderSetId, 1, 'L', null,null);
+			orderItemRepository.insertOrderItem(orderDrink);			
+		}
+		for(Integer sideMenuId:form.getSideMenuIdList()) {
+			OrderItem orderSideMenu=new OrderItem(null, sideMenuId, 0, orderSetId, 1, 'M', null,null);
+			orderItemRepository.insertOrderItem(orderSideMenu);
+		}
 		orderSet=orderSetRepository.load(orderSetId);
 		orderRepository.addTotalPrice(order.getId(), orderSet.getSet().getPrice());
 		
