@@ -18,8 +18,7 @@
 		<form action="cart_list.html" th:action=@{/add-item} th:object="${orderItemForm}" method="post">
 		<div class="row">
 			<div class="col-xs-offset-2 col-xs-8">
-
-				<h3 class="text-center">商品詳細</h3>
+				<span class="title"><h3 class="text-center">商品詳細</h3></span>
 				<div class="row">
 					<div class="col-xs-5">
 						<img src="img/1.jpg" class="img-responsive img-rounded" th:src="@{'/img/'+${item.imagePath}}">

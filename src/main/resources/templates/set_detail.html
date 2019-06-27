@@ -41,7 +41,8 @@
 						<div class="form-group">
 							<div class="row">
 								<div class="col-sm-12">
-									<label for="inputResponsibleCompany">お好きなピザを一枚選択(<span th:text="${i}"></span>枚目)</label>
+									<label for="inputResponsibleCompany" th:if="${set.id==4}">お好きなピザを３枚選択(<span th:text="${i}"></span>枚目)</label>
+									<label for="inputResponsibleCompany" th:unless="${set.id==4}">お好きなピザを１枚選択</label>
 								</div>
 								<div class="col-sm-12">
 								<span  th:each="pizza : ${setPizzaList}">
@@ -64,7 +65,7 @@
 							<div class="row">
 								<div class="col-sm-12">
 									<label for="inputResponsibleCompany">
-										トッピング
+										お好きなトッピングを３つ選択
 									</label>
 								</div>
 								<div class="col-sm-12" th:id="'topping'+ ${i}">
@@ -78,22 +79,24 @@
 				</div>				
 				</div>
 				
+				
 					<div class="row">
 					<div class="col-xs-offset-2 col-xs-8">
 						<div class="form-group">
 							<div class="row">
 								<div class="col-sm-12">
-									<label for="inputResponsibleCompany">お好きなサイドメニューを一つ選択</label>
+									<label for="inputResponsibleCompany" th:if="${set.id==4}">お好きなサイドメニューを３つ選択</label>
+									<label for="inputResponsibleCompany" th:unless="${set.id==4}">お好きなサイドメニューを１つ選択</label>
 								</div>
+								<div th:each="i : ${#numbers.sequence(1, maxSidesize)}">
 								<div class="col-sm-12">
-									<label class="radio-inline" th:each="side : ${setSideList}">
-										<input type="radio"
-											name="sideMenuId" checked="checked" id="side" class="side" value="19" th:value="${side.id}">
-											<span th:text="${side.name}">&nbsp;サラダ&nbsp;</span><br>
-											</label>
+									<select id="pet-select" name="sideMenuId">
+									    <option   th:each="side : ${setSideList}" th:value="${side.id}"><label  th:text="${side.name}"></label></option>
+									</select>
 								</div>
 							</div>
 						</div>
+					</div>
 					</div>
 				</div><br>
 				
@@ -102,14 +105,15 @@
 						<div class="form-group">
 							<div class="row">
 								<div class="col-sm-12">
-									<label for="inputResponsibleCompany">お好きなドリンクを一つ選択</label>
+									<label for="inputResponsibleCompany"  th:if="${set.id==4}">お好きなドリンクを５つ選択</label><br>
+									<label for="inputResponsibleCompany"  th:unless="${set.id==4}">お好きなドリンクを２つ選択</label><br>
+									<span style="color:red">アルコールは20歳未満の方は購入できませんので、ご注意ください。</span>
 								</div>
+								<div th:each="i : ${#numbers.sequence(1, maxDrinksize)}">
 								<div class="col-sm-12">
-									<label class="radio-inline"  th:each="drink : ${setDrinkList}">
-										<input type="radio"
-											name="drinkId" checked="checked" id="drink" class="drink" value="24" th:value="${drink.id}">
-											<span th:text="${drink.name}">&nbsp;コーラ&nbsp;</span><br>
-									</label>
+									<select id="pet-select" name="sideMenuId">
+									    <option   th:each="drink : ${setDrinkList}" th:value="${drink.id}"><label  th:text="${drink.name}"></label></option>
+									</select>
 								</div>
 							</div>
 						</div>
