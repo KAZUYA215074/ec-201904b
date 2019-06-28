@@ -108,7 +108,7 @@ public class OrderRepository {
 	public List<Order> findByUserIdDesc(int userId) {
 		String sql = "SELECT id ,user_id , status , total_price , order_date , destination_name , "
 				+ "destination_email , destination_zipcode , destination_address,destination_tel , delivery_time , payment_method "
-				+ "FROM orders WHERE user_id=:userId order by order_date desc;";
+				+ "FROM orders WHERE user_id=:userId order by order_date desc, id desc;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
 		List<Order> orderList = new ArrayList<Order>();
 		try {
