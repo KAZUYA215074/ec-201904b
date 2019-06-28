@@ -63,9 +63,9 @@ public class OrderController {
 	public String toOrder(Model model) {
 		Integer userId = (Integer) session.getAttribute("userId");
 		Order order = orderService.serchByUserIdNotOrdered(userId);
-		if(order==null || (order.getOrderItemList().size()==0 && order.getOrderSetList().size()==0)) {
-			return "redirect:/show-cart";
-		}		
+//		if(order==null || (order.getOrderItemList().size()==0 && order.getOrderSetList().size()==0)) {
+//			return "redirect:/show-cart";
+//		}		
 		model.addAttribute("cartItemStatus",true);
 		model.addAttribute("cartSetStatus",true);
 		if(order.getOrderItemList().size()==0) {
