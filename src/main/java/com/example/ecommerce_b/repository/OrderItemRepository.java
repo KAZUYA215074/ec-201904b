@@ -1,8 +1,11 @@
 package com.example.ecommerce_b.repository;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -44,6 +47,18 @@ public class OrderItemRepository {
 		item.setItemCategory(rs.getInt("item_category"));
 		orderItem.setItem(item);
 		return orderItem;
+	};
+	
+	private final static ResultSetExtractor<Map<Item,Integer>> RANK_RESULT_SET = rs ->{
+		Map<Item,Integer> rankMap = new LinkedHashMap<>();
+		while(rs.next()) {
+			Item item = new Item();
+			item.setId(rs.getInt("item_id"));
+			item.setName(rs.getString("name"));
+			item.setItemCategory(rs.getInt("item_category"));
+			rankMap.put(item,rs.getInt("quantity"));
+		}
+		return rankMap;
 	};
 	
 	/**
@@ -124,5 +139,11 @@ public class OrderItemRepository {
 		String sql2="update orders set total_price= (total_price-:subTotal) where id=:orderId";
 		SqlParameterSource param2=new MapSqlParameterSource().addValue("orderId", orderId).addValue("subTotal", subTotal);		
 		template.update(sql2, param2);
+	}
+	
+	public Map<Item,Integer> findSaleRank(){
+		String sql = "select oi.item_id,i.name,i.item_category,sum(oi.quantity) as quantity from order_items oi inner JOIN items i on i.id=oi.item_id GROUP BY oi.item_id,i.name,i.item_category order by i.item_category,quantity desc";
+		Map<Item,Integer> rankMap = template.query(sql, RANK_RESULT_SET);
+		return rankMap;
 	}
 }

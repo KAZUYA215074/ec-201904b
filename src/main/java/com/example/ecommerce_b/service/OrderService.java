@@ -1,8 +1,6 @@
 package com.example.ecommerce_b.service;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -87,9 +85,7 @@ public class OrderService {
 		orderRepository.updateOrder(order);
 	}
 	
-	public Map<Date,Integer> getSales(){
-		return orderRepository.findSaleHistory();
-	}
+	
 	
 	
 

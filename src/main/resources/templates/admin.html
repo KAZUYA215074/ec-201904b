@@ -50,6 +50,140 @@
 			   	</table>
 			</div>
 		</div>
+
+		<div class="row">
+			<div class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
+				<h3 class="text-center">売れ筋商品〜ピザ〜</h3>
+					<table class="table table-striped">
+						<tbody>
+							<tr>
+								<th>
+									<div class="text-center">
+										ランク
+									</div>
+								</th>
+								<th>
+									<div class="text-center">
+										商品名
+									</div>
+								</th>
+								<th>
+									<div class="text-center">
+										個数
+									</div>
+								</th>
+							</tr>
+							<tr th:each="rank,status:${pizzaRankMap}">
+								<th>
+									<div class="text-center">
+										<span th:text="${status.count}">名前</span>
+									</div>
+								</th>
+								<th>
+									<div class="text-center">
+										<span th:text="${rank.key.name}">名前</span>
+									</div>
+								</th>
+								<th>
+									<div class="text-center">
+										<span th:text="${#numbers.formatInteger(rank.value, 1, 'COMMA')}">売り上げ</span>
+									</div>
+								</th>
+							</tr>
+			    	</tbody>
+			   	</table>
+			</div>
+		</div>
+		<div class="row">
+			<div class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
+				<h3 class="text-center">売れ筋商品〜サイド〜</h3>
+					<table class="table table-striped">
+						<tbody>
+							<tr>
+								<th>
+									<div class="text-center">
+										ランク
+									</div>
+								</th>
+								<th>
+									<div class="text-center">
+										商品名
+									</div>
+								</th>
+								<th>
+									<div class="text-center">
+										個数
+									</div>
+								</th>
+							</tr>
+							<tr th:each="rank,status:${sideRankMap}">
+								<th>
+									<div class="text-center">
+										<span th:text="${status.count}">名前</span>
+									</div>
+								</th>
+								<th>
+									<div class="text-center">
+										<span th:text="${rank.key.name}">名前</span>
+									</div>
+								</th>
+								<th>
+									<div class="text-center">
+										<span th:text="${#numbers.formatInteger(rank.value, 1, 'COMMA')}">売り上げ</span>
+									</div>
+								</th>
+							</tr>
+			    	</tbody>
+			   	</table>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
+				<h3 class="text-center">売れ筋商品〜ドリンク〜</h3>
+					<table class="table table-striped">
+						<tbody>
+							<tr>
+								<th>
+									<div class="text-center">
+										ランク
+									</div>
+								</th>
+								<th>
+									<div class="text-center">
+										商品名
+									</div>
+								</th>
+								<th>
+									<div class="text-center">
+										個数
+									</div>
+								</th>
+							</tr>
+							<tr th:each="rank,status:${drinkRankMap}">
+								<th>
+									<div class="text-center">
+										<span th:text="${status.count}">名前</span>
+									</div>
+								</th>
+								<th>
+									<div class="text-center">
+										<span th:text="${rank.key.name}">名前</span>
+									</div>
+								</th>
+								<th>
+									<div class="text-center">
+										<span th:text="${#numbers.formatInteger(rank.value, 1, 'COMMA')}">売り上げ</span>
+									</div>
+								</th>
+							</tr>
+			    	</tbody>
+			   	</table>
+			</div>
+		</div>
+
+
+
 		<div class="row">
 			<div class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
 				<h3 class="text-center">アクセス者からのエラー報告</h3>
