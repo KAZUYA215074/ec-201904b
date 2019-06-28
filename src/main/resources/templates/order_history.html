@@ -28,7 +28,7 @@
 					<table class="table table-striped" th:if="!${historyStatus}" th:each="order:${orderList}" >
 					<tbody>
 					
-					<tr>
+					<tr th:if="${#lists.size(order.orderItemList)!=0}">
 					    <th colspan="2">
 								<div class="text-center" th:if="${order.orderDate}" th:text="${#dates.format(order.orderDate,'yyyy年MM月dd日')}+'の注文'"></div>
 								<div class="text-center" th:if="!${order.orderDate}" th:text="まだ注文が完了していません"></div>
