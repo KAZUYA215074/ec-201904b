@@ -49,7 +49,7 @@ public class OrderHistoryController {
 		Integer userId = (Integer) session.getAttribute("userId");
 		List<Order> orderList = orderHistoryService.showOrderHistory(userId);
 		model.addAttribute("historyStatus", false);
-		if (orderList == null) {
+		if (orderList == null||(orderList.get(1).getOrderItemList().size()==0&&orderList.get(1).getOrderSetList().size()==0)) {
 			model.addAttribute("historyStatus", true);
 			return "order_history";
 		}
