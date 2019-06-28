@@ -60,7 +60,6 @@ public class RegistUserController {
 		if(result.hasErrors()) {
 			return toRegist();
 		}
-		System.out.println(form);
 		try {
 			registUserService.registUser(form);
 		} catch (ParseException e) {
