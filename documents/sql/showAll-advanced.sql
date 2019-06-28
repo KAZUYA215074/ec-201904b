@@ -17,19 +17,7 @@ SELECT id , topping_id , order_item_id FROM order_toppings;
 --コメント情報
 select id,error_date,error_page,comment from comments;
 
-select
-oi.item_id,
-i.name,
-i.item_category,
-sum(oi.quantity) as quantity
-from order_items oi
-inner JOIN
-items i
-on
-i.id=oi.item_id
-
-GROUP BY oi.item_id,i.name,i.item_category
-order by i.item_category,quantity desc;
+select oi.item_id,i.name,i.item_category,sum(oi.quantity) as quantity from order_items oi inner JOIN items i on i.id=oi.item_id GROUP BY oi.item_id,i.name,i.item_category order by i.item_category,quantity desc;
 
 select
 order_date as sales_date,

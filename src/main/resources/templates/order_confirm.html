@@ -170,7 +170,7 @@
 		</div>
 
 		<div class="text-center"
-		       th:if="${alcohol}" th:text="${age}"></div>
+		       th:if="${alcohol}" th:text="${age}" style="color:red"></div>
 
 		<!-- table -->
 		<form th:action="@{/order}" method="post" th:object="${orderForm}">
