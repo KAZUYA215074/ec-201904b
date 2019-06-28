@@ -103,11 +103,23 @@
 								</div>
 							</td>
 							<td>
-							     <form class="text-center" th:action="@{/buy-again}" method="post">
-							     <input type="hidden" name="" value=""></input>
-							     <input type="hidden" name="" value=""></input>
-							     <input type="hidden" name="" value=""></input>
-							     <input type="hidden" name="" value=""></input>
+							     <form class="text-center" th:action="@{/buy-again-set}" method="post">
+							      <input type="hidden" name="setId" th:value="${orderSet.setId}"></input>
+							     <input type="hidden" name="quantity" th:value="${orderSet.quantity}"></input>
+							     <div th:each="orderItem,status : ${orderSet.orderItemList}">
+							     <input th:if="${orderItem.item.itemCategory}==1" type="hidden" name="itemId1" th:value="${orderItem.itemId}"></input>
+							     <div th:if="${orderItem.item.itemCategory}==1" th:each="orderTopping : ${orderItem.orderToppingList}">
+							     <input type="hidden" name="toppingIdList1" th:value="${orderTopping.toppingId}"></input>							     
+							     </div>
+							     </div>
+							     <div th:each="orderItem : ${orderSet.orderItemList}">
+							     <input th:if="${orderItem.item.itemCategory}==2" type="hidden" name="sideMenuIdList" th:value="${orderItem.itemId}"></input>
+							     </div>
+							     <div th:each="orderItem : ${orderSet.orderItemList}">
+							     <input th:if="${orderItem.item.itemCategory}==3" type="hidden" name="drinkIdList" th:value="${orderItem.itemId}"></input>
+							     </div>
+							     <input type="hidden" name="orderSetId" th:value="${orderSet.id}"></input>
+							     
 							     <button>同じものを<br>カートに入れる</button>
 							     </form>
 							</td>
