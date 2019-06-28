@@ -35,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests() // 認可に関する設定
 		.antMatchers("/admin").hasAuthority("ROLE_ADMIN")
-		.antMatchers("/","/to-login","/header-to-login","/to-regist","/regist","/show-cart","/show-detail","/add-item","/add-set","/search-like-name","/getAutoComplete1","/getAutoComplete2","/getAutoComplete3","/getAutoComplete4","/delete-item","/error","/common/maintenance","/info").permitAll() //「/」などのパスは全てのユーザに許可
+		.antMatchers("/","/to-login","/header-to-login","/to-regist","/regist","/show-cart","/show-detail","/add-item","/add-set","/search-like-name","/getAutoComplete1","/getAutoComplete2","/getAutoComplete3","/getAutoComplete4","/delete-item","/error","/common/maintenance").permitAll() //「/」などのパスは全てのユーザに許可
 
 		.anyRequest().authenticated(); // それ以外のパスは認証が必要
 		http.formLogin() // ログインに関する設定
