@@ -1,5 +1,6 @@
 package com.example.ecommerce_b.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.ecommerce_b.domain.Order;
 import com.example.ecommerce_b.domain.OrderItem;
 import com.example.ecommerce_b.domain.OrderSet;
+import com.example.ecommerce_b.domain.OrderTopping;
 import com.example.ecommerce_b.form.OrderItemForm;
 import com.example.ecommerce_b.form.OrderSetForm;
 import com.example.ecommerce_b.service.CartService;
@@ -51,7 +53,6 @@ public class OrderHistoryController {
 			model.addAttribute("historyStatus", true);
 			return "order_history";
 		}
-		
 		model.addAttribute("orderList", orderList);
 		return "order_history";
 	}
@@ -66,8 +67,6 @@ public class OrderHistoryController {
 	@RequestMapping("/buy-again-item")
 	public String buyAgainItem(OrderItemForm form, Model model) {
 		Integer userId = (Integer) session.getAttribute("userId");
-		System.out.println(form);
-		System.out.println(form.getOrderToppingIdList());
 		OrderItem orderItem = new OrderItem();
 		BeanUtils.copyProperties(form, orderItem);
 		orderItem.setSize(form.getSize().charAt(0));
@@ -85,38 +84,42 @@ public class OrderHistoryController {
 	 */
 	@RequestMapping("/buy-again-set")
 	public String buyAgainSet(OrderSetForm form,Integer orderSetId, Model model) {
-		System.out.println(form);
-
 		Integer userId = (Integer) session.getAttribute("userId");
 
 		OrderSet orderSet = new OrderSet();
 		BeanUtils.copyProperties(form, orderSet);
 		
-//		Integer userIdSet = (Integer) session.getAttribute("userId");
-//		List<Order> orderList = orderHistoryService.showOrderHistory(userIdSet);
-//		for(Order order : orderList) {
-//			for(OrderSet orderSet1 : order.getOrderSetList())
-//			if(orderSet1.getId() == orderSetId) {
-//				form.setItemId1(orderSet1.getOrderItemList().get(0).getItemId());
-//				form.setItemId2(orderSet1.getOrderItemList().get(1).getItemId());
-//				form.setItemId3(orderSet1.getOrderItemList().get(2).getItemId());
-//				List<Integer> toppingIdList1 =new ArrayList<>();
-//				for(OrderTopping orderTopping : orderSet1.getOrderItemList().get(0).getOrderToppingList()) {
-//					toppingIdList1.add(orderTopping.getToppingId());
-//				}
-//				form.setToppingIdList1(toppingIdList1);
-//				List<Integer> toppingIdList2 =new ArrayList<>();
-//				for(OrderTopping orderTopping : orderSet1.getOrderItemList().get(1).getOrderToppingList()) {
-//					toppingIdList1.add(orderTopping.getToppingId());
-//				}
-//				form.setToppingIdList2(toppingIdList2);
-//				List<Integer> toppingIdList3 =new ArrayList<>();
-//				for(OrderTopping orderTopping : orderSet1.getOrderItemList().get(2).getOrderToppingList()) {
-//					toppingIdList1.add(orderTopping.getToppingId());
-//				}
-//				form.setToppingIdList3(toppingIdList3);
-//			}
-//		}
+		Integer userIdSet = (Integer) session.getAttribute("userId");
+		List<Order> orderList = orderHistoryService.showOrderHistory(userIdSet);
+		for(Order order : orderList) {
+			for(OrderSet orderSet1 : order.getOrderSetList())
+			if(orderSet1.getId() == orderSetId) {
+				if(orderSet1.getSetId()==4) {
+				form.setItemId1(orderSet1.getOrderItemList().get(8).getItemId());
+				form.setItemId2(orderSet1.getOrderItemList().get(9).getItemId());
+				form.setItemId3(orderSet1.getOrderItemList().get(10).getItemId());
+				List<Integer> toppingIdList1 =new ArrayList<>();
+				System.out.println("1"+orderSet1);
+				System.out.println("2"+form);
+				for(OrderTopping orderTopping : orderSet1.getOrderItemList().get(8).getOrderToppingList()) {
+					System.out.println("3"+orderTopping);
+					toppingIdList1.add(orderTopping.getToppingId());
+				}
+				form.setToppingIdList1(toppingIdList1);
+				List<Integer> toppingIdList2 =new ArrayList<>();
+				for(OrderTopping orderTopping : orderSet1.getOrderItemList().get(9).getOrderToppingList()) {
+					System.out.println("4"+orderTopping);
+					toppingIdList2.add(orderTopping.getToppingId());
+				}
+				form.setToppingIdList2(toppingIdList2);
+				List<Integer> toppingIdList3 =new ArrayList<>();
+				for(OrderTopping orderTopping : orderSet1.getOrderItemList().get(10).getOrderToppingList()) {
+					toppingIdList3.add(orderTopping.getToppingId());
+				}
+				form.setToppingIdList3(toppingIdList3);
+				}
+			}
+		}
 		System.out.println(form);
 		cartService.addOrderSet(userId, orderSet, form);
 		return "redirect:/show-cart";
