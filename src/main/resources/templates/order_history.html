@@ -28,7 +28,7 @@
 					<table class="table table-striped" th:if="!${historyStatus}" th:each="order:${orderList}" >
 					<tbody>
 					
-					<tr>
+					<tr th:if="${#lists.size(order.orderItemList)!=0}">
 					    <th colspan="2">
 								<div class="text-center" th:if="${order.orderDate}" th:text="${#dates.format(order.orderDate,'yyyy年MM月dd日')}+'の注文'"></div>
 								<div class="text-center" th:if="!${order.orderDate}" th:text="まだ注文が完了していません"></div>
@@ -80,10 +80,11 @@
 							<td>
 							    <div th:each="orderItem : ${orderSet.orderItemList}">
 								    <span th:if="${orderItem.item.itemCategory} == 1">
-								        <span  th:text="${orderItem.item.name}"></span> <br>
+								        <span  th:text="${orderItem.item.name}"></span> <br>(
 								    <span th:each="orderTopping : ${orderItem.orderToppingList}">
-								        <span th:text="${orderTopping.topping.name}"></span> 
+								        <span th:text="${'・'+orderTopping.topping.name}"></span> 
 								    </span>
+								    <span th:if="${#lists.size(orderItem.orderToppingList)}==0">トッピングなし</span>)
 								    </span>
 								</div>
 							</td>
