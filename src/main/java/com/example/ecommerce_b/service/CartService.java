@@ -123,6 +123,7 @@ public class CartService {
 			orderRepository.updateUserId(userId, loginUserId);
 		}else {
 			orderItemRepository.updateOrderId(userId,order.getId());
+			orderSetRepository.updateOrderId(userId,order.getId());
 			Order newOrder=loadOrder(loginUserId);
 			int newTotalPrice=0;
 			for(OrderItem item :newOrder.getOrderItemList()) {
