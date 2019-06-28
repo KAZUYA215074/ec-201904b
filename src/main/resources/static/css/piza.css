@@ -51,4 +51,7 @@ span#total-price :after {
 	margin: 0 auto;
 }
 
+#reserved{
+	text-align: center;
+}
 
