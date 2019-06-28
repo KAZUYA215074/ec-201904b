@@ -171,7 +171,6 @@ public class OrderRepository {
 	public Map<Date,Integer> findSaleHistory(){
 		String sql = "select order_date as sales_date,sum(total_price) as sales from orders where status=2 or status=3 group by order_date order by order_date desc; ";
 		Map<Date,Integer> salesMap = template.query(sql,SALES_RESULT_SET);
-		System.out.println(salesMap);
 		return salesMap;
 	}
 	

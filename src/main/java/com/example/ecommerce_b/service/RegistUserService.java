@@ -44,7 +44,6 @@ public class RegistUserService {
 		user.setTelephone(telephone);
 		Date birthday = stringToDate(form.getBirthday());
 		user.setBirthday(birthday);
-		System.out.println(user);
 		userRepository.insert(user);
 	}
 

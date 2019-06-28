@@ -1,6 +1,22 @@
 @CHARSET "UTF-8";
 
 
+h3{
+    border-bottom: double 5px #fac559;
+}
+h4{
+	border-bottom: solid 5px #ff9e9e;
+}
+
+.title{
+    border-bottom: dotted 3px #fac559;
+}
+
+.detail-top{
+	border: double 10px #0000ff;
+}
+
+
 /* サイズをオレンジ〇で囲む */
 span.price {
  /* サイズ指定 */
@@ -17,6 +33,18 @@ span.price {
 /* 合計金額の文字の大きさを変える */
 span#total-price {
 	font-size: 35px;
+	position: relative;
+  	padding: 0.3em;
+}
+
+span#total-price :after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 7px;
+  background: repeating-linear-gradient(-45deg, #f19ca7, #f19ca7 2px, white 2px, white 4px);
 }
 
 #itemlist-btn{
