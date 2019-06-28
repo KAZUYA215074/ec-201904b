@@ -131,7 +131,6 @@ public class CartController {
 		System.out.println(form);
 
 		Integer userId = (Integer) session.getAttribute("userId");
-		System.out.println(userId);
 		if (userId == null) {
 			userId = (int) (Math.random() * (100000) * (-1));
 			System.out.println("発行したuserId=" + userId);
