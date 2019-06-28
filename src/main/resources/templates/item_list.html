@@ -110,10 +110,9 @@
 				</table>
 
 				<!-- ページング機能 -->
-				<div th:if="${pageTotalNumbers > 0}" class="pagination"
-				    th:each="pageNumber : ${pageNuberList}">
+				<div th:if="${pageTotalNumbers > 0}" class="pagination"  th:each="pageNumber : ${pageNuberList}">
 				    <a th:href="@{/(page=${pageNumber}, code=${code}, status=${status}, category=${category})}"
-				        th:text=${pageNumber}></a>
+				            th:text=${pageNumber} class="col-xs-offset-7 col-xs-7"></a>
 				</div>
 
 			</div>

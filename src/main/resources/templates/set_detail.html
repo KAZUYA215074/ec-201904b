@@ -41,8 +41,8 @@
 						<div class="form-group">
 							<div class="row">
 								<div class="col-sm-12">
-									<label for="inputResponsibleCompany" th:if="${set.id==4}">お好きなピザを３枚選択(<span th:text="${i}"></span>枚目)</label>
-									<label for="inputResponsibleCompany" th:unless="${set.id==4}">お好きなピザを１枚選択</label>
+									<label for="inputResponsibleCompany" th:if="${set.id==4}" class="title">お好きなピザを３枚選択(<span th:text="${i}"></span>枚目)</label>
+									<label for="inputResponsibleCompany" th:unless="${set.id==4}" class="title">お好きなピザを１枚選択</label>
 								</div>
 								<div class="col-sm-12">
 								<span  th:each="pizza : ${setPizzaList}">
@@ -64,7 +64,7 @@
 						<div class="form-group">
 							<div class="row">
 								<div class="col-sm-12">
-									<label for="inputResponsibleCompany">
+									<label for="inputResponsibleCompany"  class="title">
 										お好きなトッピングを３つ選択
 									</label>
 								</div>
@@ -85,8 +85,8 @@
 						<div class="form-group">
 							<div class="row">
 								<div class="col-sm-12">
-									<label for="inputResponsibleCompany" th:if="${set.id==4}">お好きなサイドメニューを３つ選択</label>
-									<label for="inputResponsibleCompany" th:unless="${set.id==4}">お好きなサイドメニューを１つ選択</label>
+									<label for="inputResponsibleCompany" th:if="${set.id==4}" class="title">お好きなサイドメニューを３つ選択</label>
+									<label for="inputResponsibleCompany" th:unless="${set.id==4}" class="title">お好きなサイドメニューを１つ選択</label>
 								</div>
 								<div th:each="i : ${#numbers.sequence(1, maxSidesize)}">
 								<div class="col-sm-12">
@@ -105,8 +105,8 @@
 						<div class="form-group">
 							<div class="row">
 								<div class="col-sm-12">
-									<label for="inputResponsibleCompany"  th:if="${set.id==4}">お好きなドリンクを５つ選択</label><br>
-									<label for="inputResponsibleCompany"  th:unless="${set.id==4}">お好きなドリンクを２つ選択</label><br>
+									<label for="inputResponsibleCompany"  th:if="${set.id==4}" class="title">お好きなドリンクを５つ選択</label><br>
+									<label for="inputResponsibleCompany"  th:unless="${set.id==4}" class="title">お好きなドリンクを２つ選択</label><br>
 									<span style="color:red">アルコールは20歳未満の方は購入できませんので、ご注意ください。</span>
 								</div>
 								<div th:each="i : ${#numbers.sequence(1, maxDrinksize)}">
@@ -118,18 +118,15 @@
 							</div>
 						</div>
 					</div>
+					</div>
 				</div><br>
-				
-				
-				
-				
 				
 				<div class="row">
 					<div class="col-xs-offset-2 col-xs-8">
 						<div class="form-group">
 							<div class="row">
 								<div class="col-xs-5 col-sm-5">
-									<label for="">数量:</label>
+									<label for=""  class="title">数量:</label>
 									<!--  <label class="control-label"
 										style="color: red" for="inputError">数量を選択してください</label> --> 
 										<select name="quantity" class="form-control" id="pizanum">
